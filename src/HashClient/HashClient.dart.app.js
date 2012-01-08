@@ -102,8 +102,14 @@ Object.prototype.blur$0 = function() {
 Object.prototype.click$0 = function() {
   return this.noSuchMethod("click", []);
 };
+Object.prototype.contains$1 = function($0) {
+  return this.noSuchMethod("contains", [$0]);
+};
 Object.prototype.convert$1 = function($0) {
   return this.noSuchMethod("convert", [$0]);
+};
+Object.prototype.deserialize$1 = function($0) {
+  return this.noSuchMethod("deserialize", [$0]);
 };
 Object.prototype.end$0 = function() {
   return this.noSuchMethod("end", []);
@@ -144,6 +150,9 @@ Object.prototype.hashCode$0 = function() {
 Object.prototype.is$Exception = function() {
   return false;
 };
+Object.prototype.is$List = function() {
+  return false;
+};
 Object.prototype.is$Map_dart_core_String$Dynamic = function() {
   return false;
 };
@@ -153,11 +162,17 @@ Object.prototype.is$RegExp = function() {
 Object.prototype.is$html_html_Document = function() {
   return false;
 };
+Object.prototype.is$html_html_Element = function() {
+  return false;
+};
 Object.prototype.item$1 = function($0) {
   return this.noSuchMethod("item", [$0]);
 };
 Object.prototype.iterator$0 = function() {
   return this.noSuchMethod("iterator", []);
+};
+Object.prototype.makeMe$0 = function() {
+  return this.noSuchMethod("makeMe", []);
 };
 Object.prototype.next$0 = function() {
   return this.noSuchMethod("next", []);
@@ -191,6 +206,9 @@ Object.prototype.removeChild$1 = function($0) {
 };
 Object.prototype.removeEventListener$3 = function($0, $1, $2) {
   return this.noSuchMethod("removeEventListener", [$0, $1, $2]);
+};
+Object.prototype.replaceChild$2 = function($0, $1) {
+  return this.noSuchMethod("replaceChild", [$0, $1]);
 };
 Object.prototype.send$0 = function() {
   return this.noSuchMethod("send", []);
@@ -480,6 +498,7 @@ function _toDartException(e) {
 //  ********** Library dart:coreimpl **************
 // ********** Code for ListFactory **************
 ListFactory = Array;
+ListFactory.prototype.is$List = function(){return true};
 ListFactory.ListFactory$from$factory = function(other) {
   var list = [];
   for (var $$i = other.iterator(); $$i.hasNext$0(); ) {
@@ -522,6 +541,7 @@ ListFactory.prototype.iterator$0 = ListFactory.prototype.iterator;
 ListFactory_Binding = ListFactory;
 ListFactory_ColumnDefinition = ListFactory;
 ListFactory_E = ListFactory;
+ListFactory_html_html_Element = ListFactory;
 ListFactory_EventHandlerReference = ListFactory;
 ListFactory_FrameworkElement = ListFactory;
 ListFactory_GradientStop = ListFactory;
@@ -646,6 +666,107 @@ ImmutableMap.prototype.forEach$1 = function($0) {
   return this.forEach(to$call$2($0));
 };
 ImmutableMap.prototype.remove$1 = ImmutableMap.prototype.remove;
+// ********** Code for JSSyntaxRegExp **************
+function JSSyntaxRegExp(pattern, multiLine, ignoreCase) {
+  // Initializers done
+  JSSyntaxRegExp._create$ctor.call(this, pattern, ($eq(multiLine, true) ? 'm' : '') + ($eq(ignoreCase, true) ? 'i' : ''));
+}
+JSSyntaxRegExp._create$ctor = function(pattern, flags) {
+  this.re = new RegExp(pattern, flags);
+      this.pattern = pattern;
+      this.multiLine = this.re.multiline;
+      this.ignoreCase = this.re.ignoreCase;
+}
+JSSyntaxRegExp._create$ctor.prototype = JSSyntaxRegExp.prototype;
+JSSyntaxRegExp.prototype.is$RegExp = function(){return true};
+JSSyntaxRegExp.prototype.firstMatch = function(str) {
+  var m = this._exec(str);
+  return m == null ? null : new MatchImplementation(this.pattern, str, this._matchStart(m), this.get$_lastIndex(), m);
+}
+JSSyntaxRegExp.prototype._exec = function(str) {
+  return this.re.exec(str);
+}
+JSSyntaxRegExp.prototype._matchStart = function(m) {
+  return m.index;
+}
+JSSyntaxRegExp.prototype.get$_lastIndex = function() {
+  return this.re.lastIndex;
+}
+JSSyntaxRegExp.prototype.allMatches = function(str) {
+  return new _AllMatchesIterable(this, str);
+}
+JSSyntaxRegExp.prototype.get$_global = function() {
+  return new JSSyntaxRegExp._create$ctor(this.pattern, 'g' + (this.multiLine ? 'm' : '') + (this.ignoreCase ? 'i' : ''));
+}
+// ********** Code for MatchImplementation **************
+function MatchImplementation(pattern, str, _start, _end, _groups) {
+  this.pattern = pattern;
+  this.str = str;
+  this._start = _start;
+  this._end = _end;
+  this._groups = _groups;
+  // Initializers done
+}
+MatchImplementation.prototype.start = function() {
+  return this._start;
+}
+MatchImplementation.prototype.get$start = function() {
+  return this.start.bind(this);
+}
+MatchImplementation.prototype.end = function() {
+  return this._end;
+}
+MatchImplementation.prototype.group = function(group) {
+  return this._groups.$index(group);
+}
+MatchImplementation.prototype.$index = function(group) {
+  return this._groups.$index(group);
+}
+MatchImplementation.prototype.end$0 = MatchImplementation.prototype.end;
+MatchImplementation.prototype.start$0 = MatchImplementation.prototype.start;
+// ********** Code for _AllMatchesIterable **************
+function _AllMatchesIterable(_re, _str) {
+  this._re = _re;
+  this._dart_coreimpl_str = _str;
+  // Initializers done
+}
+_AllMatchesIterable.prototype.iterator = function() {
+  return new _AllMatchesIterator(this._re, this._dart_coreimpl_str);
+}
+_AllMatchesIterable.prototype.iterator$0 = _AllMatchesIterable.prototype.iterator;
+// ********** Code for _AllMatchesIterator **************
+function _AllMatchesIterator(re, _str) {
+  this._str = _str;
+  this._done = false;
+  this._re = re.get$_global();
+  // Initializers done
+}
+_AllMatchesIterator.prototype.next = function() {
+  if (!this.hasNext()) {
+    $throw(const$89/*const NoMoreElementsException()*/);
+  }
+  var next = this._next;
+  this._next = null;
+  return next;
+}
+_AllMatchesIterator.prototype.hasNext = function() {
+  if (this._done) {
+    return false;
+  }
+  else if (this._next != null) {
+    return true;
+  }
+  this._next = this._re.firstMatch(this._str);
+  if (this._next == null) {
+    this._done = true;
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+_AllMatchesIterator.prototype.hasNext$0 = _AllMatchesIterator.prototype.hasNext;
+_AllMatchesIterator.prototype.next$0 = _AllMatchesIterator.prototype.next;
 // ********** Code for NumImplementation **************
 NumImplementation = Number;
 NumImplementation.prototype.round = function() {
@@ -659,6 +780,16 @@ NumImplementation.prototype.toStringAsPrecision = function(precision) {
 }
 NumImplementation.prototype.hashCode$0 = NumImplementation.prototype.hashCode;
 NumImplementation.prototype.toStringAsPrecision$1 = NumImplementation.prototype.toStringAsPrecision;
+// ********** Code for ExceptionImplementation **************
+function ExceptionImplementation(msg) {
+  this._msg = msg;
+  // Initializers done
+}
+ExceptionImplementation.prototype.is$Exception = function(){return true};
+ExceptionImplementation.prototype.toString = function() {
+  return (this._msg == null) ? "Exception" : ("Exception: " + this._msg);
+}
+ExceptionImplementation.prototype.toString$0 = ExceptionImplementation.prototype.toString;
 // ********** Code for HashMapImplementation **************
 function HashMapImplementation() {
   // Initializers done
@@ -990,6 +1121,7 @@ HashSetImplementation.prototype.iterator = function() {
   return new HashSetIterator_E(this);
 }
 HashSetImplementation.prototype.add$1 = HashSetImplementation.prototype.add;
+HashSetImplementation.prototype.contains$1 = HashSetImplementation.prototype.contains;
 HashSetImplementation.prototype.forEach$1 = function($0) {
   return this.forEach(to$call$1($0));
 };
@@ -1260,6 +1392,12 @@ DoubleLinkedQueue.prototype.addLast = function(value) {
 DoubleLinkedQueue.prototype.add = function(value) {
   this.addLast(value);
 }
+DoubleLinkedQueue.prototype.first = function() {
+  return this._sentinel._next.get$element();
+}
+DoubleLinkedQueue.prototype.get$first = function() {
+  return this.first.bind(this);
+}
 DoubleLinkedQueue.prototype.get$length = function() {
   var counter = 0;
   this.forEach(function _(element) {
@@ -1416,6 +1554,7 @@ StringImplementation.prototype.hashCode = function() {
       hash ^= hash >> 11;
       return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
 }
+StringImplementation.prototype.contains$1 = StringImplementation.prototype.contains;
 StringImplementation.prototype.hashCode$0 = StringImplementation.prototype.hashCode;
 StringImplementation.prototype.split$1 = StringImplementation.prototype.split;
 StringImplementation.prototype.startsWith$1 = StringImplementation.prototype.startsWith;
@@ -1812,6 +1951,9 @@ $dynamic("set$dartObjectLocalStorage").DOMTokenList = function(value) { return t
 $dynamic("add$1").DOMTokenList = function($0) {
   return this.add($0);
 };
+$dynamic("contains$1").DOMTokenList = function($0) {
+  return this.contains($0);
+};
 $dynamic("item$1").DOMTokenList = function($0) {
   return this.item($0);
 };
@@ -1920,10 +2062,16 @@ $dynamic("get$name").DocumentType = function() { return this.name; };
 $dynamic("set$name").DocumentType = function(value) { return this.name = value; };
 // ********** Code for DynamicsCompressorNode **************
 // ********** Code for Element **************
+$dynamic("get$childElementCount").Element = function() { return this.childElementCount; };
+$dynamic("set$childElementCount").Element = function(value) { return this.childElementCount = value; };
 $dynamic("get$clientHeight").Element = function() { return this.clientHeight; };
 $dynamic("set$clientHeight").Element = function(value) { return this.clientHeight = value; };
 $dynamic("get$clientWidth").Element = function() { return this.clientWidth; };
 $dynamic("set$clientWidth").Element = function(value) { return this.clientWidth = value; };
+$dynamic("get$firstElementChild").Element = function() { return this.firstElementChild; };
+$dynamic("set$firstElementChild").Element = function(value) { return this.firstElementChild = value; };
+$dynamic("get$lastElementChild").Element = function() { return this.lastElementChild; };
+$dynamic("set$lastElementChild").Element = function(value) { return this.lastElementChild = value; };
 $dynamic("get$offsetLeft").Element = function() { return this.offsetLeft; };
 $dynamic("set$offsetLeft").Element = function(value) { return this.offsetLeft = value; };
 $dynamic("get$offsetTop").Element = function() { return this.offsetTop; };
@@ -1966,6 +2114,12 @@ $dynamic("setAttribute$2").Element = function($0, $1) {
 $dynamic("get$dartObjectLocalStorage").ElementTimeControl = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").ElementTimeControl = function(value) { return this.dartObjectLocalStorage = value; };
 // ********** Code for dom_ElementTraversal **************
+$dynamic("get$childElementCount").ElementTraversal = function() { return this.childElementCount; };
+$dynamic("set$childElementCount").ElementTraversal = function(value) { return this.childElementCount = value; };
+$dynamic("get$firstElementChild").ElementTraversal = function() { return this.firstElementChild; };
+$dynamic("set$firstElementChild").ElementTraversal = function(value) { return this.firstElementChild = value; };
+$dynamic("get$lastElementChild").ElementTraversal = function() { return this.lastElementChild; };
+$dynamic("set$lastElementChild").ElementTraversal = function(value) { return this.lastElementChild = value; };
 $dynamic("get$dartObjectLocalStorage").ElementTraversal = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").ElementTraversal = function(value) { return this.dartObjectLocalStorage = value; };
 // ********** Code for Entity **************
@@ -2093,9 +2247,11 @@ $dynamic("set$position").FileWriterSync = function(value) { return this.position
 $dynamic("get$dartObjectLocalStorage").FileWriterSync = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").FileWriterSync = function(value) { return this.dartObjectLocalStorage = value; };
 // ********** Code for Float32Array **************
+$dynamic("is$List").Float32Array = function(){return true};
 $dynamic("get$length").Float32Array = function() { return this.length; };
 $dynamic("set$length").Float32Array = function(value) { return this.length = value; };
 // ********** Code for Float64Array **************
+$dynamic("is$List").Float64Array = function(){return true};
 $dynamic("get$length").Float64Array = function() { return this.length; };
 $dynamic("set$length").Float64Array = function(value) { return this.length = value; };
 // ********** Code for Geolocation **************
@@ -2156,6 +2312,9 @@ $dynamic("set$width").HTMLCanvasElement = function(value) { return this.width = 
 // ********** Code for dom_HTMLCollection **************
 $dynamic("get$length").HTMLCollection = function() { return this.length; };
 $dynamic("set$length").HTMLCollection = function(value) { return this.length = value; };
+$dynamic("$setindex").HTMLCollection = function(index, value) {
+  $throw(new UnsupportedOperationException("Cannot assign element of immutable List."));
+}
 $dynamic("get$dartObjectLocalStorage").HTMLCollection = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").HTMLCollection = function(value) { return this.dartObjectLocalStorage = value; };
 $dynamic("item$1").HTMLCollection = function($0) {
@@ -2185,6 +2344,10 @@ $dynamic("get$open").HTMLDocument = function() {
   return this.open.bind(this);
 }
 // ********** Code for dom_HTMLElement **************
+$dynamic("get$children").HTMLElement = function() { return this.children; };
+$dynamic("set$children").HTMLElement = function(value) { return this.children = value; };
+$dynamic("get$innerHTML").HTMLElement = function() { return this.innerHTML; };
+$dynamic("set$innerHTML").HTMLElement = function(value) { return this.innerHTML = value; };
 // ********** Code for dom_HTMLEmbedElement **************
 $dynamic("get$height").HTMLEmbedElement = function() { return this.height; };
 $dynamic("set$height").HTMLEmbedElement = function(value) { return this.height = value; };
@@ -2197,6 +2360,8 @@ $dynamic("set$width").HTMLEmbedElement = function(value) { return this.width = v
 $dynamic("get$color").HTMLFontElement = function() { return this.color; };
 $dynamic("set$color").HTMLFontElement = function(value) { return this.color = value; };
 // ********** Code for dom_HTMLFormElement **************
+$dynamic("get$elements").HTMLFormElement = function() { return this.elements; };
+$dynamic("set$elements").HTMLFormElement = function(value) { return this.elements = value; };
 $dynamic("get$length").HTMLFormElement = function() { return this.length; };
 $dynamic("set$length").HTMLFormElement = function(value) { return this.length = value; };
 $dynamic("get$name").HTMLFormElement = function() { return this.name; };
@@ -2487,12 +2652,15 @@ $dynamic("set$dartObjectLocalStorage").InjectedScriptHost = function(value) { re
 $dynamic("get$dartObjectLocalStorage").InspectorFrontendHost = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").InspectorFrontendHost = function(value) { return this.dartObjectLocalStorage = value; };
 // ********** Code for Int16Array **************
+$dynamic("is$List").Int16Array = function(){return true};
 $dynamic("get$length").Int16Array = function() { return this.length; };
 $dynamic("set$length").Int16Array = function(value) { return this.length = value; };
 // ********** Code for Int32Array **************
+$dynamic("is$List").Int32Array = function(){return true};
 $dynamic("get$length").Int32Array = function() { return this.length; };
 $dynamic("set$length").Int32Array = function(value) { return this.length = value; };
 // ********** Code for Int8Array **************
+$dynamic("is$List").Int8Array = function(){return true};
 $dynamic("get$length").Int8Array = function() { return this.length; };
 $dynamic("set$length").Int8Array = function(value) { return this.length = value; };
 // ********** Code for JavaScriptAudioNode **************
@@ -2592,6 +2760,8 @@ $dynamic("get$attributes").Node = function() { return this.attributes; };
 $dynamic("set$attributes").Node = function(value) { return this.attributes = value; };
 $dynamic("get$childNodes").Node = function() { return this.childNodes; };
 $dynamic("set$childNodes").Node = function(value) { return this.childNodes = value; };
+$dynamic("get$firstChild").Node = function() { return this.firstChild; };
+$dynamic("set$firstChild").Node = function(value) { return this.firstChild = value; };
 $dynamic("get$lastChild").Node = function() { return this.lastChild; };
 $dynamic("set$lastChild").Node = function(value) { return this.lastChild = value; };
 $dynamic("get$ownerDocument").Node = function() { return this.ownerDocument; };
@@ -2611,6 +2781,9 @@ $dynamic("addEventListener$3").Node = function($0, $1, $2) {
 $dynamic("appendChild$1").Node = function($0) {
   return this.appendChild($0);
 };
+$dynamic("contains$1").Node = function($0) {
+  return this.contains($0);
+};
 $dynamic("hasAttributes$0").Node = function() {
   return this.hasAttributes();
 };
@@ -2622,6 +2795,9 @@ $dynamic("removeChild$1").Node = function($0) {
 };
 $dynamic("removeEventListener$3").Node = function($0, $1, $2) {
   return this.removeEventListener($0, $wrap_call$1(to$call$1($1)), $2);
+};
+$dynamic("replaceChild$2").Node = function($0, $1) {
+  return this.replaceChild($0, $1);
 };
 // ********** Code for dom_NodeFilter **************
 $dynamic("get$dartObjectLocalStorage").NodeFilter = function() { return this.dartObjectLocalStorage; };
@@ -2827,6 +3003,8 @@ $dynamic("set$style").SVGDescElement = function(value) { return this.style = val
 // ********** Code for SVGElementInstance **************
 $dynamic("get$childNodes").SVGElementInstance = function() { return this.childNodes; };
 $dynamic("set$childNodes").SVGElementInstance = function(value) { return this.childNodes = value; };
+$dynamic("get$firstChild").SVGElementInstance = function() { return this.firstChild; };
+$dynamic("set$firstChild").SVGElementInstance = function(value) { return this.firstChild = value; };
 $dynamic("get$lastChild").SVGElementInstance = function() { return this.lastChild; };
 $dynamic("set$lastChild").SVGElementInstance = function(value) { return this.lastChild = value; };
 $dynamic("get$parentNode").SVGElementInstance = function() { return this.parentNode; };
@@ -3227,6 +3405,8 @@ $dynamic("set$dartObjectLocalStorage").Screen = function(value) { return this.da
 $dynamic("get$dartObjectLocalStorage").ScriptProfile = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").ScriptProfile = function(value) { return this.dartObjectLocalStorage = value; };
 // ********** Code for dom_ScriptProfileNode **************
+$dynamic("get$children").ScriptProfileNode = function() { return this.children; };
+$dynamic("set$children").ScriptProfileNode = function(value) { return this.children = value; };
 $dynamic("get$dartObjectLocalStorage").ScriptProfileNode = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").ScriptProfileNode = function(value) { return this.dartObjectLocalStorage = value; };
 // ********** Code for SharedWorker **************
@@ -3350,6 +3530,9 @@ $dynamic("item$1").TouchList = function($0) {
 };
 // ********** Code for dom_TrackEvent **************
 // ********** Code for dom_TreeWalker **************
+$dynamic("get$firstChild").TreeWalker = function() {
+  return this.firstChild.bind(this);
+}
 $dynamic("get$lastChild").TreeWalker = function() {
   return this.lastChild.bind(this);
 }
@@ -3364,12 +3547,15 @@ $dynamic("set$pageX").UIEvent = function(value) { return this.pageX = value; };
 $dynamic("get$pageY").UIEvent = function() { return this.pageY; };
 $dynamic("set$pageY").UIEvent = function(value) { return this.pageY = value; };
 // ********** Code for Uint16Array **************
+$dynamic("is$List").Uint16Array = function(){return true};
 $dynamic("get$length").Uint16Array = function() { return this.length; };
 $dynamic("set$length").Uint16Array = function(value) { return this.length = value; };
 // ********** Code for Uint32Array **************
+$dynamic("is$List").Uint32Array = function(){return true};
 $dynamic("get$length").Uint32Array = function() { return this.length; };
 $dynamic("set$length").Uint32Array = function(value) { return this.length = value; };
 // ********** Code for Uint8Array **************
+$dynamic("is$List").Uint8Array = function(){return true};
 $dynamic("get$length").Uint8Array = function() { return this.length; };
 $dynamic("set$length").Uint8Array = function(value) { return this.length = value; };
 // ********** Code for ValidityState **************
@@ -3657,8 +3843,19 @@ NodeWrappingImplementation.prototype.get$document = function() {
 NodeWrappingImplementation.prototype.get$parent = function() {
   return LevelDom.wrapNode(this._ptr.get$parentNode());
 }
+NodeWrappingImplementation.prototype.get$text = function() {
+  return this._ptr.get$textContent();
+}
 NodeWrappingImplementation.prototype.set$text = function(value) {
   this._ptr.set$textContent(value);
+}
+NodeWrappingImplementation.prototype.replaceWith = function(otherNode) {
+  try {
+    this._ptr.get$parentNode().replaceChild$2(LevelDom.unwrap(otherNode), this._ptr);
+  } catch (e) {
+    e = _toDartException(e);
+  }
+  return this;
 }
 NodeWrappingImplementation.prototype.remove = function() {
   if (this._ptr.get$parentNode() != null) {
@@ -3666,6 +3863,13 @@ NodeWrappingImplementation.prototype.remove = function() {
   }
   return this;
 }
+NodeWrappingImplementation.prototype.contains = function(otherNode) {
+  while (otherNode != null && $ne(otherNode, this)) {
+    otherNode = otherNode.get$parent();
+  }
+  return $eq(otherNode, this);
+}
+NodeWrappingImplementation.prototype.contains$1 = NodeWrappingImplementation.prototype.contains;
 NodeWrappingImplementation.prototype.remove$0 = NodeWrappingImplementation.prototype.remove;
 // ********** Code for ElementWrappingImplementation **************
 $inherits(ElementWrappingImplementation, NodeWrappingImplementation);
@@ -3675,6 +3879,29 @@ ElementWrappingImplementation._wrap$ctor = function(ptr) {
   NodeWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 ElementWrappingImplementation._wrap$ctor.prototype = ElementWrappingImplementation.prototype;
+ElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
+ElementWrappingImplementation.ElementWrappingImplementation$html$factory = function(html) {
+  var parentTag = 'div';
+  var tag;
+  var match = const$407/*null._START_TAG_REGEXP*/.firstMatch(html);
+  if (match != null) {
+    tag = match.group(1).toLowerCase();
+    if (const$409/*ElementWrappingImplementation._CUSTOM_PARENT_TAG_MAP*/.containsKey(tag)) {
+      parentTag = const$409/*ElementWrappingImplementation._CUSTOM_PARENT_TAG_MAP*/.$index(tag);
+    }
+  }
+  var temp = get$document().createElement(parentTag);
+  temp.set$innerHTML(html);
+  if ($eq(temp.get$childElementCount(), 1)) {
+    return LevelDom.wrapElement(temp.get$firstElementChild());
+  }
+  else if (parentTag == 'html' && $eq(temp.get$childElementCount(), 2)) {
+    return LevelDom.wrapElement(temp.get$children().item$1(tag == 'head' ? 0 : 1));
+  }
+  else {
+    $throw(new IllegalArgumentException(('HTML had ' + temp.get$childElementCount() + ' ') + 'top level elements but 1 expected'));
+  }
+}
 ElementWrappingImplementation.ElementWrappingImplementation$tag$factory = function(tag) {
   return LevelDom.wrapElement(get$document().createElement(tag));
 }
@@ -3683,6 +3910,21 @@ ElementWrappingImplementation.prototype.get$attributes = function() {
     this._elementAttributeMap = new ElementAttributeMap._wrap$ctor(this._ptr);
   }
   return this._elementAttributeMap;
+}
+ElementWrappingImplementation.prototype.get$elements = function() {
+  if (this._elements == null) {
+    this._elements = new _ChildrenElementList._wrap$ctor(this._ptr);
+  }
+  return this._elements;
+}
+ElementWrappingImplementation.prototype.get$firstElementChild = function() {
+  return LevelDom.wrapElement(this._ptr.get$firstElementChild());
+}
+ElementWrappingImplementation.prototype.set$innerHTML = function(value) {
+  this._ptr.set$innerHTML(value);
+}
+ElementWrappingImplementation.prototype.get$lastElementChild = function() {
+  return LevelDom.wrapElement(this._ptr.get$lastElementChild());
 }
 ElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
@@ -3695,6 +3937,9 @@ ElementWrappingImplementation.prototype.blur = function() {
 }
 ElementWrappingImplementation.prototype.get$blur = function() {
   return this.blur.bind(this);
+}
+ElementWrappingImplementation.prototype.contains = function(element) {
+  return this._ptr.contains$1(LevelDom.unwrap(element));
 }
 ElementWrappingImplementation.prototype.focus = function() {
   this._ptr.focus$0();
@@ -3712,6 +3957,7 @@ ElementWrappingImplementation.prototype.get$on = function() {
   return this._on;
 }
 ElementWrappingImplementation.prototype.blur$0 = ElementWrappingImplementation.prototype.blur;
+ElementWrappingImplementation.prototype.contains$1 = ElementWrappingImplementation.prototype.contains;
 ElementWrappingImplementation.prototype.focus$0 = ElementWrappingImplementation.prototype.focus;
 // ********** Code for AnchorElementWrappingImplementation **************
 $inherits(AnchorElementWrappingImplementation, ElementWrappingImplementation);
@@ -3721,8 +3967,12 @@ AnchorElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 AnchorElementWrappingImplementation._wrap$ctor.prototype = AnchorElementWrappingImplementation.prototype;
+AnchorElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 AnchorElementWrappingImplementation.prototype.get$name = function() {
   return this._ptr.get$name();
+}
+AnchorElementWrappingImplementation.prototype.get$text = function() {
+  return this._ptr.get$text();
 }
 NodeWrappingImplementation.prototype.set$text = function(value) {
   this._ptr.set$textContent(value);
@@ -3739,6 +3989,7 @@ AreaElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 AreaElementWrappingImplementation._wrap$ctor.prototype = AreaElementWrappingImplementation.prototype;
+AreaElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for MediaElementWrappingImplementation **************
 $inherits(MediaElementWrappingImplementation, ElementWrappingImplementation);
 function MediaElementWrappingImplementation() {}
@@ -3747,6 +3998,7 @@ MediaElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 MediaElementWrappingImplementation._wrap$ctor.prototype = MediaElementWrappingImplementation.prototype;
+MediaElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 MediaElementWrappingImplementation.prototype.get$readyState = function() {
   return this._ptr.get$readyState();
 }
@@ -3758,6 +4010,7 @@ AudioElementWrappingImplementation._wrap$ctor = function(ptr) {
   MediaElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 AudioElementWrappingImplementation._wrap$ctor.prototype = AudioElementWrappingImplementation.prototype;
+AudioElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for EventWrappingImplementation **************
 $inherits(EventWrappingImplementation, DOMWrapperBase);
 function EventWrappingImplementation() {}
@@ -3788,6 +4041,7 @@ BRElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 BRElementWrappingImplementation._wrap$ctor.prototype = BRElementWrappingImplementation.prototype;
+BRElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for BaseElementWrappingImplementation **************
 $inherits(BaseElementWrappingImplementation, ElementWrappingImplementation);
 function BaseElementWrappingImplementation() {}
@@ -3796,6 +4050,7 @@ BaseElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 BaseElementWrappingImplementation._wrap$ctor.prototype = BaseElementWrappingImplementation.prototype;
+BaseElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for ButtonElementWrappingImplementation **************
 $inherits(ButtonElementWrappingImplementation, ElementWrappingImplementation);
 function ButtonElementWrappingImplementation() {}
@@ -3804,6 +4059,7 @@ ButtonElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 ButtonElementWrappingImplementation._wrap$ctor.prototype = ButtonElementWrappingImplementation.prototype;
+ButtonElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 ButtonElementWrappingImplementation.prototype.get$name = function() {
   return this._ptr.get$name();
 }
@@ -3856,6 +4112,7 @@ CanvasElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 CanvasElementWrappingImplementation._wrap$ctor.prototype = CanvasElementWrappingImplementation.prototype;
+CanvasElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 CanvasElementWrappingImplementation.prototype.get$height = function() {
   return this._ptr.get$height();
 }
@@ -3881,6 +4138,7 @@ DListElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 DListElementWrappingImplementation._wrap$ctor.prototype = DListElementWrappingImplementation.prototype;
+DListElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for DataListElementWrappingImplementation **************
 $inherits(DataListElementWrappingImplementation, ElementWrappingImplementation);
 function DataListElementWrappingImplementation() {}
@@ -3889,6 +4147,7 @@ DataListElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 DataListElementWrappingImplementation._wrap$ctor.prototype = DataListElementWrappingImplementation.prototype;
+DataListElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for DetailsElementWrappingImplementation **************
 $inherits(DetailsElementWrappingImplementation, ElementWrappingImplementation);
 function DetailsElementWrappingImplementation() {}
@@ -3897,6 +4156,7 @@ DetailsElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 DetailsElementWrappingImplementation._wrap$ctor.prototype = DetailsElementWrappingImplementation.prototype;
+DetailsElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 DetailsElementWrappingImplementation.prototype.get$open = function() {
   return this._ptr.get$open();
 }
@@ -3917,6 +4177,7 @@ DivElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 DivElementWrappingImplementation._wrap$ctor.prototype = DivElementWrappingImplementation.prototype;
+DivElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for EmbedElementWrappingImplementation **************
 $inherits(EmbedElementWrappingImplementation, ElementWrappingImplementation);
 function EmbedElementWrappingImplementation() {}
@@ -3925,6 +4186,7 @@ EmbedElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 EmbedElementWrappingImplementation._wrap$ctor.prototype = EmbedElementWrappingImplementation.prototype;
+EmbedElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 EmbedElementWrappingImplementation.prototype.get$height = function() {
   return this._ptr.get$height();
 }
@@ -3961,6 +4223,7 @@ FieldSetElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 FieldSetElementWrappingImplementation._wrap$ctor.prototype = FieldSetElementWrappingImplementation.prototype;
+FieldSetElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for FontElementWrappingImplementation **************
 $inherits(FontElementWrappingImplementation, ElementWrappingImplementation);
 function FontElementWrappingImplementation() {}
@@ -3969,6 +4232,7 @@ FontElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 FontElementWrappingImplementation._wrap$ctor.prototype = FontElementWrappingImplementation.prototype;
+FontElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 FontElementWrappingImplementation.prototype.get$color = function() {
   return this._ptr.get$color();
 }
@@ -3980,6 +4244,7 @@ FormElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 FormElementWrappingImplementation._wrap$ctor.prototype = FormElementWrappingImplementation.prototype;
+FormElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 FormElementWrappingImplementation.prototype.get$length = function() {
   return this._ptr.get$length();
 }
@@ -3994,6 +4259,7 @@ HRElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 HRElementWrappingImplementation._wrap$ctor.prototype = HRElementWrappingImplementation.prototype;
+HRElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 HRElementWrappingImplementation.prototype.set$width = function(value) {
   this._ptr.set$width(value);
 }
@@ -4005,6 +4271,7 @@ HeadElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 HeadElementWrappingImplementation._wrap$ctor.prototype = HeadElementWrappingImplementation.prototype;
+HeadElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for HeadingElementWrappingImplementation **************
 $inherits(HeadingElementWrappingImplementation, ElementWrappingImplementation);
 function HeadingElementWrappingImplementation() {}
@@ -4013,6 +4280,7 @@ HeadingElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 HeadingElementWrappingImplementation._wrap$ctor.prototype = HeadingElementWrappingImplementation.prototype;
+HeadingElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for IDBVersionChangeEventWrappingImplementation **************
 $inherits(IDBVersionChangeEventWrappingImplementation, EventWrappingImplementation);
 function IDBVersionChangeEventWrappingImplementation() {}
@@ -4029,6 +4297,7 @@ IFrameElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 IFrameElementWrappingImplementation._wrap$ctor.prototype = IFrameElementWrappingImplementation.prototype;
+IFrameElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 IFrameElementWrappingImplementation.prototype.get$height = function() {
   return this._ptr.get$height();
 }
@@ -4049,6 +4318,7 @@ ImageElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 ImageElementWrappingImplementation._wrap$ctor.prototype = ImageElementWrappingImplementation.prototype;
+ImageElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 ImageElementWrappingImplementation.prototype.get$height = function() {
   return this._ptr.get$height();
 }
@@ -4069,6 +4339,7 @@ InputElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 InputElementWrappingImplementation._wrap$ctor.prototype = InputElementWrappingImplementation.prototype;
+InputElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 InputElementWrappingImplementation.prototype.get$name = function() {
   return this._ptr.get$name();
 }
@@ -4094,6 +4365,7 @@ KeygenElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 KeygenElementWrappingImplementation._wrap$ctor.prototype = KeygenElementWrappingImplementation.prototype;
+KeygenElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 KeygenElementWrappingImplementation.prototype.get$name = function() {
   return this._ptr.get$name();
 }
@@ -4105,6 +4377,7 @@ LIElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 LIElementWrappingImplementation._wrap$ctor.prototype = LIElementWrappingImplementation.prototype;
+LIElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 LIElementWrappingImplementation.prototype.get$value = function() {
   return this._ptr.get$value();
 }
@@ -4119,6 +4392,7 @@ LabelElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 LabelElementWrappingImplementation._wrap$ctor.prototype = LabelElementWrappingImplementation.prototype;
+LabelElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for LegendElementWrappingImplementation **************
 $inherits(LegendElementWrappingImplementation, ElementWrappingImplementation);
 function LegendElementWrappingImplementation() {}
@@ -4127,6 +4401,7 @@ LegendElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 LegendElementWrappingImplementation._wrap$ctor.prototype = LegendElementWrappingImplementation.prototype;
+LegendElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for LinkElementWrappingImplementation **************
 $inherits(LinkElementWrappingImplementation, ElementWrappingImplementation);
 function LinkElementWrappingImplementation() {}
@@ -4135,6 +4410,7 @@ LinkElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 LinkElementWrappingImplementation._wrap$ctor.prototype = LinkElementWrappingImplementation.prototype;
+LinkElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for MapElementWrappingImplementation **************
 $inherits(MapElementWrappingImplementation, ElementWrappingImplementation);
 function MapElementWrappingImplementation() {}
@@ -4143,6 +4419,7 @@ MapElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 MapElementWrappingImplementation._wrap$ctor.prototype = MapElementWrappingImplementation.prototype;
+MapElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 MapElementWrappingImplementation.prototype.get$name = function() {
   return this._ptr.get$name();
 }
@@ -4154,6 +4431,7 @@ MarqueeElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 MarqueeElementWrappingImplementation._wrap$ctor.prototype = MarqueeElementWrappingImplementation.prototype;
+MarqueeElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 MarqueeElementWrappingImplementation.prototype.get$height = function() {
   return this._ptr.get$height();
 }
@@ -4179,6 +4457,7 @@ MenuElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 MenuElementWrappingImplementation._wrap$ctor.prototype = MenuElementWrappingImplementation.prototype;
+MenuElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for MetaElementWrappingImplementation **************
 $inherits(MetaElementWrappingImplementation, ElementWrappingImplementation);
 function MetaElementWrappingImplementation() {}
@@ -4187,6 +4466,7 @@ MetaElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 MetaElementWrappingImplementation._wrap$ctor.prototype = MetaElementWrappingImplementation.prototype;
+MetaElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 MetaElementWrappingImplementation.prototype.get$content = function() {
   return this._ptr.get$content();
 }
@@ -4201,6 +4481,7 @@ MeterElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 MeterElementWrappingImplementation._wrap$ctor.prototype = MeterElementWrappingImplementation.prototype;
+MeterElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 MeterElementWrappingImplementation.prototype.get$value = function() {
   return this._ptr.get$value();
 }
@@ -4215,6 +4496,7 @@ ModElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 ModElementWrappingImplementation._wrap$ctor.prototype = ModElementWrappingImplementation.prototype;
+ModElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for NotationWrappingImplementation **************
 $inherits(NotationWrappingImplementation, NodeWrappingImplementation);
 function NotationWrappingImplementation() {}
@@ -4231,6 +4513,7 @@ OListElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 OListElementWrappingImplementation._wrap$ctor.prototype = OListElementWrappingImplementation.prototype;
+OListElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 OListElementWrappingImplementation.prototype.get$start = function() {
   return this._ptr.get$start();
 }
@@ -4253,6 +4536,7 @@ OptGroupElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 OptGroupElementWrappingImplementation._wrap$ctor.prototype = OptGroupElementWrappingImplementation.prototype;
+OptGroupElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for OptionElementWrappingImplementation **************
 $inherits(OptionElementWrappingImplementation, ElementWrappingImplementation);
 function OptionElementWrappingImplementation() {}
@@ -4261,6 +4545,10 @@ OptionElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 OptionElementWrappingImplementation._wrap$ctor.prototype = OptionElementWrappingImplementation.prototype;
+OptionElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
+OptionElementWrappingImplementation.prototype.get$text = function() {
+  return this._ptr.get$text();
+}
 OptionElementWrappingImplementation.prototype.set$text = function(value) {
   this._ptr.set$text(value);
 }
@@ -4278,6 +4566,7 @@ OutputElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 OutputElementWrappingImplementation._wrap$ctor.prototype = OutputElementWrappingImplementation.prototype;
+OutputElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 OutputElementWrappingImplementation.prototype.get$name = function() {
   return this._ptr.get$name();
 }
@@ -4295,6 +4584,7 @@ ParagraphElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 ParagraphElementWrappingImplementation._wrap$ctor.prototype = ParagraphElementWrappingImplementation.prototype;
+ParagraphElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for ParamElementWrappingImplementation **************
 $inherits(ParamElementWrappingImplementation, ElementWrappingImplementation);
 function ParamElementWrappingImplementation() {}
@@ -4303,6 +4593,7 @@ ParamElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 ParamElementWrappingImplementation._wrap$ctor.prototype = ParamElementWrappingImplementation.prototype;
+ParamElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 ParamElementWrappingImplementation.prototype.get$name = function() {
   return this._ptr.get$name();
 }
@@ -4320,6 +4611,7 @@ PreElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 PreElementWrappingImplementation._wrap$ctor.prototype = PreElementWrappingImplementation.prototype;
+PreElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 PreElementWrappingImplementation.prototype.set$width = function(value) {
   this._ptr.set$width(value);
 }
@@ -4339,6 +4631,7 @@ ProgressElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 ProgressElementWrappingImplementation._wrap$ctor.prototype = ProgressElementWrappingImplementation.prototype;
+ProgressElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 ProgressElementWrappingImplementation.prototype.get$value = function() {
   return this._ptr.get$value();
 }
@@ -4353,6 +4646,7 @@ QuoteElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 QuoteElementWrappingImplementation._wrap$ctor.prototype = QuoteElementWrappingImplementation.prototype;
+QuoteElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGElementWrappingImplementation **************
 $inherits(SVGElementWrappingImplementation, ElementWrappingImplementation);
 function SVGElementWrappingImplementation() {}
@@ -4361,6 +4655,23 @@ SVGElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGElementWrappingImplementation._wrap$ctor.prototype = SVGElementWrappingImplementation.prototype;
+SVGElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
+SVGElementWrappingImplementation.prototype.get$elements = function() {
+  if (this._elements == null) {
+    this._elements = new FilteredElementList(this);
+  }
+  return this._elements;
+}
+SVGElementWrappingImplementation.prototype.set$elements = function(value) {
+  var elements = this.get$elements();
+  elements.clear();
+  elements.addAll(value);
+}
+SVGElementWrappingImplementation.prototype.set$innerHTML = function(svg) {
+  var container = ElementWrappingImplementation.ElementWrappingImplementation$tag$factory("div");
+  container.set$innerHTML(('<svg version="1.1">' + svg + '</svg>'));
+  this.set$elements(container.get$elements().get$first().get$elements());
+}
 // ********** Code for SVGAElementWrappingImplementation **************
 $inherits(SVGAElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGAElementWrappingImplementation() {}
@@ -4369,6 +4680,7 @@ SVGAElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGAElementWrappingImplementation._wrap$ctor.prototype = SVGAElementWrappingImplementation.prototype;
+SVGAElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGAElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -4380,6 +4692,7 @@ SVGAltGlyphDefElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGAltGlyphDefElementWrappingImplementation._wrap$ctor.prototype = SVGAltGlyphDefElementWrappingImplementation.prototype;
+SVGAltGlyphDefElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGTextContentElementWrappingImplementation **************
 $inherits(SVGTextContentElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGTextContentElementWrappingImplementation() {}
@@ -4388,6 +4701,7 @@ SVGTextContentElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGTextContentElementWrappingImplementation._wrap$ctor.prototype = SVGTextContentElementWrappingImplementation.prototype;
+SVGTextContentElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGTextContentElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -4399,6 +4713,7 @@ SVGTextPositioningElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGTextContentElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGTextPositioningElementWrappingImplementation._wrap$ctor.prototype = SVGTextPositioningElementWrappingImplementation.prototype;
+SVGTextPositioningElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGAltGlyphElementWrappingImplementation **************
 $inherits(SVGAltGlyphElementWrappingImplementation, SVGTextPositioningElementWrappingImplementation);
 function SVGAltGlyphElementWrappingImplementation() {}
@@ -4407,6 +4722,7 @@ SVGAltGlyphElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGTextPositioningElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGAltGlyphElementWrappingImplementation._wrap$ctor.prototype = SVGAltGlyphElementWrappingImplementation.prototype;
+SVGAltGlyphElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGAltGlyphItemElementWrappingImplementation **************
 $inherits(SVGAltGlyphItemElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGAltGlyphItemElementWrappingImplementation() {}
@@ -4415,6 +4731,7 @@ SVGAltGlyphItemElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGAltGlyphItemElementWrappingImplementation._wrap$ctor.prototype = SVGAltGlyphItemElementWrappingImplementation.prototype;
+SVGAltGlyphItemElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGAnimationElementWrappingImplementation **************
 $inherits(SVGAnimationElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGAnimationElementWrappingImplementation() {}
@@ -4423,6 +4740,7 @@ SVGAnimationElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGAnimationElementWrappingImplementation._wrap$ctor.prototype = SVGAnimationElementWrappingImplementation.prototype;
+SVGAnimationElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGAnimateColorElementWrappingImplementation **************
 $inherits(SVGAnimateColorElementWrappingImplementation, SVGAnimationElementWrappingImplementation);
 function SVGAnimateColorElementWrappingImplementation() {}
@@ -4431,6 +4749,7 @@ SVGAnimateColorElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGAnimationElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGAnimateColorElementWrappingImplementation._wrap$ctor.prototype = SVGAnimateColorElementWrappingImplementation.prototype;
+SVGAnimateColorElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGAnimateElementWrappingImplementation **************
 $inherits(SVGAnimateElementWrappingImplementation, SVGAnimationElementWrappingImplementation);
 function SVGAnimateElementWrappingImplementation() {}
@@ -4439,6 +4758,7 @@ SVGAnimateElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGAnimationElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGAnimateElementWrappingImplementation._wrap$ctor.prototype = SVGAnimateElementWrappingImplementation.prototype;
+SVGAnimateElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGAnimateMotionElementWrappingImplementation **************
 $inherits(SVGAnimateMotionElementWrappingImplementation, SVGAnimationElementWrappingImplementation);
 function SVGAnimateMotionElementWrappingImplementation() {}
@@ -4447,6 +4767,7 @@ SVGAnimateMotionElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGAnimationElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGAnimateMotionElementWrappingImplementation._wrap$ctor.prototype = SVGAnimateMotionElementWrappingImplementation.prototype;
+SVGAnimateMotionElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGAnimateTransformElementWrappingImplementation **************
 $inherits(SVGAnimateTransformElementWrappingImplementation, SVGAnimationElementWrappingImplementation);
 function SVGAnimateTransformElementWrappingImplementation() {}
@@ -4455,6 +4776,7 @@ SVGAnimateTransformElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGAnimationElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGAnimateTransformElementWrappingImplementation._wrap$ctor.prototype = SVGAnimateTransformElementWrappingImplementation.prototype;
+SVGAnimateTransformElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGAnimatedLengthWrappingImplementation **************
 $inherits(SVGAnimatedLengthWrappingImplementation, DOMWrapperBase);
 function SVGAnimatedLengthWrappingImplementation() {}
@@ -4471,6 +4793,7 @@ SVGCircleElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGCircleElementWrappingImplementation._wrap$ctor.prototype = SVGCircleElementWrappingImplementation.prototype;
+SVGCircleElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGCircleElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -4482,6 +4805,7 @@ SVGClipPathElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGClipPathElementWrappingImplementation._wrap$ctor.prototype = SVGClipPathElementWrappingImplementation.prototype;
+SVGClipPathElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGClipPathElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -4493,6 +4817,7 @@ SVGComponentTransferFunctionElementWrappingImplementation._wrap$ctor = function(
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGComponentTransferFunctionElementWrappingImplementation._wrap$ctor.prototype = SVGComponentTransferFunctionElementWrappingImplementation.prototype;
+SVGComponentTransferFunctionElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGCursorElementWrappingImplementation **************
 $inherits(SVGCursorElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGCursorElementWrappingImplementation() {}
@@ -4501,6 +4826,7 @@ SVGCursorElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGCursorElementWrappingImplementation._wrap$ctor.prototype = SVGCursorElementWrappingImplementation.prototype;
+SVGCursorElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGDefsElementWrappingImplementation **************
 $inherits(SVGDefsElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGDefsElementWrappingImplementation() {}
@@ -4509,6 +4835,7 @@ SVGDefsElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGDefsElementWrappingImplementation._wrap$ctor.prototype = SVGDefsElementWrappingImplementation.prototype;
+SVGDefsElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGDefsElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -4520,6 +4847,7 @@ SVGDescElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGDescElementWrappingImplementation._wrap$ctor.prototype = SVGDescElementWrappingImplementation.prototype;
+SVGDescElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGDescElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -4531,6 +4859,7 @@ SVGEllipseElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGEllipseElementWrappingImplementation._wrap$ctor.prototype = SVGEllipseElementWrappingImplementation.prototype;
+SVGEllipseElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGEllipseElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -4542,6 +4871,7 @@ SVGFEBlendElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEBlendElementWrappingImplementation._wrap$ctor.prototype = SVGFEBlendElementWrappingImplementation.prototype;
+SVGFEBlendElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGFEBlendElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4556,6 +4886,7 @@ SVGFEColorMatrixElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEColorMatrixElementWrappingImplementation._wrap$ctor.prototype = SVGFEColorMatrixElementWrappingImplementation.prototype;
+SVGFEColorMatrixElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGFEColorMatrixElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4570,6 +4901,7 @@ SVGFEComponentTransferElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEComponentTransferElementWrappingImplementation._wrap$ctor.prototype = SVGFEComponentTransferElementWrappingImplementation.prototype;
+SVGFEComponentTransferElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGFEComponentTransferElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4584,6 +4916,7 @@ SVGFEConvolveMatrixElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEConvolveMatrixElementWrappingImplementation._wrap$ctor.prototype = SVGFEConvolveMatrixElementWrappingImplementation.prototype;
+SVGFEConvolveMatrixElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGFEConvolveMatrixElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4598,6 +4931,7 @@ SVGFEDiffuseLightingElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEDiffuseLightingElementWrappingImplementation._wrap$ctor.prototype = SVGFEDiffuseLightingElementWrappingImplementation.prototype;
+SVGFEDiffuseLightingElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGFEDiffuseLightingElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4612,6 +4946,7 @@ SVGFEDisplacementMapElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEDisplacementMapElementWrappingImplementation._wrap$ctor.prototype = SVGFEDisplacementMapElementWrappingImplementation.prototype;
+SVGFEDisplacementMapElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGFEDisplacementMapElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4626,6 +4961,7 @@ SVGFEDistantLightElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEDistantLightElementWrappingImplementation._wrap$ctor.prototype = SVGFEDistantLightElementWrappingImplementation.prototype;
+SVGFEDistantLightElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGFEDropShadowElementWrappingImplementation **************
 $inherits(SVGFEDropShadowElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGFEDropShadowElementWrappingImplementation() {}
@@ -4634,6 +4970,7 @@ SVGFEDropShadowElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEDropShadowElementWrappingImplementation._wrap$ctor.prototype = SVGFEDropShadowElementWrappingImplementation.prototype;
+SVGFEDropShadowElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGFEDropShadowElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4648,6 +4985,7 @@ SVGFEFloodElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEFloodElementWrappingImplementation._wrap$ctor.prototype = SVGFEFloodElementWrappingImplementation.prototype;
+SVGFEFloodElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGFEFloodElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4662,6 +5000,7 @@ SVGFEFuncAElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGComponentTransferFunctionElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEFuncAElementWrappingImplementation._wrap$ctor.prototype = SVGFEFuncAElementWrappingImplementation.prototype;
+SVGFEFuncAElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGFEFuncBElementWrappingImplementation **************
 $inherits(SVGFEFuncBElementWrappingImplementation, SVGComponentTransferFunctionElementWrappingImplementation);
 function SVGFEFuncBElementWrappingImplementation() {}
@@ -4670,6 +5009,7 @@ SVGFEFuncBElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGComponentTransferFunctionElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEFuncBElementWrappingImplementation._wrap$ctor.prototype = SVGFEFuncBElementWrappingImplementation.prototype;
+SVGFEFuncBElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGFEFuncGElementWrappingImplementation **************
 $inherits(SVGFEFuncGElementWrappingImplementation, SVGComponentTransferFunctionElementWrappingImplementation);
 function SVGFEFuncGElementWrappingImplementation() {}
@@ -4678,6 +5018,7 @@ SVGFEFuncGElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGComponentTransferFunctionElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEFuncGElementWrappingImplementation._wrap$ctor.prototype = SVGFEFuncGElementWrappingImplementation.prototype;
+SVGFEFuncGElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGFEFuncRElementWrappingImplementation **************
 $inherits(SVGFEFuncRElementWrappingImplementation, SVGComponentTransferFunctionElementWrappingImplementation);
 function SVGFEFuncRElementWrappingImplementation() {}
@@ -4686,6 +5027,7 @@ SVGFEFuncRElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGComponentTransferFunctionElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEFuncRElementWrappingImplementation._wrap$ctor.prototype = SVGFEFuncRElementWrappingImplementation.prototype;
+SVGFEFuncRElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGFEGaussianBlurElementWrappingImplementation **************
 $inherits(SVGFEGaussianBlurElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGFEGaussianBlurElementWrappingImplementation() {}
@@ -4694,6 +5036,7 @@ SVGFEGaussianBlurElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEGaussianBlurElementWrappingImplementation._wrap$ctor.prototype = SVGFEGaussianBlurElementWrappingImplementation.prototype;
+SVGFEGaussianBlurElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGFEGaussianBlurElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4708,6 +5051,7 @@ SVGFEImageElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEImageElementWrappingImplementation._wrap$ctor.prototype = SVGFEImageElementWrappingImplementation.prototype;
+SVGFEImageElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGFEImageElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4722,6 +5066,7 @@ SVGFEMergeElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEMergeElementWrappingImplementation._wrap$ctor.prototype = SVGFEMergeElementWrappingImplementation.prototype;
+SVGFEMergeElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGFEMergeElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4736,6 +5081,7 @@ SVGFEMergeNodeElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEMergeNodeElementWrappingImplementation._wrap$ctor.prototype = SVGFEMergeNodeElementWrappingImplementation.prototype;
+SVGFEMergeNodeElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGFEOffsetElementWrappingImplementation **************
 $inherits(SVGFEOffsetElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGFEOffsetElementWrappingImplementation() {}
@@ -4744,6 +5090,7 @@ SVGFEOffsetElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEOffsetElementWrappingImplementation._wrap$ctor.prototype = SVGFEOffsetElementWrappingImplementation.prototype;
+SVGFEOffsetElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGFEOffsetElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4758,6 +5105,7 @@ SVGFEPointLightElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFEPointLightElementWrappingImplementation._wrap$ctor.prototype = SVGFEPointLightElementWrappingImplementation.prototype;
+SVGFEPointLightElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGFESpecularLightingElementWrappingImplementation **************
 $inherits(SVGFESpecularLightingElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGFESpecularLightingElementWrappingImplementation() {}
@@ -4766,6 +5114,7 @@ SVGFESpecularLightingElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFESpecularLightingElementWrappingImplementation._wrap$ctor.prototype = SVGFESpecularLightingElementWrappingImplementation.prototype;
+SVGFESpecularLightingElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGFESpecularLightingElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4780,6 +5129,7 @@ SVGFESpotLightElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFESpotLightElementWrappingImplementation._wrap$ctor.prototype = SVGFESpotLightElementWrappingImplementation.prototype;
+SVGFESpotLightElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGFETileElementWrappingImplementation **************
 $inherits(SVGFETileElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGFETileElementWrappingImplementation() {}
@@ -4788,6 +5138,7 @@ SVGFETileElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFETileElementWrappingImplementation._wrap$ctor.prototype = SVGFETileElementWrappingImplementation.prototype;
+SVGFETileElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGFETileElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4802,6 +5153,7 @@ SVGFETurbulenceElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFETurbulenceElementWrappingImplementation._wrap$ctor.prototype = SVGFETurbulenceElementWrappingImplementation.prototype;
+SVGFETurbulenceElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGFETurbulenceElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4816,6 +5168,7 @@ SVGFilterElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFilterElementWrappingImplementation._wrap$ctor.prototype = SVGFilterElementWrappingImplementation.prototype;
+SVGFilterElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGFilterElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4830,6 +5183,7 @@ SVGFontElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFontElementWrappingImplementation._wrap$ctor.prototype = SVGFontElementWrappingImplementation.prototype;
+SVGFontElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGFontFaceElementWrappingImplementation **************
 $inherits(SVGFontFaceElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGFontFaceElementWrappingImplementation() {}
@@ -4838,6 +5192,7 @@ SVGFontFaceElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFontFaceElementWrappingImplementation._wrap$ctor.prototype = SVGFontFaceElementWrappingImplementation.prototype;
+SVGFontFaceElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGFontFaceFormatElementWrappingImplementation **************
 $inherits(SVGFontFaceFormatElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGFontFaceFormatElementWrappingImplementation() {}
@@ -4846,6 +5201,7 @@ SVGFontFaceFormatElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFontFaceFormatElementWrappingImplementation._wrap$ctor.prototype = SVGFontFaceFormatElementWrappingImplementation.prototype;
+SVGFontFaceFormatElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGFontFaceNameElementWrappingImplementation **************
 $inherits(SVGFontFaceNameElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGFontFaceNameElementWrappingImplementation() {}
@@ -4854,6 +5210,7 @@ SVGFontFaceNameElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFontFaceNameElementWrappingImplementation._wrap$ctor.prototype = SVGFontFaceNameElementWrappingImplementation.prototype;
+SVGFontFaceNameElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGFontFaceSrcElementWrappingImplementation **************
 $inherits(SVGFontFaceSrcElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGFontFaceSrcElementWrappingImplementation() {}
@@ -4862,6 +5219,7 @@ SVGFontFaceSrcElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFontFaceSrcElementWrappingImplementation._wrap$ctor.prototype = SVGFontFaceSrcElementWrappingImplementation.prototype;
+SVGFontFaceSrcElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGFontFaceUriElementWrappingImplementation **************
 $inherits(SVGFontFaceUriElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGFontFaceUriElementWrappingImplementation() {}
@@ -4870,6 +5228,7 @@ SVGFontFaceUriElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGFontFaceUriElementWrappingImplementation._wrap$ctor.prototype = SVGFontFaceUriElementWrappingImplementation.prototype;
+SVGFontFaceUriElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGForeignObjectElementWrappingImplementation **************
 $inherits(SVGForeignObjectElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGForeignObjectElementWrappingImplementation() {}
@@ -4878,6 +5237,7 @@ SVGForeignObjectElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGForeignObjectElementWrappingImplementation._wrap$ctor.prototype = SVGForeignObjectElementWrappingImplementation.prototype;
+SVGForeignObjectElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGForeignObjectElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4892,6 +5252,7 @@ SVGGElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGGElementWrappingImplementation._wrap$ctor.prototype = SVGGElementWrappingImplementation.prototype;
+SVGGElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGGElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -4903,6 +5264,7 @@ SVGGlyphElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGGlyphElementWrappingImplementation._wrap$ctor.prototype = SVGGlyphElementWrappingImplementation.prototype;
+SVGGlyphElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGGlyphRefElementWrappingImplementation **************
 $inherits(SVGGlyphRefElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGGlyphRefElementWrappingImplementation() {}
@@ -4911,6 +5273,7 @@ SVGGlyphRefElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGGlyphRefElementWrappingImplementation._wrap$ctor.prototype = SVGGlyphRefElementWrappingImplementation.prototype;
+SVGGlyphRefElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGGlyphRefElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -4922,6 +5285,7 @@ SVGGradientElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGGradientElementWrappingImplementation._wrap$ctor.prototype = SVGGradientElementWrappingImplementation.prototype;
+SVGGradientElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGGradientElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -4933,6 +5297,7 @@ SVGHKernElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGHKernElementWrappingImplementation._wrap$ctor.prototype = SVGHKernElementWrappingImplementation.prototype;
+SVGHKernElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGImageElementWrappingImplementation **************
 $inherits(SVGImageElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGImageElementWrappingImplementation() {}
@@ -4941,6 +5306,7 @@ SVGImageElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGImageElementWrappingImplementation._wrap$ctor.prototype = SVGImageElementWrappingImplementation.prototype;
+SVGImageElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGImageElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -4955,6 +5321,7 @@ SVGLineElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGLineElementWrappingImplementation._wrap$ctor.prototype = SVGLineElementWrappingImplementation.prototype;
+SVGLineElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGLineElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -4966,6 +5333,7 @@ SVGLinearGradientElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGGradientElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGLinearGradientElementWrappingImplementation._wrap$ctor.prototype = SVGLinearGradientElementWrappingImplementation.prototype;
+SVGLinearGradientElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGMPathElementWrappingImplementation **************
 $inherits(SVGMPathElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGMPathElementWrappingImplementation() {}
@@ -4974,6 +5342,7 @@ SVGMPathElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGMPathElementWrappingImplementation._wrap$ctor.prototype = SVGMPathElementWrappingImplementation.prototype;
+SVGMPathElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGMarkerElementWrappingImplementation **************
 $inherits(SVGMarkerElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGMarkerElementWrappingImplementation() {}
@@ -4982,6 +5351,7 @@ SVGMarkerElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGMarkerElementWrappingImplementation._wrap$ctor.prototype = SVGMarkerElementWrappingImplementation.prototype;
+SVGMarkerElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGMarkerElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -4993,6 +5363,7 @@ SVGMaskElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGMaskElementWrappingImplementation._wrap$ctor.prototype = SVGMaskElementWrappingImplementation.prototype;
+SVGMaskElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGMaskElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -5007,6 +5378,7 @@ SVGMetadataElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGMetadataElementWrappingImplementation._wrap$ctor.prototype = SVGMetadataElementWrappingImplementation.prototype;
+SVGMetadataElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGMissingGlyphElementWrappingImplementation **************
 $inherits(SVGMissingGlyphElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGMissingGlyphElementWrappingImplementation() {}
@@ -5015,6 +5387,7 @@ SVGMissingGlyphElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGMissingGlyphElementWrappingImplementation._wrap$ctor.prototype = SVGMissingGlyphElementWrappingImplementation.prototype;
+SVGMissingGlyphElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGPathElementWrappingImplementation **************
 $inherits(SVGPathElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGPathElementWrappingImplementation() {}
@@ -5023,6 +5396,7 @@ SVGPathElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGPathElementWrappingImplementation._wrap$ctor.prototype = SVGPathElementWrappingImplementation.prototype;
+SVGPathElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGPathElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -5034,6 +5408,7 @@ SVGPatternElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGPatternElementWrappingImplementation._wrap$ctor.prototype = SVGPatternElementWrappingImplementation.prototype;
+SVGPatternElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGPatternElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -5048,6 +5423,7 @@ SVGPolygonElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGPolygonElementWrappingImplementation._wrap$ctor.prototype = SVGPolygonElementWrappingImplementation.prototype;
+SVGPolygonElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGPolygonElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -5059,6 +5435,7 @@ SVGPolylineElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGPolylineElementWrappingImplementation._wrap$ctor.prototype = SVGPolylineElementWrappingImplementation.prototype;
+SVGPolylineElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGPolylineElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -5070,6 +5447,7 @@ SVGRadialGradientElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGGradientElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGRadialGradientElementWrappingImplementation._wrap$ctor.prototype = SVGRadialGradientElementWrappingImplementation.prototype;
+SVGRadialGradientElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGRectElementWrappingImplementation **************
 $inherits(SVGRectElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGRectElementWrappingImplementation() {}
@@ -5078,6 +5456,7 @@ SVGRectElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGRectElementWrappingImplementation._wrap$ctor.prototype = SVGRectElementWrappingImplementation.prototype;
+SVGRectElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGRectElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -5092,6 +5471,7 @@ SVGScriptElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGScriptElementWrappingImplementation._wrap$ctor.prototype = SVGScriptElementWrappingImplementation.prototype;
+SVGScriptElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGSetElementWrappingImplementation **************
 $inherits(SVGSetElementWrappingImplementation, SVGAnimationElementWrappingImplementation);
 function SVGSetElementWrappingImplementation() {}
@@ -5100,6 +5480,7 @@ SVGSetElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGAnimationElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGSetElementWrappingImplementation._wrap$ctor.prototype = SVGSetElementWrappingImplementation.prototype;
+SVGSetElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGStopElementWrappingImplementation **************
 $inherits(SVGStopElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGStopElementWrappingImplementation() {}
@@ -5108,6 +5489,7 @@ SVGStopElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGStopElementWrappingImplementation._wrap$ctor.prototype = SVGStopElementWrappingImplementation.prototype;
+SVGStopElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGStopElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -5119,6 +5501,7 @@ SVGStyleElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGStyleElementWrappingImplementation._wrap$ctor.prototype = SVGStyleElementWrappingImplementation.prototype;
+SVGStyleElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGSwitchElementWrappingImplementation **************
 $inherits(SVGSwitchElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGSwitchElementWrappingImplementation() {}
@@ -5127,6 +5510,7 @@ SVGSwitchElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGSwitchElementWrappingImplementation._wrap$ctor.prototype = SVGSwitchElementWrappingImplementation.prototype;
+SVGSwitchElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGSwitchElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -5138,6 +5522,7 @@ SVGSymbolElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGSymbolElementWrappingImplementation._wrap$ctor.prototype = SVGSymbolElementWrappingImplementation.prototype;
+SVGSymbolElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGSymbolElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -5149,6 +5534,7 @@ SVGTRefElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGTextPositioningElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGTRefElementWrappingImplementation._wrap$ctor.prototype = SVGTRefElementWrappingImplementation.prototype;
+SVGTRefElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGTSpanElementWrappingImplementation **************
 $inherits(SVGTSpanElementWrappingImplementation, SVGTextPositioningElementWrappingImplementation);
 function SVGTSpanElementWrappingImplementation() {}
@@ -5157,6 +5543,7 @@ SVGTSpanElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGTextPositioningElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGTSpanElementWrappingImplementation._wrap$ctor.prototype = SVGTSpanElementWrappingImplementation.prototype;
+SVGTSpanElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGTextElementWrappingImplementation **************
 $inherits(SVGTextElementWrappingImplementation, SVGTextPositioningElementWrappingImplementation);
 function SVGTextElementWrappingImplementation() {}
@@ -5165,6 +5552,7 @@ SVGTextElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGTextPositioningElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGTextElementWrappingImplementation._wrap$ctor.prototype = SVGTextElementWrappingImplementation.prototype;
+SVGTextElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGTextPathElementWrappingImplementation **************
 $inherits(SVGTextPathElementWrappingImplementation, SVGTextContentElementWrappingImplementation);
 function SVGTextPathElementWrappingImplementation() {}
@@ -5173,6 +5561,7 @@ SVGTextPathElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGTextContentElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGTextPathElementWrappingImplementation._wrap$ctor.prototype = SVGTextPathElementWrappingImplementation.prototype;
+SVGTextPathElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGTitleElementWrappingImplementation **************
 $inherits(SVGTitleElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGTitleElementWrappingImplementation() {}
@@ -5181,6 +5570,7 @@ SVGTitleElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGTitleElementWrappingImplementation._wrap$ctor.prototype = SVGTitleElementWrappingImplementation.prototype;
+SVGTitleElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGTitleElementWrappingImplementation.prototype.get$style = function() {
   return LevelDom.wrapCSSStyleDeclaration(this._ptr.get$style());
 }
@@ -5192,6 +5582,7 @@ SVGUseElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGUseElementWrappingImplementation._wrap$ctor.prototype = SVGUseElementWrappingImplementation.prototype;
+SVGUseElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGUseElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -5206,6 +5597,7 @@ SVGVKernElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGVKernElementWrappingImplementation._wrap$ctor.prototype = SVGVKernElementWrappingImplementation.prototype;
+SVGVKernElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGViewElementWrappingImplementation **************
 $inherits(SVGViewElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGViewElementWrappingImplementation() {}
@@ -5214,6 +5606,7 @@ SVGViewElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGViewElementWrappingImplementation._wrap$ctor.prototype = SVGViewElementWrappingImplementation.prototype;
+SVGViewElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for UIEventWrappingImplementation **************
 $inherits(UIEventWrappingImplementation, EventWrappingImplementation);
 function UIEventWrappingImplementation() {}
@@ -5244,6 +5637,10 @@ ScriptElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 ScriptElementWrappingImplementation._wrap$ctor.prototype = ScriptElementWrappingImplementation.prototype;
+ScriptElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
+ScriptElementWrappingImplementation.prototype.get$text = function() {
+  return this._ptr.get$text();
+}
 ScriptElementWrappingImplementation.prototype.set$text = function(value) {
   this._ptr.set$text(value);
 }
@@ -5255,6 +5652,7 @@ SelectElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SelectElementWrappingImplementation._wrap$ctor.prototype = SelectElementWrappingImplementation.prototype;
+SelectElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SelectElementWrappingImplementation.prototype.get$length = function() {
   return this._ptr.get$length();
 }
@@ -5279,6 +5677,7 @@ SourceElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SourceElementWrappingImplementation._wrap$ctor.prototype = SourceElementWrappingImplementation.prototype;
+SourceElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SpanElementWrappingImplementation **************
 $inherits(SpanElementWrappingImplementation, ElementWrappingImplementation);
 function SpanElementWrappingImplementation() {}
@@ -5287,6 +5686,7 @@ SpanElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SpanElementWrappingImplementation._wrap$ctor.prototype = SpanElementWrappingImplementation.prototype;
+SpanElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SpeechInputEventWrappingImplementation **************
 $inherits(SpeechInputEventWrappingImplementation, EventWrappingImplementation);
 function SpeechInputEventWrappingImplementation() {}
@@ -5303,6 +5703,7 @@ StyleElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 StyleElementWrappingImplementation._wrap$ctor.prototype = StyleElementWrappingImplementation.prototype;
+StyleElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for TableCaptionElementWrappingImplementation **************
 $inherits(TableCaptionElementWrappingImplementation, ElementWrappingImplementation);
 function TableCaptionElementWrappingImplementation() {}
@@ -5311,6 +5712,7 @@ TableCaptionElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 TableCaptionElementWrappingImplementation._wrap$ctor.prototype = TableCaptionElementWrappingImplementation.prototype;
+TableCaptionElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for TableCellElementWrappingImplementation **************
 $inherits(TableCellElementWrappingImplementation, ElementWrappingImplementation);
 function TableCellElementWrappingImplementation() {}
@@ -5319,6 +5721,7 @@ TableCellElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 TableCellElementWrappingImplementation._wrap$ctor.prototype = TableCellElementWrappingImplementation.prototype;
+TableCellElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 TableCellElementWrappingImplementation.prototype.get$height = function() {
   return this._ptr.get$height();
 }
@@ -5336,6 +5739,7 @@ TableColElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 TableColElementWrappingImplementation._wrap$ctor.prototype = TableColElementWrappingImplementation.prototype;
+TableColElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 TableColElementWrappingImplementation.prototype.set$width = function(value) {
   this._ptr.set$width(value);
 }
@@ -5347,6 +5751,7 @@ TableElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 TableElementWrappingImplementation._wrap$ctor.prototype = TableElementWrappingImplementation.prototype;
+TableElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 TableElementWrappingImplementation.prototype.set$width = function(value) {
   this._ptr.set$width(value);
 }
@@ -5358,6 +5763,7 @@ TableRowElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 TableRowElementWrappingImplementation._wrap$ctor.prototype = TableRowElementWrappingImplementation.prototype;
+TableRowElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for TableSectionElementWrappingImplementation **************
 $inherits(TableSectionElementWrappingImplementation, ElementWrappingImplementation);
 function TableSectionElementWrappingImplementation() {}
@@ -5366,6 +5772,7 @@ TableSectionElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 TableSectionElementWrappingImplementation._wrap$ctor.prototype = TableSectionElementWrappingImplementation.prototype;
+TableSectionElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for TextAreaElementWrappingImplementation **************
 $inherits(TextAreaElementWrappingImplementation, ElementWrappingImplementation);
 function TextAreaElementWrappingImplementation() {}
@@ -5374,6 +5781,7 @@ TextAreaElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 TextAreaElementWrappingImplementation._wrap$ctor.prototype = TextAreaElementWrappingImplementation.prototype;
+TextAreaElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 TextAreaElementWrappingImplementation.prototype.get$name = function() {
   return this._ptr.get$name();
 }
@@ -5391,6 +5799,10 @@ TitleElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 TitleElementWrappingImplementation._wrap$ctor.prototype = TitleElementWrappingImplementation.prototype;
+TitleElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
+TitleElementWrappingImplementation.prototype.get$text = function() {
+  return this._ptr.get$text();
+}
 TitleElementWrappingImplementation.prototype.set$text = function(value) {
   this._ptr.set$text(value);
 }
@@ -5402,6 +5814,7 @@ TrackElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 TrackElementWrappingImplementation._wrap$ctor.prototype = TrackElementWrappingImplementation.prototype;
+TrackElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for UListElementWrappingImplementation **************
 $inherits(UListElementWrappingImplementation, ElementWrappingImplementation);
 function UListElementWrappingImplementation() {}
@@ -5410,6 +5823,7 @@ UListElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 UListElementWrappingImplementation._wrap$ctor.prototype = UListElementWrappingImplementation.prototype;
+UListElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for UnknownElementWrappingImplementation **************
 $inherits(UnknownElementWrappingImplementation, ElementWrappingImplementation);
 function UnknownElementWrappingImplementation() {}
@@ -5418,6 +5832,7 @@ UnknownElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 UnknownElementWrappingImplementation._wrap$ctor.prototype = UnknownElementWrappingImplementation.prototype;
+UnknownElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for VideoElementWrappingImplementation **************
 $inherits(VideoElementWrappingImplementation, MediaElementWrappingImplementation);
 function VideoElementWrappingImplementation() {}
@@ -5426,6 +5841,7 @@ VideoElementWrappingImplementation._wrap$ctor = function(ptr) {
   MediaElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 VideoElementWrappingImplementation._wrap$ctor.prototype = VideoElementWrappingImplementation.prototype;
+VideoElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 VideoElementWrappingImplementation.prototype.get$height = function() {
   return this._ptr.get$height();
 }
@@ -6992,6 +7408,7 @@ BodyElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 BodyElementWrappingImplementation._wrap$ctor.prototype = BodyElementWrappingImplementation.prototype;
+BodyElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 BodyElementWrappingImplementation.prototype.get$on = function() {
   if (this._on == null) {
     this._on = new BodyElementEventsImplementation._wrap$ctor(this._ptr);
@@ -7191,6 +7608,89 @@ DeviceOrientationEventWrappingImplementation._wrap$ctor = function(ptr) {
   EventWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 DeviceOrientationEventWrappingImplementation._wrap$ctor.prototype = DeviceOrientationEventWrappingImplementation.prototype;
+// ********** Code for FilteredElementList **************
+function FilteredElementList(node) {
+  this._childNodes = node.get$nodes();
+  this._node = node;
+  // Initializers done
+}
+FilteredElementList.prototype.is$List = function(){return true};
+FilteredElementList.prototype.get$_filtered = function() {
+  return ListFactory.ListFactory$from$factory(this._childNodes.filter((function (n) {
+    return !!(n && n.is$html_html_Element());
+  })
+  ));
+}
+FilteredElementList.prototype.get$first = function() {
+  var $$list = this._childNodes;
+  for (var $$i = this._childNodes.iterator(); $$i.hasNext(); ) {
+    var node = $$i.next();
+    if (!!(node && node.is$html_html_Element())) {
+      return node;
+    }
+  }
+  return null;
+}
+FilteredElementList.prototype.forEach = function(f) {
+  this.get$_filtered().forEach(f);
+}
+FilteredElementList.prototype.$setindex = function(index, value) {
+  this.$index(index).replaceWith(value);
+}
+FilteredElementList.prototype.add = function(value) {
+  this._childNodes.add(value);
+}
+FilteredElementList.prototype.get$add = function() {
+  return this.add.bind(this);
+}
+FilteredElementList.prototype.addAll = function(collection) {
+  collection.forEach(this.get$add());
+}
+FilteredElementList.prototype.removeRange = function(start, length) {
+  this.get$_filtered().getRange(start, length).forEach$1((function (el) {
+    return el.remove$0();
+  })
+  );
+}
+FilteredElementList.prototype.clear = function() {
+  this._childNodes.clear();
+}
+FilteredElementList.prototype.removeLast = function() {
+  var last_ = this.last();
+  if (last_ != null) {
+    last_.remove$0();
+  }
+  return last_;
+}
+FilteredElementList.prototype.filter = function(f) {
+  return this.get$_filtered().filter(f);
+}
+FilteredElementList.prototype.isEmpty = function() {
+  return this.get$_filtered().isEmpty();
+}
+FilteredElementList.prototype.get$length = function() {
+  return this.get$_filtered().get$length();
+}
+FilteredElementList.prototype.$index = function(index) {
+  return this.get$_filtered().$index(index);
+}
+FilteredElementList.prototype.iterator = function() {
+  return this.get$_filtered().iterator();
+}
+FilteredElementList.prototype.getRange = function(start, length) {
+  return this.get$_filtered().getRange(start, length);
+}
+FilteredElementList.prototype.indexOf = function(element, start) {
+  return this.get$_filtered().indexOf(element, start);
+}
+FilteredElementList.prototype.last = function() {
+  return this.get$_filtered().last();
+}
+FilteredElementList.prototype.add$1 = FilteredElementList.prototype.add;
+FilteredElementList.prototype.forEach$1 = function($0) {
+  return this.forEach(to$call$1($0));
+};
+FilteredElementList.prototype.iterator$0 = FilteredElementList.prototype.iterator;
 // ********** Code for EmptyStyleDeclaration **************
 $inherits(EmptyStyleDeclaration, CSSStyleDeclarationWrappingImplementation);
 function EmptyStyleDeclaration() {
@@ -7209,6 +7709,20 @@ DocumentFragmentWrappingImplementation._wrap$ctor = function(ptr) {
   NodeWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 DocumentFragmentWrappingImplementation._wrap$ctor.prototype = DocumentFragmentWrappingImplementation.prototype;
+DocumentFragmentWrappingImplementation.prototype.is$html_html_Element = function(){return true};
+DocumentFragmentWrappingImplementation.prototype.get$elements = function() {
+  if (this._elements == null) {
+    this._elements = new FilteredElementList(this);
+  }
+  return this._elements;
+}
+DocumentFragmentWrappingImplementation.prototype.set$innerHTML = function(value) {
+  this.get$nodes().clear();
+  var e = ElementWrappingImplementation.ElementWrappingImplementation$tag$factory("div");
+  e.set$innerHTML(value);
+  var nodes = ListFactory.ListFactory$from$factory(e.get$nodes());
+  this.get$nodes().addAll(nodes);
+}
 DocumentFragmentWrappingImplementation.prototype.get$on = function() {
   if (this._on == null) {
     this._on = new ElementEventsImplementation._wrap$ctor(this._ptr);
@@ -7217,6 +7731,12 @@ DocumentFragmentWrappingImplementation.prototype.get$on = function() {
 }
 DocumentFragmentWrappingImplementation.prototype.get$tagName = function() {
   return "";
+}
+DocumentFragmentWrappingImplementation.prototype.get$firstElementChild = function() {
+  return this.get$elements().get$first()();
+}
+DocumentFragmentWrappingImplementation.prototype.get$lastElementChild = function() {
+  return this.get$elements().last();
 }
 DocumentFragmentWrappingImplementation.prototype.get$parent = function() {
   return null;
@@ -7260,6 +7780,7 @@ DocumentWrappingImplementation._wrap$ctor = function(_documentPtr, ptr) {
 }
 DocumentWrappingImplementation._wrap$ctor.prototype = DocumentWrappingImplementation.prototype;
 DocumentWrappingImplementation.prototype.is$html_html_Document = function(){return true};
+DocumentWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 DocumentWrappingImplementation.prototype.get$parent = function() {
   return null;
 }
@@ -7272,6 +7793,95 @@ DocumentWrappingImplementation.prototype.get$on = function() {
   }
   return this._on;
 }
+// ********** Code for _ChildrenElementList **************
+function _ChildrenElementList() {}
+_ChildrenElementList._wrap$ctor = function(element) {
+  this._childElements = element.get$children();
+  this._element = element;
+  // Initializers done
+}
+_ChildrenElementList._wrap$ctor.prototype = _ChildrenElementList.prototype;
+_ChildrenElementList.prototype.is$List = function(){return true};
+_ChildrenElementList.prototype._toList = function() {
+  var output = new Array(this._childElements.get$length());
+  for (var i = 0, len = this._childElements.get$length();
+   i < len; i++) {
+    output.$setindex(i, LevelDom.wrapElement(this._childElements.$index(i)));
+  }
+  return output;
+}
+_ChildrenElementList.prototype.get$first = function() {
+  return LevelDom.wrapElement(this._element.get$firstElementChild());
+}
+_ChildrenElementList.prototype.forEach = function(f) {
+  var $$list = this._childElements;
+  for (var $$i = this._childElements.iterator$0(); $$i.hasNext$0(); ) {
+    var element = $$i.next$0();
+    f(LevelDom.wrapElement(element));
+  }
+}
+_ChildrenElementList.prototype.filter = function(f) {
+  var output = new Array();
+  this.forEach((function (element) {
+    if (f(element)) {
+      output.add(element);
+    }
+  })
+  );
+  return output;
+}
+_ChildrenElementList.prototype.isEmpty = function() {
+  return this._element.get$firstElementChild() != null;
+}
+_ChildrenElementList.prototype.get$length = function() {
+  return this._childElements.get$length();
+}
+_ChildrenElementList.prototype.$index = function(index) {
+  return LevelDom.wrapElement(this._childElements.$index(index));
+}
+_ChildrenElementList.prototype.$setindex = function(index, value) {
+  this._element.replaceChild$2(LevelDom.unwrap(value), this._childElements.item$1(index));
+}
+_ChildrenElementList.prototype.add = function(value) {
+  this._element.appendChild$1(LevelDom.unwrap(value));
+  return value;
+}
+_ChildrenElementList.prototype.iterator = function() {
+  return this._toList().iterator();
+}
+_ChildrenElementList.prototype.addAll = function(collection) {
+  for (var $$i = collection.iterator(); $$i.hasNext$0(); ) {
+    var element = $$i.next$0();
+    this._element.appendChild$1(LevelDom.unwrap(element));
+  }
+}
+_ChildrenElementList.prototype.removeRange = function(start, length) {
+  $throw(const$85/*const NotImplementedException()*/);
+}
+_ChildrenElementList.prototype.getRange = function(start, length) {
+  $throw(const$85/*const NotImplementedException()*/);
+}
+_ChildrenElementList.prototype.indexOf = function(element, start) {
+  return _Lists.indexOf(this, element, start, this.get$length());
+}
+_ChildrenElementList.prototype.clear = function() {
+  this._element.set$textContent('');
+}
+_ChildrenElementList.prototype.removeLast = function() {
+  var last_ = this.last();
+  if (last_ != null) {
+    this._element.removeChild$1(LevelDom.unwrap(last_));
+  }
+  return last_;
+}
+_ChildrenElementList.prototype.last = function() {
+  return LevelDom.wrapElement(this._element.get$lastElementChild());
+}
+_ChildrenElementList.prototype.add$1 = _ChildrenElementList.prototype.add;
+_ChildrenElementList.prototype.forEach$1 = function($0) {
+  return this.forEach(to$call$1($0));
+};
+_ChildrenElementList.prototype.iterator$0 = _ChildrenElementList.prototype.iterator;
 // ********** Code for ElementAttributeMap **************
 function ElementAttributeMap() {}
 ElementAttributeMap._wrap$ctor = function(_element) {
@@ -7457,6 +8067,7 @@ _ChildrenNodeList._wrap$ctor = function(node) {
   // Initializers done
 }
 _ChildrenNodeList._wrap$ctor.prototype = _ChildrenNodeList.prototype;
+_ChildrenNodeList.prototype.is$List = function(){return true};
 _ChildrenNodeList.prototype._toList = function() {
   var output = new Array(this._childNodes.get$length());
   for (var i = 0, len = this._childNodes.get$length();
@@ -7464,6 +8075,9 @@ _ChildrenNodeList.prototype._toList = function() {
     output.$setindex(i, LevelDom.wrapNode(this._childNodes.$index(i)));
   }
   return output;
+}
+_ChildrenNodeList.prototype.get$first = function() {
+  return LevelDom.wrapNode(this._node.get$firstChild());
 }
 _ChildrenNodeList.prototype.forEach = function(f) {
   return this._toList().forEach(f);
@@ -7497,7 +8111,16 @@ _ChildrenNodeList.prototype.add = function(value) {
 _ChildrenNodeList.prototype.iterator = function() {
   return this._toList().iterator();
 }
+_ChildrenNodeList.prototype.addAll = function(collection) {
+  for (var $$i = collection.iterator(); $$i.hasNext$0(); ) {
+    var node = $$i.next$0();
+    this._node.appendChild$1(LevelDom.unwrap(node));
+  }
+}
 _ChildrenNodeList.prototype.removeRange = function(start, length) {
+  $throw(const$85/*const NotImplementedException()*/);
+}
+_ChildrenNodeList.prototype.getRange = function(start, length) {
   $throw(const$85/*const NotImplementedException()*/);
 }
 _ChildrenNodeList.prototype.indexOf = function(element, start) {
@@ -7529,6 +8152,7 @@ ObjectElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 ObjectElementWrappingImplementation._wrap$ctor.prototype = ObjectElementWrappingImplementation.prototype;
+ObjectElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 ObjectElementWrappingImplementation.prototype.get$height = function() {
   return this._ptr.get$height();
 }
@@ -7590,6 +8214,7 @@ SVGDocumentWrappingImplementation._wrap$ctor = function(ptr) {
 }
 SVGDocumentWrappingImplementation._wrap$ctor.prototype = SVGDocumentWrappingImplementation.prototype;
 SVGDocumentWrappingImplementation.prototype.is$html_html_Document = function(){return true};
+SVGDocumentWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 // ********** Code for SVGSVGElementWrappingImplementation **************
 $inherits(SVGSVGElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGSVGElementWrappingImplementation() {}
@@ -7598,6 +8223,7 @@ SVGSVGElementWrappingImplementation._wrap$ctor = function(ptr) {
   SVGElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 SVGSVGElementWrappingImplementation._wrap$ctor.prototype = SVGSVGElementWrappingImplementation.prototype;
+SVGSVGElementWrappingImplementation.prototype.is$html_html_Element = function(){return true};
 SVGSVGElementWrappingImplementation.prototype.get$height = function() {
   return LevelDom.wrapSVGAnimatedLength(this._ptr.get$height());
 }
@@ -7934,6 +8560,14 @@ function LucaObject() {
   HashableObject.call(this);
 }
 LucaObject.prototype.get$_stateBag = function() { return this._stateBag; };
+LucaObject.prototype.getPropertyByName = function(propertyName) {
+  var result = this._frameworkProperties.filter((function (p) {
+    return p.propertyName.toLowerCase() == propertyName.toLowerCase();
+  })
+  );
+  if (result.get$length() == 0) return null;
+  return result.iterator().next$0();
+}
 // ********** Code for FrameworkObject **************
 $inherits(FrameworkObject, LucaObject);
 function FrameworkObject() {
@@ -7963,6 +8597,12 @@ FrameworkObject.prototype.get$mouseDown = function() { return this.mouseDown; };
 FrameworkObject.prototype.get$mouseMove = function() { return this.mouseMove; };
 FrameworkObject.prototype.get$mouseUp = function() { return this.mouseUp; };
 FrameworkObject.prototype.get$attachedPropertyChanged = function() { return this.attachedPropertyChanged; };
+FrameworkObject.prototype.makeMe = function() {
+  return new FrameworkObject();
+}
+FrameworkObject.prototype.get$isContainer = function() {
+  return this._stateBag.containsKey("CONTAINER_CONTEXT"/*FrameworkObject.CONTAINER_CONTEXT*/);
+}
 FrameworkObject.prototype._initFrameworkObjectEvents = function() {
   var $this = this; // closure support
   this._component.get$on().get$mouseUp().add$1((function (e) {
@@ -8085,6 +8725,7 @@ FrameworkObject.prototype.get$_type = function() {
 FrameworkObject.prototype.click$0 = function() {
   return this.click();
 };
+FrameworkObject.prototype.makeMe$0 = FrameworkObject.prototype.makeMe;
 FrameworkObject.prototype.updateLayout$0 = FrameworkObject.prototype.updateLayout;
 // ********** Code for LucaSystem **************
 $inherits(LucaSystem, FrameworkObject);
@@ -8129,6 +8770,26 @@ LucaSystem.prototype._initLucaSystem = function(rootID) {
   );
   LucaSystem._registerCoreElements();
   $globals.LucaSystem_initialized = true;
+}
+LucaSystem.findByName = function(name, startingWith) {
+  if (startingWith.get$name() != null && startingWith.get$name() == name) return startingWith;
+  if (!startingWith.get$isContainer()) return null;
+  var cc = startingWith._stateBag.$index("CONTAINER_CONTEXT"/*FrameworkObject.CONTAINER_CONTEXT*/);
+  if (!!(cc && cc.is$List())) {
+    for (var $$i = cc.iterator$0(); $$i.hasNext$0(); ) {
+      var el = $$i.next$0();
+      var result = LucaSystem.findByName(name, el);
+      if (result != null) return result;
+    }
+  }
+  else if ((cc instanceof FrameworkProperty)) {
+    var obj = getValue(cc);
+    if (obj == null || !((obj instanceof FrameworkElement))) return null;
+    return LucaSystem.findByName(name, obj);
+  }
+  else {
+    return null;
+  }
 }
 LucaSystem._registerCoreElements = function() {
   LucaSystem.registerElement(new StackPanel());
@@ -8381,15 +9042,6 @@ function ObservableList_ColumnDefinition() {
   // Initializers done
   Array.call(this);
 }
-ObservableList_ColumnDefinition.prototype.add = function(element) {
-  ListFactory.prototype.add.call(this, element);
-  this._notifySingleNew(element);
-}
-ObservableList_ColumnDefinition.prototype._notifySingleNew = function(newItem) {
-  var nl = new Array();
-  nl.add(newItem);
-  this.listChanged.invoke(this, new ListChangedEventArgs_ColumnDefinition(new Array(), nl));
-}
 // ********** Code for ObservableList_FrameworkElement **************
 $inherits(ObservableList_FrameworkElement, ObservableList);
 function ObservableList_FrameworkElement() {
@@ -8397,30 +9049,12 @@ function ObservableList_FrameworkElement() {
   // Initializers done
   Array.call(this);
 }
-ObservableList_FrameworkElement.prototype.add = function(element) {
-  ListFactory.prototype.add.call(this, element);
-  this._notifySingleNew(element);
-}
-ObservableList_FrameworkElement.prototype._notifySingleNew = function(newItem) {
-  var nl = new Array();
-  nl.add(newItem);
-  this.listChanged.invoke(this, new ListChangedEventArgs_FrameworkElement(new Array(), nl));
-}
 // ********** Code for ObservableList_RowDefinition **************
 $inherits(ObservableList_RowDefinition, ObservableList);
 function ObservableList_RowDefinition() {
   this.listChanged = new _FrameworkEventImplementation();
   // Initializers done
   Array.call(this);
-}
-ObservableList_RowDefinition.prototype.add = function(element) {
-  ListFactory.prototype.add.call(this, element);
-  this._notifySingleNew(element);
-}
-ObservableList_RowDefinition.prototype._notifySingleNew = function(newItem) {
-  var nl = new Array();
-  nl.add(newItem);
-  this.listChanged.invoke(this, new ListChangedEventArgs_RowDefinition(new Array(), nl));
 }
 // ********** Code for _BindingImplementation **************
 $inherits(_BindingImplementation, LucaObject);
@@ -8882,6 +9516,9 @@ function Border() {
   , new Thickness(0));
   this.borderThicknessProperty.stringToValueConverter = const$7/*const StringToThicknessConverter()*/;
 }
+Border.prototype.makeMe = function() {
+  return new Border();
+}
 Border.prototype.calculateWidth = function(value) {
   FrameworkElement.prototype.calculateWidth.call(this, value);
   if (value == "auto") return;
@@ -8904,20 +9541,11 @@ Border.prototype.set$background = function(value) {
 Border.prototype.get$padding = function() {
   return getValue(this.paddingProperty);
 }
-Border.prototype.set$padding = function(value) {
-  return setValue(this.paddingProperty, value);
-}
 Border.prototype.get$borderColor = function() {
   return getValue(this.borderColorProperty);
 }
-Border.prototype.set$borderColor = function(value) {
-  return setValue(this.borderColorProperty, value);
-}
 Border.prototype.get$borderThickness = function() {
   return getValue(this.borderThicknessProperty);
-}
-Border.prototype.set$borderThickness = function(value) {
-  return setValue(this.borderThicknessProperty, value);
 }
 Border.prototype.get$content = function() {
   return getValue(this.contentProperty);
@@ -8956,6 +9584,7 @@ Border.prototype.updateLayout = function() {
 Border.prototype.get$_type = function() {
   return "Border";
 }
+Border.prototype.makeMe$0 = Border.prototype.makeMe;
 Border.prototype.updateLayout$0 = Border.prototype.updateLayout;
 // ********** Code for Control **************
 $inherits(Control, FrameworkElement);
@@ -8999,11 +9628,11 @@ function Button() {
   );
   this._stateBag.$setindex("CONTAINER_CONTEXT"/*FrameworkObject.CONTAINER_CONTEXT*/, this.contentProperty);
 }
+Button.prototype.makeMe = function() {
+  return new Button();
+}
 Button.prototype.get$content = function() {
   return getValue(this.contentProperty);
-}
-Button.prototype.set$content = function(value) {
-  return setValue(this.contentProperty, value);
 }
 Button.prototype.CreateElement = function() {
   this._component = _Dom.createByTag("button");
@@ -9011,6 +9640,7 @@ Button.prototype.CreateElement = function() {
 Button.prototype.get$_type = function() {
   return "Button";
 }
+Button.prototype.makeMe$0 = Button.prototype.makeMe;
 // ********** Code for Panel **************
 $inherits(Panel, _ContainerElement);
 function Panel() {
@@ -9040,8 +9670,9 @@ function Panel() {
   })
   );
 }
-Panel.prototype.set$background = function(value) {
-  return setValue(this.backgroundProperty, value);
+Panel.prototype.get$children = function() { return this.children; };
+Panel.prototype.contains = function(newChild) {
+  return this.children.indexOf(newChild, 0) > -1;
 }
 Panel.prototype.get$_type = function() {
   return "Panel";
@@ -9051,6 +9682,7 @@ Panel.prototype.CreateElement = function() {
   this._component.get$style().set$overflow("hidden");
   this._component.get$style().set$display("inline-block");
 }
+Panel.prototype.contains$1 = Panel.prototype.contains;
 // ********** Code for LayoutCanvas **************
 $inherits(LayoutCanvas, Panel);
 function LayoutCanvas() {
@@ -9058,6 +9690,9 @@ function LayoutCanvas() {
   Panel.call(this);
   _Dom.appendClass(this._component, "luca_ui_layoutcanvas");
   this.children.listChanged.$add(this.get$_onListChanging());
+}
+LayoutCanvas.prototype.makeMe = function() {
+  return new LayoutCanvas();
 }
 LayoutCanvas.prototype._onListChanging = function(_, args) {
   var $this = this; // closure support
@@ -9129,6 +9764,7 @@ LayoutCanvas.prototype.updateLayout = function() {
 LayoutCanvas.prototype.get$_type = function() {
   return "LayoutCanvas";
 }
+LayoutCanvas.prototype.makeMe$0 = LayoutCanvas.prototype.makeMe;
 LayoutCanvas.prototype.updateLayout$0 = LayoutCanvas.prototype.updateLayout;
 // ********** Code for _FrameworkEventImplementation **************
 $inherits(_FrameworkEventImplementation, LucaObject);
@@ -9168,6 +9804,9 @@ function _FrameworkEventImplementation_AttachedPropertyChangedEventArgs() {}
 // ********** Code for _FrameworkEventImplementation_EventArgs **************
 $inherits(_FrameworkEventImplementation_EventArgs, _FrameworkEventImplementation);
 function _FrameworkEventImplementation_EventArgs() {}
+// ********** Code for _FrameworkEventImplementation_HashSelectionEventArgs **************
+$inherits(_FrameworkEventImplementation_HashSelectionEventArgs, _FrameworkEventImplementation);
+function _FrameworkEventImplementation_HashSelectionEventArgs() {}
 // ********** Code for _FrameworkEventImplementation_ListChangedEventArgs_ColumnDefinition **************
 $inherits(_FrameworkEventImplementation_ListChangedEventArgs_ColumnDefinition, _FrameworkEventImplementation);
 function _FrameworkEventImplementation_ListChangedEventArgs_ColumnDefinition() {}
@@ -9234,6 +9873,9 @@ function Grid() {
     $this._updateRowLayout($this.get$actualHeight());
   })
   );
+}
+Grid.prototype.makeMe = function() {
+  return new Grid();
 }
 Grid.prototype.get$columnDefinitions = function() {
   return getValue(this.columnDefinitionsProperty);
@@ -9493,6 +10135,7 @@ Grid.getRowSpan = function(element) {
 Grid.prototype.get$_type = function() {
   return "Grid";
 }
+Grid.prototype.makeMe$0 = Grid.prototype.makeMe;
 Grid.prototype.updateLayout$0 = Grid.prototype.updateLayout;
 // ********** Code for StackPanel **************
 $inherits(StackPanel, Panel);
@@ -9507,6 +10150,9 @@ function StackPanel() {
   , const$374/*Orientation.vertical*/);
   this.orientationProperty.stringToValueConverter = new StringToOrientationConverter();
   this.children.listChanged.$add(this.get$_onListChanging());
+}
+StackPanel.prototype.makeMe = function() {
+  return new StackPanel();
 }
 StackPanel.prototype._onListChanging = function(_, args) {
   var $this = this; // closure support
@@ -9538,6 +10184,7 @@ StackPanel.prototype.updateLayout = function() {
 StackPanel.prototype.get$_type = function() {
   return "StackPanel";
 }
+StackPanel.prototype.makeMe$0 = StackPanel.prototype.makeMe;
 StackPanel.prototype.updateLayout$0 = StackPanel.prototype.updateLayout;
 // ********** Code for TextBlock **************
 $inherits(TextBlock, FrameworkElement);
@@ -9547,6 +10194,9 @@ function TextBlock() {
   _Dom.appendClass(this._component, "luca_ui_textblock");
   this._initProperties();
   this._stateBag.$setindex("CONTAINER_CONTEXT"/*FrameworkObject.CONTAINER_CONTEXT*/, this.textProperty);
+}
+TextBlock.prototype.makeMe = function() {
+  return new TextBlock();
 }
 TextBlock.prototype._initProperties = function() {
   var $this = this; // closure support
@@ -9573,8 +10223,8 @@ TextBlock.prototype._initProperties = function() {
   })
   );
 }
-TextBlock.prototype.set$fontSize = function(value) {
-  return setValue(this.fontSizeProperty, value);
+TextBlock.prototype.get$text = function() {
+  return getValue(this.textProperty);
 }
 TextBlock.prototype.set$text = function(value) {
   return setValue(this.textProperty, value);
@@ -9588,6 +10238,7 @@ TextBlock.prototype.updateLayout = function() {
 TextBlock.prototype.get$_type = function() {
   return "TextBlock";
 }
+TextBlock.prototype.makeMe$0 = TextBlock.prototype.makeMe;
 TextBlock.prototype.updateLayout$0 = TextBlock.prototype.updateLayout;
 // ********** Code for _VirtualContainer **************
 $inherits(_VirtualContainer, _ContainerElement);
@@ -9720,6 +10371,9 @@ function TextBox() {
   this._stateBag.$setindex("CONTAINER_CONTEXT"/*FrameworkObject.CONTAINER_CONTEXT*/, this.textProperty);
   this._initEvents();
 }
+TextBox.prototype.makeMe = function() {
+  return new TextBox();
+}
 TextBox.prototype._initProperties = function() {
   var $this = this; // closure support
   this.placeholderProperty = new FrameworkProperty(this, "placeholder", (function (value) {
@@ -9767,9 +10421,6 @@ TextBox.prototype.get$text = function() {
 TextBox.prototype.set$text = function(value) {
   return setValue(this.textProperty, value);
 }
-TextBox.prototype.set$placeholder = function(value) {
-  return setValue(this.placeholderProperty, value);
-}
 TextBox.prototype.CreateElement = function() {
   this._component = _Dom.createByTag("input");
   this._component.get$attributes().$setindex("type", "text");
@@ -9777,6 +10428,7 @@ TextBox.prototype.CreateElement = function() {
 TextBox.prototype.get$_type = function() {
   return "TextBox";
 }
+TextBox.prototype.makeMe$0 = TextBox.prototype.makeMe;
 // ********** Code for InputTypes **************
 function InputTypes() {}
 InputTypes._isValidInputType = function(candidate) {
@@ -9821,6 +10473,9 @@ function RadioButton() {
   this._initProperties();
   this._initEvents();
 }
+RadioButton.prototype.makeMe = function() {
+  return new RadioButton();
+}
 RadioButton.prototype._initProperties = function() {
   var $this = this; // closure support
   this.valueProperty = new FrameworkProperty(this, "value", (function (v) {
@@ -9848,9 +10503,6 @@ RadioButton.prototype.set$value = function(v) {
 RadioButton.prototype.get$groupName = function() {
   return getValue(this.groupNameProperty);
 }
-RadioButton.prototype.set$groupName = function(v) {
-  return setValue(this.groupNameProperty, v);
-}
 RadioButton.prototype.CreateElement = function() {
   this._component = _Dom.createByTag("input");
   this._component.get$attributes().$setindex("type", "radio");
@@ -9858,19 +10510,18 @@ RadioButton.prototype.CreateElement = function() {
 RadioButton.prototype.get$_type = function() {
   return "RadioButton";
 }
+RadioButton.prototype.makeMe$0 = RadioButton.prototype.makeMe;
 // ********** Code for RadioButtonGroup **************
 function RadioButtonGroup() {
   this._radioButtonList = new HashMapImplementation();
   this.selectionChanged = new _FrameworkEventImplementation();
   // Initializers done
 }
-RadioButtonGroup.prototype.get$currentSelectedButton = function() { return this.currentSelectedButton; };
-RadioButtonGroup.prototype.set$currentSelectedButton = function(value) { return this.currentSelectedButton = value; };
 RadioButtonGroup.prototype.addRadioButton = function(buttonToAdd) {
   var $this = this; // closure support
   if (buttonToAdd == null) return;
   if (this._radioButtonList.containsKey(buttonToAdd)) {
-    $throw(const$405/*const FrameworkException("RadioButton already exists in the RadioButtonGroup list.")*/);
+    $throw(const$416/*const FrameworkException("RadioButton already exists in the RadioButtonGroup list.")*/);
   }
   if (!this._radioButtonList.isEmpty()) {
     var name = this._radioButtonList.getKeys().iterator$0().next$0().get$groupName();
@@ -9899,6 +10550,9 @@ function CheckBox() {
   _Dom.appendClass(this._component, "luca_ui_checkbox");
   this._initProperties();
   this._initEvents();
+}
+CheckBox.prototype.makeMe = function() {
+  return new CheckBox();
 }
 CheckBox.prototype._initProperties = function() {
   var $this = this; // closure support
@@ -9934,6 +10588,7 @@ CheckBox.prototype.CreateElement = function() {
 CheckBox.prototype.get$_type = function() {
   return "CheckBox";
 }
+CheckBox.prototype.makeMe$0 = CheckBox.prototype.makeMe;
 // ********** Code for PropertyChangingEventArgs **************
 $inherits(PropertyChangingEventArgs, EventArgs);
 function PropertyChangingEventArgs(oldValue, newValue) {
@@ -9941,109 +10596,6 @@ function PropertyChangingEventArgs(oldValue, newValue) {
   this.newValue = newValue;
   // Initializers done
   EventArgs.call(this);
-}
-// ********** Code for GridLayoutDefinition **************
-$inherits(GridLayoutDefinition, LucaObject);
-function GridLayoutDefinition() {
-  this._adjustedLengthInternal = 0
-  this._adjustedOffset = 0
-  this.maxLength = 32767
-  this.minLength = 0
-  // Initializers done
-  LucaObject.call(this);
-}
-GridLayoutDefinition.prototype.get$_adjustedLength = function() {
-  return this._adjustedLengthInternal;
-}
-GridLayoutDefinition.prototype.set$_adjustedLength = function(value) {
-  if (value < this.minLength) value = this.minLength;
-  if (value > this.maxLength) value = this.maxLength;
-  this._adjustedLengthInternal = value;
-}
-// ********** Code for RowDefinition **************
-$inherits(RowDefinition, GridLayoutDefinition);
-function RowDefinition() {}
-RowDefinition.with$ctor = function(value) {
-  this._rowDefinitionChanged = new _FrameworkEventImplementation();
-  // Initializers done
-  GridLayoutDefinition.call(this);
-  this.set$height(value);
-}
-RowDefinition.with$ctor.prototype = RowDefinition.prototype;
-RowDefinition.prototype.get$height = function() {
-  return this._value;
-}
-RowDefinition.prototype.set$height = function(value) {
-  if (value.get$value() < this.minLength) value.set$value(this.minLength);
-  if (value.get$value() > this.maxLength) value.set$value(this.maxLength);
-  this._value = value;
-  this._rowDefinitionChanged.invoke(this, new EventArgs());
-}
-// ********** Code for ColumnDefinition **************
-$inherits(ColumnDefinition, GridLayoutDefinition);
-function ColumnDefinition() {}
-ColumnDefinition.with$ctor = function(value) {
-  this._columnDefinitionChanged = new _FrameworkEventImplementation();
-  // Initializers done
-  GridLayoutDefinition.call(this);
-  this.set$width(value);
-}
-ColumnDefinition.with$ctor.prototype = ColumnDefinition.prototype;
-ColumnDefinition.prototype.get$width = function() {
-  return this._value;
-}
-ColumnDefinition.prototype.set$width = function(value) {
-  if (value.get$value() < this.minLength) value.set$value(this.minLength);
-  if (value.get$value() > this.maxLength) value.set$value(this.maxLength);
-  this._value = value;
-  this._columnDefinitionChanged.invoke(this, new EventArgs());
-}
-// ********** Code for GridLength **************
-$inherits(GridLength, LucaObject);
-function GridLength() {}
-GridLength.star$ctor = function(v) {
-  // Initializers done
-  LucaObject.call(this);
-  this._initGridUnitTypeProperties();
-  this.set$gridUnitType(const$379/*GridUnitType.star*/);
-  this.set$value(v);
-}
-GridLength.star$ctor.prototype = GridLength.prototype;
-GridLength.auto$ctor = function() {
-  // Initializers done
-  LucaObject.call(this);
-  this._initGridUnitTypeProperties();
-}
-GridLength.auto$ctor.prototype = GridLength.prototype;
-GridLength.pixel$ctor = function(v) {
-  // Initializers done
-  LucaObject.call(this);
-  this._initGridUnitTypeProperties();
-  this.set$gridUnitType(const$377/*GridUnitType.pixel*/);
-  this.set$value(v);
-}
-GridLength.pixel$ctor.prototype = GridLength.prototype;
-GridLength.prototype.get$gridUnitType = function() {
-  return getValue(this.gridUnitTypeProperty);
-}
-GridLength.prototype.set$gridUnitType = function(v) {
-  return setValue(this.gridUnitTypeProperty, v);
-}
-GridLength.prototype.get$value = function() {
-  return getValue(this.valueProperty);
-}
-GridLength.prototype.set$value = function(v) {
-  return setValue(this.valueProperty, v);
-}
-GridLength.prototype._initGridUnitTypeProperties = function() {
-  this.gridUnitTypeProperty = new FrameworkProperty(this, "gridUnitType", (function (v) {
-
-  })
-  , const$381/*GridUnitType.auto*/);
-  this.valueProperty = new FrameworkProperty(this, "value", (function (v) {
-
-  })
-  , -1);
 }
 // ********** Code for GridUnitType **************
 function GridUnitType(_val) {
@@ -10175,14 +10727,6 @@ function Thickness(uniformThickness) {
   this.bottom = uniformThickness;
   // Initializers done
 }
-Thickness.right$ctor = function(right) {
-  this.right = right;
-  this.top = 0;
-  this.left = 0;
-  this.bottom = 0;
-  // Initializers done
-}
-Thickness.right$ctor.prototype = Thickness.prototype;
 Thickness.widthheight$ctor = function(width, height) {
   this.left = width;
   this.right = width;
@@ -11125,6 +11669,8 @@ Tuple.with$ctor = function(first, second) {
   // Initializers done
 }
 Tuple.with$ctor.prototype = Tuple.prototype;
+Tuple.prototype.get$first = function() { return this.first; };
+Tuple.prototype.set$first = function(value) { return this.first = value; };
 // ********** Code for Tuple_int **************
 $inherits(Tuple_int, Tuple);
 function Tuple_int() {}
@@ -11151,28 +11697,13 @@ ListChangedEventArgs.prototype.get$oldItems = function() { return this.oldItems;
 ListChangedEventArgs.prototype.get$newItems = function() { return this.newItems; };
 // ********** Code for ListChangedEventArgs_ColumnDefinition **************
 $inherits(ListChangedEventArgs_ColumnDefinition, ListChangedEventArgs);
-function ListChangedEventArgs_ColumnDefinition(oldItems, newItems) {
-  this.oldItems = oldItems;
-  this.newItems = newItems;
-  // Initializers done
-  EventArgs.call(this);
-}
+function ListChangedEventArgs_ColumnDefinition() {}
 // ********** Code for ListChangedEventArgs_FrameworkElement **************
 $inherits(ListChangedEventArgs_FrameworkElement, ListChangedEventArgs);
-function ListChangedEventArgs_FrameworkElement(oldItems, newItems) {
-  this.oldItems = oldItems;
-  this.newItems = newItems;
-  // Initializers done
-  EventArgs.call(this);
-}
+function ListChangedEventArgs_FrameworkElement() {}
 // ********** Code for ListChangedEventArgs_RowDefinition **************
 $inherits(ListChangedEventArgs_RowDefinition, ListChangedEventArgs);
-function ListChangedEventArgs_RowDefinition(oldItems, newItems) {
-  this.oldItems = oldItems;
-  this.newItems = newItems;
-  // Initializers done
-  EventArgs.call(this);
-}
+function ListChangedEventArgs_RowDefinition() {}
 // ********** Code for ListChangedEventArgs_T **************
 $inherits(ListChangedEventArgs_T, ListChangedEventArgs);
 function ListChangedEventArgs_T(oldItems, newItems) {
@@ -11197,7 +11728,7 @@ function LinearGradientBrush(dir, fallback) {
   this.stops = new Array();
   // Initializers done
   Brush.call(this);
-  if (dir == null) this.direction = const$401/*LinearGradientDirection.leftToRight*/;
+  if (dir == null) this.direction = const$402/*LinearGradientDirection.leftToRight*/;
   if (fallback == null) this.fallbackColor = new Color(const$362/*Colors.White*/);
 }
 LinearGradientBrush.prototype.renderBrush = function(element) {
@@ -11264,6 +11795,9 @@ function Slider() {
   this._initSliderProperties();
   this._initSliderEvents();
 }
+Slider.prototype.makeMe = function() {
+  return new Slider();
+}
 Slider.prototype._initSliderEvents = function() {
   var $this = this; // closure support
   this._component.get$on().get$change().add$1((function (e) {
@@ -11306,6 +11840,104 @@ Slider.prototype.CreateElement = function() {
 Slider.prototype.get$_type = function() {
   return "Slider";
 }
+Slider.prototype.makeMe$0 = Slider.prototype.makeMe;
+// ********** Code for LucaxmlPresentationProvider **************
+$inherits(LucaxmlPresentationProvider, HashableObject);
+function LucaxmlPresentationProvider() {
+  // Initializers done
+  HashableObject.call(this);
+}
+LucaxmlPresentationProvider.prototype.deserialize = function(fileData) {
+  var e = ElementWrappingImplementation.ElementWrappingImplementation$html$factory(fileData);
+  return this._getNextElement(e);
+}
+LucaxmlPresentationProvider.prototype._getNextElement = function(xmlElement) {
+  var lowerTagName = xmlElement.get$tagName().toLowerCase();
+  if (lowerTagName == "img") lowerTagName = "image";
+  if (!$globals.LucaSystem__objectRegistry.containsKey(lowerTagName)) $throw(new PresentationProviderException(('Element "' + lowerTagName + '" not found in object registry.')));
+  var newElement = $globals.LucaSystem__objectRegistry.$index(lowerTagName).makeMe$0();
+  if (xmlElement.get$elements().get$length() > 0) {
+    var $$list = xmlElement.get$elements();
+    for (var $$i = xmlElement.get$elements().iterator(); $$i.hasNext(); ) {
+      var e = $$i.next();
+      var elementLowerTagName = e.get$tagName().toLowerCase$0();
+      if (elementLowerTagName == "img") elementLowerTagName = "image";
+      if ($globals.LucaSystem__objectRegistry.containsKey(elementLowerTagName)) {
+        if (e.get$tagName().contains$1(".")) {
+          if ($globals.LucaSystem__objectRegistry.containsKey(elementLowerTagName)) {
+            var setAttachedPropertyFunction = $globals.LucaSystem__objectRegistry.$index(elementLowerTagName);
+            setAttachedPropertyFunction.call$2(newElement, Math.parseInt(e.get$text().trim$0()));
+          }
+        }
+        else {
+          if (!newElement.get$isContainer()) $throw(const$411/*const PresentationProviderException("Attempted to add element to another element which is not a container.")*/);
+          var cc = newElement._stateBag.$index("CONTAINER_CONTEXT"/*FrameworkObject.CONTAINER_CONTEXT*/);
+          var childElement = this._getNextElement(e);
+          if (!!(cc && cc.is$List())) {
+            cc.add$1(childElement);
+          }
+          else {
+            setValue(cc, childElement);
+          }
+        }
+      }
+      else {
+        var p = newElement.getPropertyByName(elementLowerTagName);
+        if (p == null) $throw(new PresentationProviderException(("Property node name '" + elementLowerTagName + "' is not a valid property of '" + lowerTagName + "'.")));
+        var testValue = getValue(p);
+        if (testValue != null && !!(testValue && testValue.is$List())) {
+          db('found list');
+        }
+        else if (e.get$text().trim$0().startsWith$1("{")) {
+          $throw(const$85/*const NotImplementedException()*/);
+        }
+        else {
+          setValue(p, e.get$text().trim$0());
+        }
+      }
+    }
+  }
+  else {
+    if (xmlElement.get$text().trim() != "") {
+      if (!newElement.get$isContainer()) $throw(const$413/*const PresentationProviderException("Text node found in element which does not have a container context defined.")*/);
+      var cc = newElement._stateBag.$index("CONTAINER_CONTEXT"/*FrameworkObject.CONTAINER_CONTEXT*/);
+      if (!!(cc && cc.is$List())) $throw(const$414/*const PresentationProviderException("Expected container context to be property.  Found list.")*/);
+      setValue(cc, xmlElement.get$text().trim());
+    }
+  }
+  this._assignAttributeProperties(newElement, xmlElement);
+  return newElement;
+}
+LucaxmlPresentationProvider.prototype._assignAttributeProperties = function(element, xmlElement) {
+  if (xmlElement.get$attributes().get$length() == 0) return;
+  xmlElement.get$attributes().forEach((function (k, v) {
+    if (k.contains(".")) {
+      if ($globals.LucaSystem__objectRegistry.containsKey(("" + k))) {
+        var setAttachedPropertyFunction = $globals.LucaSystem__objectRegistry.$index(("" + k));
+        setAttachedPropertyFunction.call$2(element, Math.parseInt(v));
+      }
+    }
+    else {
+      var p = element.getPropertyByName(k);
+      if (p != null) {
+        if (v.startsWith("{")) {
+          $throw(const$85/*const NotImplementedException()*/);
+        }
+        else {
+          setValue(p, v);
+        }
+      }
+    }
+  })
+  );
+}
+LucaxmlPresentationProvider.prototype.deserialize$1 = LucaxmlPresentationProvider.prototype.deserialize;
+// ********** Code for PresentationProviderException **************
+function PresentationProviderException(message) {
+  this.message = message;
+  // Initializers done
+}
+PresentationProviderException.prototype.is$Exception = function(){return true};
 // ********** Code for StringToNumericConverter **************
 function StringToNumericConverter() {
   // Initializers done
@@ -11330,6 +11962,9 @@ function TextArea() {
   this._initProperties();
   this._stateBag.$setindex("CONTAINER_CONTEXT"/*FrameworkObject.CONTAINER_CONTEXT*/, this.textProperty);
   this._initEvents();
+}
+TextArea.prototype.makeMe = function() {
+  return new TextArea();
 }
 TextArea.prototype._initProperties = function() {
   var $this = this; // closure support
@@ -11380,6 +12015,7 @@ TextArea.prototype.CreateElement = function() {
 TextArea.prototype.get$_type = function() {
   return "TextArea";
 }
+TextArea.prototype.makeMe$0 = TextArea.prototype.makeMe;
 // ********** Code for StringToBooleanConverter **************
 function StringToBooleanConverter() {
   // Initializers done
@@ -11453,6 +12089,9 @@ function Hyperlink() {
   })
   );
 }
+Hyperlink.prototype.makeMe = function() {
+  return new Hyperlink();
+}
 Hyperlink.prototype.get$content = function() {
   return getValue(this.contentProperty);
 }
@@ -11462,6 +12101,7 @@ Hyperlink.prototype.CreateElement = function() {
 Hyperlink.prototype.get$_type = function() {
   return "Hyperlink";
 }
+Hyperlink.prototype.makeMe$0 = Hyperlink.prototype.makeMe;
 // ********** Code for Image **************
 $inherits(Image, FrameworkElement);
 function Image() {
@@ -11469,6 +12109,9 @@ function Image() {
   FrameworkElement.call(this);
   _Dom.appendClass(this._component, "luca_ui_image");
   this._initializeImageProperties();
+}
+Image.prototype.makeMe = function() {
+  return new Image();
 }
 Image.prototype._initializeImageProperties = function() {
   var $this = this; // closure support
@@ -11487,6 +12130,7 @@ Image.prototype.CreateElement = function() {
 Image.prototype.get$_type = function() {
   return "Image";
 }
+Image.prototype.makeMe$0 = Image.prototype.makeMe;
 // ********** Code for top level **************
 function setValue(property, value) {
   if (property.stringToValueConverter != null && (typeof(value) == 'string')) {
@@ -11504,6 +12148,14 @@ function getValue(propertyInfo) {
   if (propertyInfo == null) return null;
   return propertyInfo.value;
 }
+function db(message, element) {
+  if (!$globals.DEBUG) return;
+  if (element == null) {
+    dart_core_print(message);
+    return;
+  }
+  dart_core_print(("[" + element.get$_type() + "(" + element.get$name() + ")] " + message));
+}
 //  ********** Library HashClient **************
 // ********** Code for HashClient **************
 function HashClient() {
@@ -11511,241 +12163,62 @@ function HashClient() {
   // Initializers done
 }
 // ********** Code for View **************
-$inherits(View, Grid);
 function View(vm) {
   this.vm = vm;
+  this.inputSubmitted = new _FrameworkEventImplementation();
   // Initializers done
-  Grid.call(this);
-  this._initUI();
+  this.rootElement = this._buildUI();
+  this._initEventsAndBindings();
 }
 View.prototype.get$rootVisual = function() {
-  return this;
+  return this.rootElement;
 }
-View.prototype._initUI = function() {
-  var $this = this; // closure support
+View.prototype._buildUI = function() {
   new _BindingImplementation($globals.LucaSystem_windowWidthProperty, $globals.LucaSystem_visualRoot.widthProperty, const$73/*BindingMode.OneWay*/, const$75/*const _DefaultConverter()*/);
   new _BindingImplementation($globals.LucaSystem_windowHeightProperty, $globals.LucaSystem_visualRoot.heightProperty, const$73/*BindingMode.OneWay*/, const$75/*const _DefaultConverter()*/);
   var lgb = new LinearGradientBrush();
-  lgb.direction = const$403/*LinearGradientDirection.topToBottom*/;
+  lgb.direction = const$404/*LinearGradientDirection.topToBottom*/;
   lgb.stops.add(new GradientStop(new Color(const$364/*Colors.WhiteSmoke*/), -1));
   lgb.stops.add(new GradientStop(new Color.hex$ctor("#AAAAAA"), -1));
-  this.set$background(lgb);
-  this.set$horizontalAlignment(const$53/*HorizontalAlignment.Stretch*/);
-  this.set$verticalAlignment(const$63/*VerticalAlignment.Stretch*/);
-  this.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.auto$ctor()));
-  this.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.auto$ctor()));
-  this.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.star$ctor(1)));
-  this.get$columnDefinitions().add(new ColumnDefinition.with$ctor(new GridLength.star$ctor(1)));
-  this.get$columnDefinitions().add(new ColumnDefinition.with$ctor(new GridLength.auto$ctor()));
-  this.get$columnDefinitions().add(new ColumnDefinition.with$ctor(new GridLength.auto$ctor()));
-  this.get$columnDefinitions().add(new ColumnDefinition.with$ctor(new GridLength.auto$ctor()));
-  this.get$columnDefinitions().add(new ColumnDefinition.with$ctor(new GridLength.star$ctor(1)));
-  var title = new TextBlock();
-  title.set$text("Hash Server Example");
-  title.set$fontSize(25);
-  title.set$margin(new Thickness(20));
-  Grid.setColumnSpan(title, 5);
-  title.set$horizontalAlignment(const$51/*HorizontalAlignment.Center*/);
-  this.children.add(title);
-  var sp = new StackPanel();
-  sp.set$margin(new Thickness.right$ctor(10));
-  Grid.setRow(sp, 1);
-  Grid.setColumn(sp, 1);
-  this.children.add(sp);
-  var borderGame = new Border();
-  borderGame.set$borderColor(new SolidColorBrush(new Color(const$104/*Colors.Black*/)));
-  borderGame.set$borderThickness(new Thickness(2));
-  borderGame.set$horizontalAlignment(const$51/*HorizontalAlignment.Center*/);
-  borderGame.set$verticalAlignment(const$61/*VerticalAlignment.Center*/);
-  borderGame.set$background(new SolidColorBrush(new Color(const$190/*Colors.Gray*/)));
-  Grid.setRow(borderGame, 1);
-  Grid.setColumn(borderGame, 2);
-  this.children.add(borderGame);
-  var borderStats = new Border();
-  borderStats.set$width(450);
-  borderStats.set$height(500);
-  borderStats.set$padding(new Thickness(5));
-  borderStats.set$borderThickness(new Thickness(1));
-  borderStats.set$margin(new Thickness.specified$ctor(0, 0, 0, 10));
-  borderStats.set$borderColor(new SolidColorBrush(new Color(const$104/*Colors.Black*/)));
-  borderStats.set$background(new SolidColorBrush(new Color(const$364/*Colors.WhiteSmoke*/)));
-  Grid.setRow(borderStats, 1);
-  Grid.setColumn(borderStats, 3);
-  this.children.add(borderStats);
-  var statsGrid = new Grid();
-  statsGrid.set$horizontalAlignment(const$53/*HorizontalAlignment.Stretch*/);
-  statsGrid.set$verticalAlignment(const$63/*VerticalAlignment.Stretch*/);
-  statsGrid.get$columnDefinitions().add(new ColumnDefinition.with$ctor(new GridLength.pixel$ctor(100)));
-  statsGrid.get$columnDefinitions().add(new ColumnDefinition.with$ctor(new GridLength.pixel$ctor(100)));
-  statsGrid.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.auto$ctor()));
-  statsGrid.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.auto$ctor()));
-  statsGrid.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.star$ctor(1)));
-  borderStats.set$content(statsGrid);
-  var spLabels = new StackPanel();
-  Grid.setRow(spLabels, 1);
-  statsGrid.children.add(spLabels);
-  var spValues = new StackPanel();
-  Grid.setRow(spValues, 1);
-  Grid.setColumn(spValues, 1);
-  statsGrid.children.add(spValues);
-  var lblGeneration = new TextBlock();
-  lblGeneration.set$text("String to hash");
-  lblGeneration.set$fontSize(10);
-  spLabels.children.add(lblGeneration);
-  var lblHighestPop = new TextBlock();
-  lblHighestPop.set$text("Hashed Value");
-  lblHighestPop.set$fontSize(10);
-  spLabels.children.add(lblHighestPop);
-  var lblGenerationValue = new TextBlock();
-  lblGenerationValue.set$text("0");
-  lblGenerationValue.set$fontSize(10);
-  spValues.children.add(lblGenerationValue);
-  var lblHighestPopValue = new TextBlock();
-  lblHighestPopValue.set$text("0");
-  lblHighestPopValue.set$fontSize(10);
-  spValues.children.add(lblHighestPopValue);
-  var enter = new TextBox();
-  enter.set$width(300);
-  enter.set$placeholder("Enter some lowercase text here...");
-  spValues.children.add(enter);
-  var btnGenHash = new Button();
-  btnGenHash.set$content("Generate Hash");
-  spValues.children.add(btnGenHash);
-  var radioButtonGroup = new RadioButtonGroup();
-  radioButtonGroup.selectionChanged.$add((function (b, _) {
-    dart_core_print("radio button group selected " + b.get$currentSelectedButton().get$value().toString$0());
-    $this.vm.setHasher(b.get$currentSelectedButton().get$name());
-  })
-  );
-  var lblHash = new TextBlock();
-  lblHash.set$text("APHash");
-  lblHash.set$fontSize(10);
-  var hashRadioButton = new RadioButton();
-  hashRadioButton.set$groupName("hashRadioButtons");
-  hashRadioButton.set$value("0");
-  hashRadioButton.set$name("APHash");
-  spValues.children.add(lblHash);
-  radioButtonGroup.addRadioButton(hashRadioButton);
-  spValues.children.add(hashRadioButton);
-  lblHash = new TextBlock();
-  lblHash.set$text("BKDRHash");
-  lblHash.set$fontSize(10);
-  hashRadioButton = new RadioButton();
-  hashRadioButton.set$groupName("hashRadioButtons");
-  hashRadioButton.set$value("1");
-  hashRadioButton.set$name("BKDRHash");
-  spValues.children.add(lblHash);
-  radioButtonGroup.addRadioButton(hashRadioButton);
-  spValues.children.add(hashRadioButton);
-  lblHash = new TextBlock();
-  lblHash.set$text("DEKHash");
-  lblHash.set$fontSize(10);
-  hashRadioButton = new RadioButton();
-  hashRadioButton.set$groupName("hashRadioButtons");
-  hashRadioButton.set$value("2");
-  hashRadioButton.set$name("DEKHash");
-  spValues.children.add(lblHash);
-  radioButtonGroup.addRadioButton(hashRadioButton);
-  spValues.children.add(hashRadioButton);
-  lblHash = new TextBlock();
-  lblHash.set$text("DJBHash");
-  lblHash.set$fontSize(10);
-  hashRadioButton = new RadioButton();
-  hashRadioButton.set$groupName("hashRadioButtons");
-  hashRadioButton.set$value("3");
-  hashRadioButton.set$name("DJBHash");
-  spValues.children.add(lblHash);
-  radioButtonGroup.addRadioButton(hashRadioButton);
-  spValues.children.add(hashRadioButton);
-  lblHash = new TextBlock();
-  lblHash.set$text("ELFHash");
-  lblHash.set$fontSize(10);
-  hashRadioButton = new RadioButton();
-  hashRadioButton.set$groupName("hashRadioButtons");
-  hashRadioButton.set$value("4");
-  hashRadioButton.set$name("ELFHash");
-  spValues.children.add(lblHash);
-  radioButtonGroup.addRadioButton(hashRadioButton);
-  spValues.children.add(hashRadioButton);
-  lblHash = new TextBlock();
-  lblHash.set$text("JSHash");
-  lblHash.set$fontSize(10);
-  hashRadioButton = new RadioButton();
-  hashRadioButton.set$groupName("hashRadioButtons");
-  hashRadioButton.set$value("5");
-  hashRadioButton.set$name("JSHash");
-  spValues.children.add(lblHash);
-  radioButtonGroup.addRadioButton(hashRadioButton);
-  spValues.children.add(hashRadioButton);
-  lblHash = new TextBlock();
-  lblHash.set$text("PJWHash");
-  lblHash.set$fontSize(10);
-  hashRadioButton = new RadioButton();
-  hashRadioButton.set$groupName("hashRadioButtons");
-  hashRadioButton.set$value("6");
-  hashRadioButton.set$name("PJWHash");
-  spValues.children.add(lblHash);
-  radioButtonGroup.addRadioButton(hashRadioButton);
-  spValues.children.add(hashRadioButton);
-  lblHash = new TextBlock();
-  lblHash.set$text("RSHash");
-  lblHash.set$fontSize(10);
-  hashRadioButton = new RadioButton();
-  hashRadioButton.set$groupName("hashRadioButtons");
-  hashRadioButton.set$value("7");
-  hashRadioButton.set$name("RSHash");
-  spValues.children.add(lblHash);
-  radioButtonGroup.addRadioButton(hashRadioButton);
-  spValues.children.add(hashRadioButton);
-  lblHash = new TextBlock();
-  lblHash.set$text("SDBMHash");
-  lblHash.set$fontSize(10);
-  hashRadioButton = new RadioButton();
-  hashRadioButton.set$groupName("hashRadioButtons");
-  hashRadioButton.set$value("8");
-  hashRadioButton.set$name("SDBMHash");
-  spValues.children.add(lblHash);
-  radioButtonGroup.addRadioButton(hashRadioButton);
-  spValues.children.add(hashRadioButton);
-  lblHash = new TextBlock();
-  lblHash.set$text("NullHash");
-  lblHash.set$fontSize(10);
-  hashRadioButton = new RadioButton();
-  hashRadioButton.set$groupName("hashRadioButtons");
-  hashRadioButton.set$value("9");
-  hashRadioButton.set$name("NullHash");
-  spValues.children.add(lblHash);
-  radioButtonGroup.addRadioButton(hashRadioButton);
-  spValues.children.add(hashRadioButton);
-  lblHash = new TextBlock();
-  lblHash.set$text("BPHash");
-  lblHash.set$fontSize(10);
-  hashRadioButton = new RadioButton();
-  hashRadioButton.set$groupName("hashRadioButtons");
-  hashRadioButton.set$value("10");
-  hashRadioButton.set$name("BPHash");
-  spValues.children.add(lblHash);
-  radioButtonGroup.addRadioButton(hashRadioButton);
-  spValues.children.add(hashRadioButton);
-  lblHash = new TextBlock();
-  lblHash.set$text("FNVHash");
-  lblHash.set$fontSize(10);
-  hashRadioButton = new RadioButton();
-  hashRadioButton.set$groupName("hashRadioButtons");
-  hashRadioButton.set$value("11");
-  hashRadioButton.set$name("FNVHash");
-  spValues.children.add(lblHash);
-  radioButtonGroup.addRadioButton(hashRadioButton);
-  spValues.children.add(hashRadioButton);
+  $globals.LucaSystem_visualRoot.set$background(lgb);
+  var uiXml = "<!-- main ui container -->\n<stackpanel width=\"400\" \n  horizontalalignment=\"center\" verticalalignment=\"center\">\n\n  <!-- title -->\n  <border width=\"400\">\n    <textblock horizontalalignment=\"center\" verticalalignment=\"center\"\n      text=\"Hash Server Example\" fontsize=\"25\"></textblock>\n  </border>\n  \n  <!-- main ui layout -->\n  <border borderthickness=\"1\" background=\"WhiteSmoke\" bordercolor=\"Black\"\n  padding=\"5\" margin=\"5,0,0,0\">\n    <stackpanel>\n      <stackpanel>\n        <textblock text=\"String To Be Hashed\"></textblock>\n        <textbox name=\"tbRawString\"></textbox>\n      </stackpanel>\n      <stackpanel margin=\"10,0,0,0\">\n        <textblock text=\"Hashed Result:\"></textblock>\n        <textblock name=\"lblHashedString\"></textblock>\n      </stackpanel>\n      <button name=\"btnGenHash\" margin=\"5,0,0,0\" width=\"110\" content=\"Generate Hash\"></button>\n      \n      <border margin=\"0,10\" padding=\"5\" width=\"300\" borderthickness=\"1\" cornerradius=\"5px\" bordercolor=\"Gray\">\n        <stackpanel>\n      <textblock text=\"Select Hash Algorithm\"></textblock>\n    ";
+  for (var i = 0;
+   i < this.vm.hashNames.get$length(); i++) {
+    uiXml = uiXml + ("    <stackpanel margin=\"5,0,0,0\" orientation=\"horizontal\">\n    <radiobutton groupname=\"hashRadioButtons\" name=\"" + this.vm.hashNames.$index(i) + "\" value=\"" + i + "\"></radiobutton>\n    <textblock margin=\"0,0,0,5\" text=\"" + this.vm.hashNames.$index(i) + "\"></textblock>\n    </stackpanel>\n    ");
+  }
+  uiXml = uiXml + "</stackpanel></border>";
+  var p = new LucaxmlPresentationProvider();
+  return p.deserialize$1(uiXml);
+}
+View.prototype._initEventsAndBindings = function() {
+  var $this = this; // closure support
+  if (this.get$rootVisual() == null) $throw(const$415/*const Exception("root visual not initialized.")*/);
+  var tbRawString = LucaSystem.findByName("tbRawString", this.get$rootVisual());
+  var btnGenHash = LucaSystem.findByName("btnGenHash", this.get$rootVisual());
+  var lblHashedString = LucaSystem.findByName("lblHashedString", this.get$rootVisual());
+  var bg = this._groupRadiosByGroupName("hashRadioButtons");
   btnGenHash.click.$add((function (_, __) {
-    return $this.vm.genHash(enter.get$text());
+    return $this.inputSubmitted.invoke(btnGenHash, new HashSelectionEventArgs(tbRawString.get$text(), $this.vm.hashNames.$index(Math.parseInt(bg.currentSelectedButton.get$value().toString()))));
   })
   );
-  new _BindingImplementation(this.vm.hashedValueProperty, lblGenerationValue.textProperty, const$73/*BindingMode.OneWay*/, const$75/*const _DefaultConverter()*/);
+  new _BindingImplementation(this.vm.hashedValueProperty, lblHashedString.textProperty, const$73/*BindingMode.OneWay*/, const$75/*const _DefaultConverter()*/);
+}
+View.prototype._groupRadiosByGroupName = function(groupName) {
+  var bg = new RadioButtonGroup();
+  for (var i = 0;
+   i < this.vm.hashNames.get$length(); i++) {
+    var r = LucaSystem.findByName(this.vm.hashNames.$index(i), this.rootElement);
+    dart_core_print('r = ' + r);
+    bg.addRadioButton(r);
+  }
+  return bg;
 }
 // ********** Code for _ViewModelImplementation **************
 $inherits(_ViewModelImplementation, ViewModelBase);
 function _ViewModelImplementation() {
+  this.hashNames = const$401/*const ["APHash", "BKDRHash", "DEKHash", "DJBHash",
+                                    "ELFHash","JSHash","PJWHash","RSHash",
+                                    "SDBMHash","NullHash","BPHash","FNVHash"]*/
   // Initializers done
   ViewModelBase.call(this);
   this._HashClient_initProperties();
@@ -11754,6 +12227,7 @@ function _ViewModelImplementation() {
 _ViewModelImplementation.prototype._initializeView = function() {
   var $this = this; // closure support
   this.view = new View(this);
+  this.view.inputSubmitted.$add(this.get$genHash());
   this.generateHash = new GenerateHash();
   this.generateHash.f = (function (s) {
     setValue($this.hashedValueProperty, s);
@@ -11766,7 +12240,7 @@ _ViewModelImplementation.prototype._HashClient_initProperties = function() {
   this.hashedValueProperty = new FrameworkProperty(this, "hashedValueProperty", (function (_) {
 
   })
-  , "test");
+  , "0");
   this.hasherNameProperty = new FrameworkProperty(this, "hasherNameProperty", (function (s) {
     $this._hasherName = s;
   })
@@ -11776,10 +12250,14 @@ _ViewModelImplementation.prototype.setHasher = function(str) {
   dart_core_print("setHasher=" + str);
   this._hasherName = str;
 }
-_ViewModelImplementation.prototype.genHash = function(str) {
-  dart_core_print("genHash implementation :" + str + "\n" + "_hasherName = " + this._hasherName);
-  this.generateHash.handlePostMessage(str, this._hasherName);
-  dart_core_print("genHash implementation :" + str);
+_ViewModelImplementation.prototype.genHash = function(origin, args) {
+  this.setHasher(args.selectedHashType);
+  dart_core_print("genHash implementation :" + args.rawString + "\n" + "_hasherName = " + args.selectedHashType);
+  this.generateHash.handlePostMessage(args.rawString, args.selectedHashType);
+  dart_core_print("genHash implementation :" + args.selectedHashType);
+}
+_ViewModelImplementation.prototype.get$genHash = function() {
+  return this.genHash.bind(this);
 }
 // ********** Code for GenerateHash **************
 function GenerateHash() {
@@ -11827,8 +12305,17 @@ GenerateHash.prototype.sendRequest = function(url, json, onSuccess, onError) {
   );
   request.open("POST", url, true);
   request.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+  dart_core_print('sendRequest ' + url + " " + json_JSON.stringify(json));
   request.send(json_JSON.stringify(json));
   return request;
+}
+// ********** Code for HashSelectionEventArgs **************
+$inherits(HashSelectionEventArgs, EventArgs);
+function HashSelectionEventArgs(rawString, selectedHashType) {
+  this.rawString = rawString;
+  this.selectedHashType = selectedHashType;
+  // Initializers done
+  EventArgs.call(this);
 }
 // ********** Code for top level **************
 function main() {
@@ -11849,19 +12336,20 @@ $inheritsMembers(_DoubleLinkedQueueEntrySentinel_KeyValuePair_K$V, DoubleLinkedQ
 $inheritsMembers(ObservableList_ColumnDefinition, ListFactory_ColumnDefinition);
 $inheritsMembers(ObservableList_FrameworkElement, ListFactory_FrameworkElement);
 $inheritsMembers(ObservableList_RowDefinition, ListFactory_RowDefinition);
-// 331 dynamic types.
+// 332 dynamic types.
 // 502 types
 // 41 !leaf
 (function(){
   var v0/*CSSValueList*/ = 'CSSValueList|WebKitCSSFilterValue|WebKitCSSTransformValue';
   var v1/*HTMLInputElement*/ = 'HTMLInputElement|HTMLIsIndexElement';
   var v2/*HTMLMediaElement*/ = 'HTMLMediaElement|HTMLAudioElement|HTMLVideoElement';
-  var v3/*SVGGradientElement*/ = 'SVGGradientElement|SVGLinearGradientElement|SVGRadialGradientElement';
-  var v4/*SVGTextContentElement*/ = 'SVGTextContentElement|SVGTextPathElement|SVGTextPositioningElement|SVGAltGlyphElement|SVGTRefElement|SVGTSpanElement|SVGTextElement';
-  var v5/*UIEvent*/ = 'UIEvent|CompositionEvent|KeyboardEvent|MouseEvent|SVGZoomEvent|TextEvent|TouchEvent|WheelEvent';
-  var v6/*CharacterData*/ = 'CharacterData|Comment|Text|CDATASection';
-  var v7/*Document*/ = 'Document|HTMLDocument|SVGDocument';
-  var v8/*Element*/ = [v1/*HTMLInputElement*/,v2/*HTMLMediaElement*/,v3/*SVGGradientElement*/,v4/*SVGTextContentElement*/,'Element|HTMLElement|HTMLAnchorElement|HTMLAppletElement|HTMLAreaElement|HTMLBRElement|HTMLBaseElement|HTMLBaseFontElement|HTMLBodyElement|HTMLButtonElement|HTMLCanvasElement|HTMLDListElement|HTMLDataListElement|HTMLDetailsElement|HTMLDirectoryElement|HTMLDivElement|HTMLEmbedElement|HTMLFieldSetElement|HTMLFontElement|HTMLFormElement|HTMLFrameElement|HTMLFrameSetElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLIFrameElement|HTMLImageElement|HTMLKeygenElement|HTMLLIElement|HTMLLabelElement|HTMLLegendElement|HTMLLinkElement|HTMLMapElement|HTMLMarqueeElement|HTMLMenuElement|HTMLMetaElement|HTMLMeterElement|HTMLModElement|HTMLOListElement|HTMLObjectElement|HTMLOptGroupElement|HTMLOptionElement|HTMLOutputElement|HTMLParagraphElement|HTMLParamElement|HTMLPreElement|HTMLProgressElement|HTMLQuoteElement|HTMLScriptElement|HTMLSelectElement|HTMLSourceElement|HTMLSpanElement|HTMLStyleElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableElement|HTMLTableRowElement|HTMLTableSectionElement|HTMLTextAreaElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement|SVGElement|SVGAElement|SVGAltGlyphDefElement|SVGAltGlyphItemElement|SVGAnimationElement|SVGAnimateColorElement|SVGAnimateElement|SVGAnimateMotionElement|SVGAnimateTransformElement|SVGSetElement|SVGCircleElement|SVGClipPathElement|SVGComponentTransferFunctionElement|SVGFEFuncAElement|SVGFEFuncBElement|SVGFEFuncGElement|SVGFEFuncRElement|SVGCursorElement|SVGDefsElement|SVGDescElement|SVGEllipseElement|SVGFEBlendElement|SVGFEColorMatrixElement|SVGFEComponentTransferElement|SVGFECompositeElement|SVGFEConvolveMatrixElement|SVGFEDiffuseLightingElement|SVGFEDisplacementMapElement|SVGFEDistantLightElement|SVGFEDropShadowElement|SVGFEFloodElement|SVGFEGaussianBlurElement|SVGFEImageElement|SVGFEMergeElement|SVGFEMergeNodeElement|SVGFEMorphologyElement|SVGFEOffsetElement|SVGFEPointLightElement|SVGFESpecularLightingElement|SVGFESpotLightElement|SVGFETileElement|SVGFETurbulenceElement|SVGFilterElement|SVGFontElement|SVGFontFaceElement|SVGFontFaceFormatElement|SVGFontFaceNameElement|SVGFontFaceSrcElement|SVGFontFaceUriElement|SVGForeignObjectElement|SVGGElement|SVGGlyphElement|SVGGlyphRefElement|SVGHKernElement|SVGImageElement|SVGLineElement|SVGMPathElement|SVGMarkerElement|SVGMaskElement|SVGMetadataElement|SVGMissingGlyphElement|SVGPathElement|SVGPatternElement|SVGPolygonElement|SVGPolylineElement|SVGRectElement|SVGSVGElement|SVGScriptElement|SVGStopElement|SVGStyleElement|SVGSwitchElement|SVGSymbolElement|SVGTitleElement|SVGUseElement|SVGVKernElement|SVGViewElement'].join('|');
+  var v3/*HTMLElement*/ = [v1/*HTMLInputElement*/,v2/*HTMLMediaElement*/,'HTMLElement|HTMLAnchorElement|HTMLAppletElement|HTMLAreaElement|HTMLBRElement|HTMLBaseElement|HTMLBaseFontElement|HTMLBodyElement|HTMLButtonElement|HTMLCanvasElement|HTMLDListElement|HTMLDataListElement|HTMLDetailsElement|HTMLDirectoryElement|HTMLDivElement|HTMLEmbedElement|HTMLFieldSetElement|HTMLFontElement|HTMLFormElement|HTMLFrameElement|HTMLFrameSetElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLIFrameElement|HTMLImageElement|HTMLKeygenElement|HTMLLIElement|HTMLLabelElement|HTMLLegendElement|HTMLLinkElement|HTMLMapElement|HTMLMarqueeElement|HTMLMenuElement|HTMLMetaElement|HTMLMeterElement|HTMLModElement|HTMLOListElement|HTMLObjectElement|HTMLOptGroupElement|HTMLOptionElement|HTMLOutputElement|HTMLParagraphElement|HTMLParamElement|HTMLPreElement|HTMLProgressElement|HTMLQuoteElement|HTMLScriptElement|HTMLSelectElement|HTMLSourceElement|HTMLSpanElement|HTMLStyleElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableElement|HTMLTableRowElement|HTMLTableSectionElement|HTMLTextAreaElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement'].join('|');
+  var v4/*SVGGradientElement*/ = 'SVGGradientElement|SVGLinearGradientElement|SVGRadialGradientElement';
+  var v5/*SVGTextContentElement*/ = 'SVGTextContentElement|SVGTextPathElement|SVGTextPositioningElement|SVGAltGlyphElement|SVGTRefElement|SVGTSpanElement|SVGTextElement';
+  var v6/*UIEvent*/ = 'UIEvent|CompositionEvent|KeyboardEvent|MouseEvent|SVGZoomEvent|TextEvent|TouchEvent|WheelEvent';
+  var v7/*CharacterData*/ = 'CharacterData|Comment|Text|CDATASection';
+  var v8/*Document*/ = 'Document|HTMLDocument|SVGDocument';
+  var v9/*Element*/ = [v3/*HTMLElement*/,v4/*SVGGradientElement*/,v5/*SVGTextContentElement*/,'Element|SVGElement|SVGAElement|SVGAltGlyphDefElement|SVGAltGlyphItemElement|SVGAnimationElement|SVGAnimateColorElement|SVGAnimateElement|SVGAnimateMotionElement|SVGAnimateTransformElement|SVGSetElement|SVGCircleElement|SVGClipPathElement|SVGComponentTransferFunctionElement|SVGFEFuncAElement|SVGFEFuncBElement|SVGFEFuncGElement|SVGFEFuncRElement|SVGCursorElement|SVGDefsElement|SVGDescElement|SVGEllipseElement|SVGFEBlendElement|SVGFEColorMatrixElement|SVGFEComponentTransferElement|SVGFECompositeElement|SVGFEConvolveMatrixElement|SVGFEDiffuseLightingElement|SVGFEDisplacementMapElement|SVGFEDistantLightElement|SVGFEDropShadowElement|SVGFEFloodElement|SVGFEGaussianBlurElement|SVGFEImageElement|SVGFEMergeElement|SVGFEMergeNodeElement|SVGFEMorphologyElement|SVGFEOffsetElement|SVGFEPointLightElement|SVGFESpecularLightingElement|SVGFESpotLightElement|SVGFETileElement|SVGFETurbulenceElement|SVGFilterElement|SVGFontElement|SVGFontFaceElement|SVGFontFaceFormatElement|SVGFontFaceNameElement|SVGFontFaceSrcElement|SVGFontFaceUriElement|SVGForeignObjectElement|SVGGElement|SVGGlyphElement|SVGGlyphRefElement|SVGHKernElement|SVGImageElement|SVGLineElement|SVGMPathElement|SVGMarkerElement|SVGMaskElement|SVGMetadataElement|SVGMissingGlyphElement|SVGPathElement|SVGPatternElement|SVGPolygonElement|SVGPolylineElement|SVGRectElement|SVGSVGElement|SVGScriptElement|SVGStopElement|SVGStyleElement|SVGSwitchElement|SVGSymbolElement|SVGTitleElement|SVGUseElement|SVGVKernElement|SVGViewElement'].join('|');
   var table = [
     // [dynamic-dispatch-tag, tags of classes implementing dynamic-dispatch-tag]
     ['AbstractWorker', 'AbstractWorker|SharedWorker|Worker'],
@@ -11873,23 +12361,24 @@ $inheritsMembers(ObservableList_RowDefinition, ListFactory_RowDefinition);
     ['CSSValueList', v0/*CSSValueList*/],
     ['CSSValue', [v0/*CSSValueList*/,'CSSValue|CSSPrimitiveValue|SVGColor|SVGPaint'].join('|')],
     ['CanvasRenderingContext', 'CanvasRenderingContext|CanvasRenderingContext2D|WebGLRenderingContext'],
-    ['CharacterData', v6/*CharacterData*/],
+    ['CharacterData', v7/*CharacterData*/],
     ['DOMTokenList', 'DOMTokenList|DOMSettableTokenList'],
     ['DOMWindow', 'DOMWindow|Window'],
-    ['Document', v7/*Document*/],
+    ['Document', v8/*Document*/],
     ['HTMLInputElement', v1/*HTMLInputElement*/],
     ['HTMLMediaElement', v2/*HTMLMediaElement*/],
-    ['SVGGradientElement', v3/*SVGGradientElement*/],
-    ['SVGTextContentElement', v4/*SVGTextContentElement*/],
-    ['Element', v8/*Element*/],
+    ['HTMLElement', v3/*HTMLElement*/],
+    ['SVGGradientElement', v4/*SVGGradientElement*/],
+    ['SVGTextContentElement', v5/*SVGTextContentElement*/],
+    ['Element', v9/*Element*/],
     ['Entry', 'Entry|DirectoryEntry|FileEntry'],
     ['EntrySync', 'EntrySync|DirectoryEntrySync|FileEntrySync'],
-    ['UIEvent', v5/*UIEvent*/],
-    ['Event', [v5/*UIEvent*/,'Event|AudioProcessingEvent|BeforeLoadEvent|CloseEvent|CustomEvent|DeviceMotionEvent|DeviceOrientationEvent|ErrorEvent|HashChangeEvent|IDBVersionChangeEvent|MessageEvent|MutationEvent|OfflineAudioCompletionEvent|OverflowEvent|PageTransitionEvent|PopStateEvent|ProgressEvent|XMLHttpRequestProgressEvent|SpeechInputEvent|StorageEvent|TrackEvent|WebGLContextEvent|WebKitAnimationEvent|WebKitTransitionEvent'].join('|')],
+    ['UIEvent', v6/*UIEvent*/],
+    ['Event', [v6/*UIEvent*/,'Event|AudioProcessingEvent|BeforeLoadEvent|CloseEvent|CustomEvent|DeviceMotionEvent|DeviceOrientationEvent|ErrorEvent|HashChangeEvent|IDBVersionChangeEvent|MessageEvent|MutationEvent|OfflineAudioCompletionEvent|OverflowEvent|PageTransitionEvent|PopStateEvent|ProgressEvent|XMLHttpRequestProgressEvent|SpeechInputEvent|StorageEvent|TrackEvent|WebGLContextEvent|WebKitAnimationEvent|WebKitTransitionEvent'].join('|')],
     ['HTMLCollection', 'HTMLCollection|HTMLOptionsCollection|HTMLPropertiesCollection'],
     ['IDBCursor', 'IDBCursor|IDBCursorWithValue'],
     ['IDBRequest', 'IDBRequest|IDBVersionChangeRequest'],
-    ['Node', [v6/*CharacterData*/,v7/*Document*/,v8/*Element*/,'Node|Attr|DocumentFragment|DocumentType|Entity|EntityReference|Notation|ProcessingInstruction'].join('|')],
+    ['Node', [v7/*CharacterData*/,v8/*Document*/,v9/*Element*/,'Node|Attr|DocumentFragment|DocumentType|Entity|EntityReference|Notation|ProcessingInstruction'].join('|')],
     ['SVGLocatable', 'SVGLocatable|SVGTransformable'],
     ['SVGPathSeg', 'SVGPathSeg|SVGPathSegArcAbs|SVGPathSegArcRel|SVGPathSegClosePath|SVGPathSegCurvetoCubicAbs|SVGPathSegCurvetoCubicRel|SVGPathSegCurvetoCubicSmoothAbs|SVGPathSegCurvetoCubicSmoothRel|SVGPathSegCurvetoQuadraticAbs|SVGPathSegCurvetoQuadraticRel|SVGPathSegCurvetoQuadraticSmoothAbs|SVGPathSegCurvetoQuadraticSmoothRel|SVGPathSegLinetoAbs|SVGPathSegLinetoHorizontalAbs|SVGPathSegLinetoHorizontalRel|SVGPathSegLinetoRel|SVGPathSegLinetoVerticalAbs|SVGPathSegLinetoVerticalRel|SVGPathSegMovetoAbs|SVGPathSegMovetoRel'],
     ['SVGStylable', 'SVGStylable|SVGFilterPrimitiveStandardAttributes'],
@@ -11901,6 +12390,7 @@ $inheritsMembers(ObservableList_RowDefinition, ListFactory_RowDefinition);
 })();
 //  ********** Globals **************
 function $static_init(){
+  $globals.DEBUG = true;
   $globals.HashableObject__hashNum = 0;
   $globals.LucaSystem_initialized = false;
 }
@@ -12065,10 +12555,33 @@ var const$381 = new GridUnitType(3)/*const GridUnitType(3)*/;
 var const$385 = new StringToBooleanConverter()/*const StringToBooleanConverter()*/;
 var const$39 = new Cursors("se-resize")/*const Cursors("se-resize")*/;
 var const$4 = new Visibility(true)/*const Visibility(true)*/;
-var const$401 = new LinearGradientDirection("left")/*const LinearGradientDirection("left")*/;
-var const$403 = new LinearGradientDirection("top")/*const LinearGradientDirection("top")*/;
-var const$405 = new FrameworkException("RadioButton already exists in the RadioButtonGroup list.")/*const FrameworkException("RadioButton already exists in the RadioButtonGroup list.")*/;
+var const$401 = ImmutableList.ImmutableList$from$factory(["APHash", "BKDRHash", "DEKHash", "DJBHash", "ELFHash", "JSHash", "PJWHash", "RSHash", "SDBMHash", "NullHash", "BPHash", "FNVHash"])/*const ["APHash", "BKDRHash", "DEKHash", "DJBHash",
+                                  "ELFHash","JSHash","PJWHash","RSHash",
+                                  "SDBMHash","NullHash","BPHash","FNVHash"]*/;
+var const$402 = new LinearGradientDirection("left")/*const LinearGradientDirection("left")*/;
+var const$404 = new LinearGradientDirection("top")/*const LinearGradientDirection("top")*/;
+var const$406 = new JSSyntaxRegExp._create$ctor('<(\\w+)', (false/*multiLine == true*/ ? 'm' : '') + (false/*ignoreCase == true*/ ? 'i' : ''))/*const RegExp('<(\\w+)')*/;
+var const$407 = new JSSyntaxRegExp('<(\\w+)')/*const RegExp('<(\\w+)')*/;
+var const$409 = _constMap(['body', 'html', 'head', 'html', 'caption', 'table', 'td', 'tr', 'tbody', 'table', 'colgroup', 'table', 'col', 'colgroup', 'tr', 'tbody', 'tbody', 'table', 'tfoot', 'table', 'thead', 'table', 'track', 'audio'])/*const {
+      'body' : 'html',
+      'head' : 'html',
+      'caption' : 'table',
+      'td': 'tr',
+      'tbody': 'table',
+      'colgroup': 'table',
+      'col' : 'colgroup',
+      'tr' : 'tbody',
+      'tbody' : 'table',
+      'tfoot' : 'table',
+      'thead' : 'table',
+      'track' : 'audio',
+    }*/;
 var const$41 = new Cursors("sw-resize")/*const Cursors("sw-resize")*/;
+var const$411 = new PresentationProviderException("Attempted to add element to another element which is not a container.")/*const PresentationProviderException("Attempted to add element to another element which is not a container.")*/;
+var const$413 = new PresentationProviderException("Text node found in element which does not have a container context defined.")/*const PresentationProviderException("Text node found in element which does not have a container context defined.")*/;
+var const$414 = new PresentationProviderException("Expected container context to be property.  Found list.")/*const PresentationProviderException("Expected container context to be property.  Found list.")*/;
+var const$415 = new ExceptionImplementation("root visual not initialized.")/*const Exception("root visual not initialized.")*/;
+var const$416 = new FrameworkException("RadioButton already exists in the RadioButtonGroup list.")/*const FrameworkException("RadioButton already exists in the RadioButtonGroup list.")*/;
 var const$43 = new Cursors("text")/*const Cursors("text")*/;
 var const$45 = new Cursors("wait")/*const Cursors("wait")*/;
 var const$47 = new Cursors("inherit")/*const Cursors("inherit")*/;

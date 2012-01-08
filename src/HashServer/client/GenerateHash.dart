@@ -44,6 +44,7 @@ class GenerateHash {
     
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+    print('sendRequest '+ url+ " " + JSON.stringify(json));
     request.send(JSON.stringify(json));
     
     return request;

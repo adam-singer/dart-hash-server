@@ -3,8 +3,8 @@ interface ViewModel default _ViewModelImplementation {
   ViewModel();
   FrameworkProperty hashedValueProperty;
   FrameworkProperty hasherNameProperty;
-  void genHash(String str);
-  void setHasher(String str);
+  List<String> hashNames;
+  void genHash(Object origin, HashSelectionEventArgs args);
 }
 
 class _ViewModelImplementation extends ViewModelBase implements ViewModel
@@ -14,6 +14,11 @@ class _ViewModelImplementation extends ViewModelBase implements ViewModel
   FrameworkProperty hashedValueProperty;
   FrameworkProperty hasherNameProperty;
   
+  // NOTE (John)
+  // you can generate this from your model later (server side...)
+  List<String> hashNames = const ["APHash", "BKDRHash", "DEKHash", "DJBHash",
+                                  "ELFHash","JSHash","PJWHash","RSHash",
+                                  "SDBMHash","NullHash","BPHash","FNVHash"];
   String _hasherName;
   
   _ViewModelImplementation() {
@@ -25,6 +30,10 @@ class _ViewModelImplementation extends ViewModelBase implements ViewModel
   
   void _initializeView() {
     view = new View(this);
+    
+    // Subscribe to the view's 'inputSubmitted' event
+    view.inputSubmitted + genHash;
+    
     generateHash = new GenerateHash();
     generateHash.f = (var s) {
       setValue(hashedValueProperty, s);
@@ -37,7 +46,7 @@ class _ViewModelImplementation extends ViewModelBase implements ViewModel
   
     hashedValueProperty = new FrameworkProperty(this, "hashedValueProperty", (_){
       
-    },"test");
+    },"0");
     
     hasherNameProperty = new FrameworkProperty(this, "hasherNameProperty", (var s){
       _hasherName = s;
@@ -49,9 +58,14 @@ class _ViewModelImplementation extends ViewModelBase implements ViewModel
     _hasherName = str;
   }
   
-  void genHash(String str) {
-    print ("genHash implementation :" + str + "\n" + "_hasherName = " + _hasherName);
-    generateHash.handlePostMessage(str, _hasherName);
-    print ("genHash implementation :" + str);
+  // NOTE (John)
+  // Now using FrameworkEvent signature with custom EventArgs...
+  void genHash(Object origin, HashSelectionEventArgs args) {
+    
+    setHasher(args.selectedHashType);
+    
+    print ("genHash implementation :" + args.rawString + "\n" + "_hasherName = " + args.selectedHashType);
+    generateHash.handlePostMessage(args.rawString, args.selectedHashType);
+    print ("genHash implementation :" + args.selectedHashType);
   }
 }

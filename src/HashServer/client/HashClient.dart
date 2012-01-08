@@ -5,6 +5,7 @@
 #source('View.dart');
 #source('ViewModel.dart');
 #source('GenerateHash.dart');
+#source('HashSelectionEventArgs.dart');
 
 // To compile:
 // minfrog --out=ValueConversion.dart.app.js --compile-only ValueConversion.dart
