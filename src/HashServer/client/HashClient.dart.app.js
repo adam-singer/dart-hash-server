@@ -141,7 +141,13 @@ Object.prototype.hashCode$0 = function() {
 Object.prototype.is$Exception = function() {
   return false;
 };
+Object.prototype.is$Map_dart_core_String$Dynamic = function() {
+  return false;
+};
 Object.prototype.is$RegExp = function() {
+  return false;
+};
+Object.prototype.is$html_html_Document = function() {
   return false;
 };
 Object.prototype.item$1 = function($0) {
@@ -149,6 +155,18 @@ Object.prototype.item$1 = function($0) {
 };
 Object.prototype.next$0 = function() {
   return this.noSuchMethod("next", []);
+};
+Object.prototype.open$2 = function($0, $1) {
+  return this.noSuchMethod("open", [$0, $1]);
+};
+Object.prototype.open$3 = function($0, $1, $2) {
+  return this.noSuchMethod("open", [$0, $1, $2]);
+};
+Object.prototype.open$4 = function($0, $1, $2, $3) {
+  return this.noSuchMethod("open", [$0, $1, $2, $3]);
+};
+Object.prototype.open$5 = function($0, $1, $2, $3, $4) {
+  return this.noSuchMethod("open", [$0, $1, $2, $3, $4]);
 };
 Object.prototype.querySelector$1 = function($0) {
   return this.noSuchMethod("querySelector", [$0]);
@@ -168,11 +186,20 @@ Object.prototype.removeChild$1 = function($0) {
 Object.prototype.removeEventListener$3 = function($0, $1, $2) {
   return this.noSuchMethod("removeEventListener", [$0, $1, $2]);
 };
+Object.prototype.send$0 = function() {
+  return this.noSuchMethod("send", []);
+};
+Object.prototype.send$1 = function($0) {
+  return this.noSuchMethod("send", [$0]);
+};
 Object.prototype.setAttribute$2 = function($0, $1) {
   return this.noSuchMethod("setAttribute", [$0, $1]);
 };
 Object.prototype.setProperty$3 = function($0, $1, $2) {
   return this.noSuchMethod("setProperty", [$0, $1, $2]);
+};
+Object.prototype.setRequestHeader$2 = function($0, $1) {
+  return this.noSuchMethod("setRequestHeader", [$0, $1]);
 };
 Object.prototype.split$1 = function($0) {
   return this.noSuchMethod("split", [$0]);
@@ -259,6 +286,16 @@ ObjectNotClosureException.prototype.toString = function() {
   return "Object is not closure";
 }
 ObjectNotClosureException.prototype.toString$0 = ObjectNotClosureException.prototype.toString;
+// ********** Code for IllegalArgumentException **************
+function IllegalArgumentException(args) {
+  this._args = args;
+  // Initializers done
+}
+IllegalArgumentException.prototype.is$Exception = function(){return true};
+IllegalArgumentException.prototype.toString = function() {
+  return ("Illegal argument(s): " + this._args);
+}
+IllegalArgumentException.prototype.toString$0 = IllegalArgumentException.prototype.toString;
 // ********** Code for StackOverflowException **************
 function StackOverflowException() {
   // Initializers done
@@ -359,6 +396,18 @@ Math.parseInt = function(str) {
     return ret;
 }
 // ********** Code for top level **************
+function dart_core_print(obj) {
+  return _print(obj);
+}
+function _print(obj) {
+  if (typeof console == 'object') {
+    if (obj) obj = obj.toString();
+    console.log(obj);
+  } else {
+    write(obj);
+    write('\n');
+  }
+}
 function _map(itemsAndKeys) {
   var ret = new LinkedHashMapImplementation();
   for (var i = 0;
@@ -469,6 +518,7 @@ ListFactory_E = ListFactory;
 ListFactory_EventHandlerReference = ListFactory;
 ListFactory_FrameworkElement = ListFactory;
 ListFactory_GradientStop = ListFactory;
+ListFactory_K = ListFactory;
 ListFactory_html_html_Node = ListFactory;
 ListFactory_RowDefinition = ListFactory;
 ListFactory_dart_core_String = ListFactory;
@@ -557,6 +607,7 @@ function ImmutableMap(keyValuePairs) {
   this._internal = _map(keyValuePairs);
   // Initializers done
 }
+ImmutableMap.prototype.is$Map_dart_core_String$Dynamic = function(){return true};
 ImmutableMap.prototype.$index = function(key) {
   return this._internal.$index(key);
 }
@@ -565,6 +616,9 @@ ImmutableMap.prototype.get$length = function() {
 }
 ImmutableMap.prototype.forEach = function(f) {
   this._internal.forEach(f);
+}
+ImmutableMap.prototype.getKeys = function() {
+  return this._internal.getKeys();
 }
 ImmutableMap.prototype.$setindex = function(key, value) {
   $throw(const$76/*const IllegalAccessException()*/);
@@ -601,6 +655,7 @@ function HashMapImplementation() {
   this._keys = new Array(8/*HashMapImplementation._INITIAL_CAPACITY*/);
   this._values = new Array(8/*HashMapImplementation._INITIAL_CAPACITY*/);
 }
+HashMapImplementation.prototype.is$Map_dart_core_String$Dynamic = function(){return true};
 HashMapImplementation._computeLoadLimit = function(capacity) {
   return $truncdiv((capacity * 3), 4);
 }
@@ -722,6 +777,15 @@ HashMapImplementation.prototype.forEach = function(f) {
     }
   }
 }
+HashMapImplementation.prototype.getKeys = function() {
+  var list = new Array(this.get$length());
+  var i = 0;
+  this.forEach(function _(key, value) {
+    list.$setindex(i++, key);
+  }
+  );
+  return list;
+}
 HashMapImplementation.prototype.containsKey = function(key) {
   return (this._probeForLookup(key) != -1);
 }
@@ -732,6 +796,7 @@ HashMapImplementation.prototype.remove$1 = HashMapImplementation.prototype.remov
 // ********** Code for HashMapImplementation_AttachedFrameworkProperty$HashMap_FrameworkObject$Dynamic **************
 $inherits(HashMapImplementation_AttachedFrameworkProperty$HashMap_FrameworkObject$Dynamic, HashMapImplementation);
 function HashMapImplementation_AttachedFrameworkProperty$HashMap_FrameworkObject$Dynamic() {}
+HashMapImplementation_AttachedFrameworkProperty$HashMap_FrameworkObject$Dynamic.prototype.is$Map_dart_core_String$Dynamic = function(){return false};
 // ********** Code for HashMapImplementation_E$E **************
 $inherits(HashMapImplementation_E$E, HashMapImplementation);
 function HashMapImplementation_E$E() {
@@ -742,6 +807,7 @@ function HashMapImplementation_E$E() {
   this._keys = new Array(8/*HashMapImplementation._INITIAL_CAPACITY*/);
   this._values = new Array(8/*HashMapImplementation._INITIAL_CAPACITY*/);
 }
+HashMapImplementation_E$E.prototype.is$Map_dart_core_String$Dynamic = function(){return true};
 HashMapImplementation_E$E._computeLoadLimit = function(capacity) {
   return $truncdiv((capacity * 3), 4);
 }
@@ -854,15 +920,19 @@ HashMapImplementation_E$E.prototype.containsKey = function(key) {
 // ********** Code for HashMapImplementation_FrameworkElement$Dynamic **************
 $inherits(HashMapImplementation_FrameworkElement$Dynamic, HashMapImplementation);
 function HashMapImplementation_FrameworkElement$Dynamic() {}
+HashMapImplementation_FrameworkElement$Dynamic.prototype.is$Map_dart_core_String$Dynamic = function(){return false};
 // ********** Code for HashMapImplementation_K$DoubleLinkedQueueEntry_KeyValuePair_K$V **************
 $inherits(HashMapImplementation_K$DoubleLinkedQueueEntry_KeyValuePair_K$V, HashMapImplementation);
 function HashMapImplementation_K$DoubleLinkedQueueEntry_KeyValuePair_K$V() {}
+HashMapImplementation_K$DoubleLinkedQueueEntry_KeyValuePair_K$V.prototype.is$Map_dart_core_String$Dynamic = function(){return true};
 // ********** Code for HashMapImplementation_dart_core_String$Dynamic **************
 $inherits(HashMapImplementation_dart_core_String$Dynamic, HashMapImplementation);
 function HashMapImplementation_dart_core_String$Dynamic() {}
+HashMapImplementation_dart_core_String$Dynamic.prototype.is$Map_dart_core_String$Dynamic = function(){return true};
 // ********** Code for HashMapImplementation_dart_core_String$StyleSetter **************
 $inherits(HashMapImplementation_dart_core_String$StyleSetter, HashMapImplementation);
 function HashMapImplementation_dart_core_String$StyleSetter() {}
+HashMapImplementation_dart_core_String$StyleSetter.prototype.is$Map_dart_core_String$Dynamic = function(){return true};
 // ********** Code for HashSetImplementation **************
 function HashSetImplementation() {
   // Initializers done
@@ -993,6 +1063,7 @@ function LinkedHashMapImplementation() {
   this._map = new HashMapImplementation();
   this._list = new DoubleLinkedQueue_KeyValuePair_K$V();
 }
+LinkedHashMapImplementation.prototype.is$Map_dart_core_String$Dynamic = function(){return true};
 LinkedHashMapImplementation.prototype.$setindex = function(key, value) {
   if (this._map.containsKey(key)) {
     this._map.$index(key).get$element().set$value(value);
@@ -1020,6 +1091,15 @@ LinkedHashMapImplementation.prototype.putIfAbsent = function(key, ifAbsent) {
     this.$setindex(key, value);
   }
   return value;
+}
+LinkedHashMapImplementation.prototype.getKeys = function() {
+  var list = new Array(this.get$length());
+  var index = 0;
+  this._list.forEach(function _(entry) {
+    list.$setindex(index++, entry.key);
+  }
+  );
+  return list;
 }
 LinkedHashMapImplementation.prototype.forEach = function(f) {
   this._list.forEach(function _(entry) {
@@ -1621,6 +1701,8 @@ $dynamic("get$dartObjectLocalStorage").Crypto = function() { return this.dartObj
 $dynamic("set$dartObjectLocalStorage").Crypto = function(value) { return this.dartObjectLocalStorage = value; };
 // ********** Code for CustomEvent **************
 // ********** Code for DOMApplicationCache **************
+$dynamic("get$status").DOMApplicationCache = function() { return this.status; };
+$dynamic("set$status").DOMApplicationCache = function(value) { return this.status = value; };
 $dynamic("get$dartObjectLocalStorage").DOMApplicationCache = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").DOMApplicationCache = function(value) { return this.dartObjectLocalStorage = value; };
 $dynamic("addEventListener$2").DOMApplicationCache = function($0, $1) {
@@ -1730,6 +1812,8 @@ $dynamic("get$name").DOMWindow = function() { return this.name; };
 $dynamic("set$name").DOMWindow = function(value) { return this.name = value; };
 $dynamic("get$parent").DOMWindow = function() { return this.parent; };
 $dynamic("set$parent").DOMWindow = function(value) { return this.parent = value; };
+$dynamic("get$status").DOMWindow = function() { return this.status; };
+$dynamic("set$status").DOMWindow = function(value) { return this.status = value; };
 $dynamic("get$top").DOMWindow = function() { return this.top; };
 $dynamic("set$top").DOMWindow = function(value) { return this.top = value; };
 $dynamic("get$blur").DOMWindow = function() {
@@ -1737,6 +1821,9 @@ $dynamic("get$blur").DOMWindow = function() {
 }
 $dynamic("get$focus").DOMWindow = function() {
   return this.focus.bind(this);
+}
+$dynamic("get$open").DOMWindow = function() {
+  return this.open.bind(this);
 }
 $dynamic("get$dartObjectLocalStorage").DOMWindow = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").DOMWindow = function(value) { return this.dartObjectLocalStorage = value; };
@@ -1751,6 +1838,12 @@ $dynamic("blur$0").DOMWindow = function() {
 };
 $dynamic("focus$0").DOMWindow = function() {
   return this.focus();
+};
+$dynamic("open$2").DOMWindow = function($0, $1) {
+  return this.open($0, $1);
+};
+$dynamic("open$3").DOMWindow = function($0, $1, $2) {
+  return this.open($0, $1, $2);
 };
 $dynamic("removeEventListener$3").DOMWindow = function($0, $1, $2) {
   return this.removeEventListener($0, $wrap_call$1(to$call$1($1)), $2);
@@ -1788,6 +1881,8 @@ $dynamic("set$dartObjectLocalStorage").DirectoryReaderSync = function(value) { r
 // ********** Code for Document **************
 $dynamic("get$documentElement").Document = function() { return this.documentElement; };
 $dynamic("set$documentElement").Document = function(value) { return this.documentElement = value; };
+$dynamic("get$readyState").Document = function() { return this.readyState; };
+$dynamic("set$readyState").Document = function(value) { return this.readyState = value; };
 $dynamic("querySelector$1").Document = function($0) {
   return this.querySelector($0);
 };
@@ -1899,6 +1994,8 @@ $dynamic("toString$0").EventException = function() {
   return this.toString();
 };
 // ********** Code for EventSource **************
+$dynamic("get$readyState").EventSource = function() { return this.readyState; };
+$dynamic("set$readyState").EventSource = function(value) { return this.readyState = value; };
 $dynamic("get$dartObjectLocalStorage").EventSource = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").EventSource = function(value) { return this.dartObjectLocalStorage = value; };
 $dynamic("addEventListener$2").EventSource = function($0, $1) {
@@ -1947,6 +2044,8 @@ $dynamic("item$1").FileList = function($0) {
   return this.item($0);
 };
 // ********** Code for FileReader **************
+$dynamic("get$readyState").FileReader = function() { return this.readyState; };
+$dynamic("set$readyState").FileReader = function(value) { return this.readyState = value; };
 $dynamic("get$dartObjectLocalStorage").FileReader = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").FileReader = function(value) { return this.dartObjectLocalStorage = value; };
 // ********** Code for FileReaderSync **************
@@ -1957,6 +2056,8 @@ $dynamic("get$length").FileWriter = function() { return this.length; };
 $dynamic("set$length").FileWriter = function(value) { return this.length = value; };
 $dynamic("get$position").FileWriter = function() { return this.position; };
 $dynamic("set$position").FileWriter = function(value) { return this.position = value; };
+$dynamic("get$readyState").FileWriter = function() { return this.readyState; };
+$dynamic("set$readyState").FileWriter = function(value) { return this.readyState = value; };
 $dynamic("get$dartObjectLocalStorage").FileWriter = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").FileWriter = function(value) { return this.dartObjectLocalStorage = value; };
 // ********** Code for FileWriterSync **************
@@ -2041,9 +2142,23 @@ $dynamic("item$1").HTMLCollection = function($0) {
 // ********** Code for dom_HTMLDListElement **************
 // ********** Code for dom_HTMLDataListElement **************
 // ********** Code for dom_HTMLDetailsElement **************
+$dynamic("get$open").HTMLDetailsElement = function() { return this.open; };
+$dynamic("set$open").HTMLDetailsElement = function(value) { return this.open = value; };
+$dynamic("open$2").HTMLDetailsElement = function($0, $1) {
+  return this.open($0, $1);
+};
+$dynamic("open$4").HTMLDetailsElement = function($0, $1, $2, $3) {
+  return this.open($0, $1, $2, $3);
+};
+$dynamic("open$5").HTMLDetailsElement = function($0, $1, $2, $3, $4) {
+  return this.open($0, $1, $2, $3, $4);
+};
 // ********** Code for dom_HTMLDirectoryElement **************
 // ********** Code for dom_HTMLDivElement **************
 // ********** Code for dom_HTMLDocument **************
+$dynamic("get$open").HTMLDocument = function() {
+  return this.open.bind(this);
+}
 // ********** Code for dom_HTMLElement **************
 // ********** Code for dom_HTMLEmbedElement **************
 $dynamic("get$height").HTMLEmbedElement = function() { return this.height; };
@@ -2125,6 +2240,8 @@ $dynamic("start$0").HTMLMarqueeElement = function() {
   return this.start();
 };
 // ********** Code for dom_HTMLMediaElement **************
+$dynamic("get$readyState").HTMLMediaElement = function() { return this.readyState; };
+$dynamic("set$readyState").HTMLMediaElement = function(value) { return this.readyState = value; };
 // ********** Code for dom_HTMLMenuElement **************
 // ********** Code for dom_HTMLMetaElement **************
 $dynamic("get$content").HTMLMetaElement = function() { return this.content; };
@@ -2228,6 +2345,8 @@ $dynamic("set$value").HTMLTextAreaElement = function(value) { return this.value 
 $dynamic("get$text").HTMLTitleElement = function() { return this.text; };
 $dynamic("set$text").HTMLTitleElement = function(value) { return this.text = value; };
 // ********** Code for dom_HTMLTrackElement **************
+$dynamic("get$readyState").HTMLTrackElement = function() { return this.readyState; };
+$dynamic("set$readyState").HTMLTrackElement = function(value) { return this.readyState = value; };
 // ********** Code for dom_HTMLUListElement **************
 // ********** Code for dom_HTMLUnknownElement **************
 // ********** Code for dom_HTMLVideoElement **************
@@ -2277,6 +2396,9 @@ $dynamic("toString$0").IDBDatabaseException = function() {
   return this.toString();
 };
 // ********** Code for IDBFactory **************
+$dynamic("get$open").IDBFactory = function() {
+  return this.open.bind(this);
+}
 $dynamic("get$dartObjectLocalStorage").IDBFactory = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").IDBFactory = function(value) { return this.dartObjectLocalStorage = value; };
 // ********** Code for IDBIndex **************
@@ -2299,6 +2421,8 @@ $dynamic("add$1").IDBObjectStore = function($0) {
   return this.add($0);
 };
 // ********** Code for IDBRequest **************
+$dynamic("get$readyState").IDBRequest = function() { return this.readyState; };
+$dynamic("set$readyState").IDBRequest = function(value) { return this.readyState = value; };
 $dynamic("get$dartObjectLocalStorage").IDBRequest = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").IDBRequest = function(value) { return this.dartObjectLocalStorage = value; };
 $dynamic("addEventListener$2").IDBRequest = function($0, $1) {
@@ -3315,6 +3439,8 @@ $dynamic("get$dartObjectLocalStorage").WebKitPoint = function() { return this.da
 $dynamic("set$dartObjectLocalStorage").WebKitPoint = function(value) { return this.dartObjectLocalStorage = value; };
 // ********** Code for dom_WebKitTransitionEvent **************
 // ********** Code for WebSocket **************
+$dynamic("get$readyState").WebSocket = function() { return this.readyState; };
+$dynamic("set$readyState").WebSocket = function(value) { return this.readyState = value; };
 $dynamic("get$dartObjectLocalStorage").WebSocket = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").WebSocket = function(value) { return this.dartObjectLocalStorage = value; };
 $dynamic("addEventListener$2").WebSocket = function($0, $1) {
@@ -3325,6 +3451,9 @@ $dynamic("addEventListener$3").WebSocket = function($0, $1, $2) {
 };
 $dynamic("removeEventListener$3").WebSocket = function($0, $1, $2) {
   return this.removeEventListener($0, $wrap_call$1(to$call$1($1)), $2);
+};
+$dynamic("send$1").WebSocket = function($0) {
+  return this.send($0);
 };
 // ********** Code for WheelEvent **************
 // ********** Code for Worker **************
@@ -3350,6 +3479,15 @@ $dynamic("toString$0").WorkerLocation = function() {
 $dynamic("get$dartObjectLocalStorage").WorkerNavigator = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").WorkerNavigator = function(value) { return this.dartObjectLocalStorage = value; };
 // ********** Code for XMLHttpRequest **************
+$dynamic("get$readyState").XMLHttpRequest = function() { return this.readyState; };
+$dynamic("set$readyState").XMLHttpRequest = function(value) { return this.readyState = value; };
+$dynamic("get$responseText").XMLHttpRequest = function() { return this.responseText; };
+$dynamic("set$responseText").XMLHttpRequest = function(value) { return this.responseText = value; };
+$dynamic("get$status").XMLHttpRequest = function() { return this.status; };
+$dynamic("set$status").XMLHttpRequest = function(value) { return this.status = value; };
+$dynamic("get$open").XMLHttpRequest = function() {
+  return this.open.bind(this);
+}
 $dynamic("get$dartObjectLocalStorage").XMLHttpRequest = function() { return this.dartObjectLocalStorage; };
 $dynamic("set$dartObjectLocalStorage").XMLHttpRequest = function(value) { return this.dartObjectLocalStorage = value; };
 $dynamic("addEventListener$2").XMLHttpRequest = function($0, $1) {
@@ -3358,8 +3496,29 @@ $dynamic("addEventListener$2").XMLHttpRequest = function($0, $1) {
 $dynamic("addEventListener$3").XMLHttpRequest = function($0, $1, $2) {
   return this.addEventListener($0, $wrap_call$1(to$call$1($1)), $2);
 };
+$dynamic("open$2").XMLHttpRequest = function($0, $1) {
+  return this.open($0, $1);
+};
+$dynamic("open$3").XMLHttpRequest = function($0, $1, $2) {
+  return this.open($0, $1, $2);
+};
+$dynamic("open$4").XMLHttpRequest = function($0, $1, $2, $3) {
+  return this.open($0, $1, $2, $3);
+};
+$dynamic("open$5").XMLHttpRequest = function($0, $1, $2, $3, $4) {
+  return this.open($0, $1, $2, $3, $4);
+};
 $dynamic("removeEventListener$3").XMLHttpRequest = function($0, $1, $2) {
   return this.removeEventListener($0, $wrap_call$1(to$call$1($1)), $2);
+};
+$dynamic("send$0").XMLHttpRequest = function() {
+  return this.send();
+};
+$dynamic("send$1").XMLHttpRequest = function($0) {
+  return this.send($0);
+};
+$dynamic("setRequestHeader$2").XMLHttpRequest = function($0, $1) {
+  return this.setRequestHeader($0, $1);
 };
 // ********** Code for XMLHttpRequestException **************
 $dynamic("get$name").XMLHttpRequestException = function() { return this.name; };
@@ -3560,6 +3719,9 @@ MediaElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 MediaElementWrappingImplementation._wrap$ctor.prototype = MediaElementWrappingImplementation.prototype;
+MediaElementWrappingImplementation.prototype.get$readyState = function() {
+  return this._ptr.get$readyState();
+}
 // ********** Code for AudioElementWrappingImplementation **************
 $inherits(AudioElementWrappingImplementation, MediaElementWrappingImplementation);
 function AudioElementWrappingImplementation() {}
@@ -3707,6 +3869,18 @@ DetailsElementWrappingImplementation._wrap$ctor = function(ptr) {
   ElementWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 DetailsElementWrappingImplementation._wrap$ctor.prototype = DetailsElementWrappingImplementation.prototype;
+DetailsElementWrappingImplementation.prototype.get$open = function() {
+  return this._ptr.get$open();
+}
+DetailsElementWrappingImplementation.prototype.open$2 = function($0, $1) {
+  return this.get$open()($0, $1);
+};
+DetailsElementWrappingImplementation.prototype.open$4 = function($0, $1, $2, $3) {
+  return this.get$open()($0, $1, $2, $3);
+};
+DetailsElementWrappingImplementation.prototype.open$5 = function($0, $1, $2, $3, $4) {
+  return this.get$open()($0, $1, $2, $3, $4);
+};
 // ********** Code for DivElementWrappingImplementation **************
 $inherits(DivElementWrappingImplementation, ElementWrappingImplementation);
 function DivElementWrappingImplementation() {}
@@ -6664,6 +6838,9 @@ LevelDom.wrapSVGAnimatedLength = function(raw) {
 LevelDom.wrapWindow = function(raw) {
   return raw == null ? null : raw.get$dartObjectLocalStorage() != null ? raw.get$dartObjectLocalStorage() : new WindowWrappingImplementation._wrap$ctor(raw);
 }
+LevelDom.unwrapMaybePrimitive = function(raw) {
+  return (raw == null || (typeof(raw) == 'string') || (typeof(raw) == 'number') || (typeof(raw) == 'boolean')) ? raw : raw.get$_ptr();
+}
 LevelDom.unwrap = function(raw) {
   return raw == null ? null : raw.get$_ptr();
 }
@@ -7054,8 +7231,12 @@ DocumentWrappingImplementation._wrap$ctor = function(_documentPtr, ptr) {
   this._documentPtr.get$dynamic().set$dartObjectLocalStorage(this);
 }
 DocumentWrappingImplementation._wrap$ctor.prototype = DocumentWrappingImplementation.prototype;
+DocumentWrappingImplementation.prototype.is$html_html_Document = function(){return true};
 DocumentWrappingImplementation.prototype.get$parent = function() {
   return null;
+}
+DocumentWrappingImplementation.prototype.get$readyState = function() {
+  return this._documentPtr.get$readyState();
 }
 DocumentWrappingImplementation.prototype.get$on = function() {
   if (this._on == null) {
@@ -7070,6 +7251,7 @@ ElementAttributeMap._wrap$ctor = function(_element) {
   // Initializers done
 }
 ElementAttributeMap._wrap$ctor.prototype = ElementAttributeMap.prototype;
+ElementAttributeMap.prototype.is$Map_dart_core_String$Dynamic = function(){return true};
 ElementAttributeMap.prototype.containsKey = function(key) {
   return this._element.hasAttribute$1(key);
 }
@@ -7094,6 +7276,15 @@ ElementAttributeMap.prototype.forEach = function(f) {
     var item = attributes.item$1(i);
     f(item.get$name(), item.get$value());
   }
+}
+ElementAttributeMap.prototype.getKeys = function() {
+  var attributes = this._element.get$attributes();
+  var keys = new Array(attributes.get$length());
+  for (var i = 0, len = attributes.get$length();
+   i < len; i++) {
+    keys.$setindex(i, attributes.item$1(i).get$name());
+  }
+  return keys;
 }
 ElementAttributeMap.prototype.get$length = function() {
   return this._element.get$attributes().get$length();
@@ -7366,6 +7557,7 @@ SVGDocumentWrappingImplementation._wrap$ctor = function(ptr) {
   DocumentWrappingImplementation._wrap$ctor.call(this, ptr, ptr.rootElement);
 }
 SVGDocumentWrappingImplementation._wrap$ctor.prototype = SVGDocumentWrappingImplementation.prototype;
+SVGDocumentWrappingImplementation.prototype.is$html_html_Document = function(){return true};
 // ********** Code for SVGSVGElementWrappingImplementation **************
 $inherits(SVGSVGElementWrappingImplementation, SVGElementWrappingImplementation);
 function SVGSVGElementWrappingImplementation() {}
@@ -7491,6 +7683,9 @@ WindowWrappingImplementation.prototype.get$parent = function() {
 WindowWrappingImplementation.prototype.set$parent = function(value) {
   this._ptr.set$parent(LevelDom.unwrap(value));
 }
+WindowWrappingImplementation.prototype.get$status = function() {
+  return this._ptr.get$status();
+}
 WindowWrappingImplementation.prototype.get$top = function() {
   return LevelDom.wrapWindow(this._ptr.get$top());
 }
@@ -7506,6 +7701,18 @@ WindowWrappingImplementation.prototype.focus = function() {
 WindowWrappingImplementation.prototype.get$focus = function() {
   return this.focus.bind(this);
 }
+WindowWrappingImplementation.prototype.open = function(url, target, features) {
+  if (features == null) {
+    return LevelDom.wrapWindow(this._ptr.open$2(url, target));
+  }
+  else {
+    return LevelDom.wrapWindow(this._ptr.open$3(url, target, features));
+  }
+}
+WindowWrappingImplementation.prototype.open.$optional = ['features', 'null']
+WindowWrappingImplementation.prototype.get$open = function() {
+  return this.open.bind(this);
+}
 WindowWrappingImplementation.prototype.get$on = function() {
   if (this._on == null) {
     this._on = new WindowEventsImplementation._wrap$ctor(this._ptr);
@@ -7514,6 +7721,8 @@ WindowWrappingImplementation.prototype.get$on = function() {
 }
 WindowWrappingImplementation.prototype.blur$0 = WindowWrappingImplementation.prototype.blur;
 WindowWrappingImplementation.prototype.focus$0 = WindowWrappingImplementation.prototype.focus;
+WindowWrappingImplementation.prototype.open$2 = WindowWrappingImplementation.prototype.open;
+WindowWrappingImplementation.prototype.open$3 = WindowWrappingImplementation.prototype.open;
 // ********** Code for XMLHttpRequestProgressEventWrappingImplementation **************
 $inherits(XMLHttpRequestProgressEventWrappingImplementation, ProgressEventWrappingImplementation);
 function XMLHttpRequestProgressEventWrappingImplementation() {}
@@ -7522,6 +7731,94 @@ XMLHttpRequestProgressEventWrappingImplementation._wrap$ctor = function(ptr) {
   ProgressEventWrappingImplementation._wrap$ctor.call(this, ptr);
 }
 XMLHttpRequestProgressEventWrappingImplementation._wrap$ctor.prototype = XMLHttpRequestProgressEventWrappingImplementation.prototype;
+// ********** Code for XMLHttpRequestEventsImplementation **************
+$inherits(XMLHttpRequestEventsImplementation, EventsImplementation);
+function XMLHttpRequestEventsImplementation() {}
+XMLHttpRequestEventsImplementation._wrap$ctor = function(_ptr) {
+  // Initializers done
+  EventsImplementation._wrap$ctor.call(this, _ptr);
+}
+XMLHttpRequestEventsImplementation._wrap$ctor.prototype = XMLHttpRequestEventsImplementation.prototype;
+XMLHttpRequestEventsImplementation.prototype.get$readyStateChange = function() {
+  return this._get('readystatechange');
+}
+// ********** Code for XMLHttpRequestWrappingImplementation **************
+$inherits(XMLHttpRequestWrappingImplementation, EventTargetWrappingImplementation);
+function XMLHttpRequestWrappingImplementation() {}
+XMLHttpRequestWrappingImplementation._wrap$ctor = function(ptr) {
+  // Initializers done
+  EventTargetWrappingImplementation._wrap$ctor.call(this, ptr);
+}
+XMLHttpRequestWrappingImplementation._wrap$ctor.prototype = XMLHttpRequestWrappingImplementation.prototype;
+XMLHttpRequestWrappingImplementation.XMLHttpRequestWrappingImplementation$factory = function() {
+  return new XMLHttpRequestWrappingImplementation._wrap$ctor(new XMLHttpRequest());
+}
+XMLHttpRequestWrappingImplementation.prototype.get$readyState = function() {
+  return this._ptr.get$readyState();
+}
+XMLHttpRequestWrappingImplementation.prototype.get$responseText = function() {
+  return this._ptr.get$responseText();
+}
+XMLHttpRequestWrappingImplementation.prototype.get$status = function() {
+  return this._ptr.get$status();
+}
+XMLHttpRequestWrappingImplementation.prototype.open = function(method, url, async, user, password) {
+  if (user == null) {
+    if (password == null) {
+      this._ptr.open$3(method, url, async);
+      return;
+    }
+  }
+  else {
+    if (password == null) {
+      this._ptr.open$4(method, url, async, user);
+      return;
+    }
+    else {
+      this._ptr.open$5(method, url, async, user, password);
+      return;
+    }
+  }
+  $throw("Incorrect number or type of arguments");
+}
+XMLHttpRequestWrappingImplementation.prototype.open.$optional = ['user', 'password', 'null', 'null']
+XMLHttpRequestWrappingImplementation.prototype.get$open = function() {
+  return this.open.bind(this);
+}
+XMLHttpRequestWrappingImplementation.prototype.send = function(data) {
+  if (data == null) {
+    this._ptr.send$0();
+    return;
+  }
+  else {
+    if (!!(data && data.is$html_html_Document())) {
+      this._ptr.send$1(LevelDom.unwrapMaybePrimitive(data));
+      return;
+    }
+    else {
+      if ((typeof(data) == 'string')) {
+        this._ptr.send$1(LevelDom.unwrapMaybePrimitive(data));
+        return;
+      }
+    }
+  }
+  $throw("Incorrect number or type of arguments");
+}
+XMLHttpRequestWrappingImplementation.prototype.setRequestHeader = function(header, value) {
+  this._ptr.setRequestHeader$2(header, value);
+}
+XMLHttpRequestWrappingImplementation.prototype.get$on = function() {
+  if (this._on == null) {
+    this._on = new XMLHttpRequestEventsImplementation._wrap$ctor(this._ptr);
+  }
+  return this._on;
+}
+XMLHttpRequestWrappingImplementation.prototype.open$3 = XMLHttpRequestWrappingImplementation.prototype.open;
+XMLHttpRequestWrappingImplementation.prototype.open$4 = XMLHttpRequestWrappingImplementation.prototype.open;
+XMLHttpRequestWrappingImplementation.prototype.open$5 = XMLHttpRequestWrappingImplementation.prototype.open;
+XMLHttpRequestWrappingImplementation.prototype.send$0 = XMLHttpRequestWrappingImplementation.prototype.send;
+XMLHttpRequestWrappingImplementation.prototype.send$1 = XMLHttpRequestWrappingImplementation.prototype.send;
+XMLHttpRequestWrappingImplementation.prototype.setRequestHeader$2 = XMLHttpRequestWrappingImplementation.prototype.setRequestHeader;
 // ********** Code for top level **************
 var _pendingRequests;
 var _pendingMeasurementFrameCallbacks;
@@ -7534,6 +7831,56 @@ function html_get$window() {
     LevelDom.initialize();
   }
   return $globals.secretWindow;
+}
+//  ********** Library json **************
+// ********** Code for _JSON **************
+_JSON = JSON;
+// ********** Code for json_JSON **************
+function json_JSON() {}
+json_JSON.parse = function(str) {
+  return _JSON.parse(str, (function (_, obj) {
+    var keys = _jsKeys(obj);
+    if (keys == null) return obj;
+    var map = new HashMapImplementation();
+    for (var $$i = keys.iterator(); $$i.hasNext(); ) {
+      var key = $$i.next();
+      map.$setindex(key, _getValue(obj, key));
+    }
+    return map;
+  })
+  );
+}
+json_JSON.stringify = function(value) {
+  return _JSON.stringify(value, (function (_, obj) {
+    if (_directToJson(obj)) return obj;
+    if (!!(obj && obj.is$Map_dart_core_String$Dynamic())) {
+      var map = obj;
+      obj = new Object();
+      map.forEach((function (k, v) {
+        return _setValue(obj, k, v);
+      })
+      );
+      return obj;
+    }
+    $throw(new IllegalArgumentException(('cannot convert "' + value + '" to JSON')));
+  })
+  );
+}
+// ********** Code for top level **************
+function _getValue(obj, key) {
+  return obj[key]
+}
+function _setValue(obj, key, value) {
+  obj[key] = value
+}
+function _directToJson(obj) {
+  return typeof obj != 'object' || obj == null || obj instanceof Array
+}
+function _jsKeys(obj) {
+  if (obj != null && typeof obj == 'object' && !(obj instanceof Array)) {
+  return Object.keys(obj);
+  }
+  return null;
 }
 //  ********** Library LUCAStudios_UI_Framework_Core **************
 // ********** Code for HashableObject **************
@@ -7787,9 +8134,6 @@ LucaSystem.set$rootView = function(view) {
   $globals.LucaSystem__domRootElement.get$nodes().clear();
   $globals.LucaSystem__domRootElement.get$nodes().add($globals.LucaSystem_visualRoot._component);
 }
-LucaSystem.renderRaw = function(element) {
-  LucaSystem.set$rootView(new _ViewFactory(element));
-}
 LucaSystem.makeFlexBox = function(element) {
   var e = element._component;
   e.get$style().setProperty$3("display", "-webkit-box");
@@ -8004,6 +8348,15 @@ function ObservableList_ColumnDefinition() {
   this.listChanged = new _FrameworkEventImplementation();
   // Initializers done
   Array.call(this);
+}
+ObservableList_ColumnDefinition.prototype.add = function(element) {
+  ListFactory.prototype.add.call(this, element);
+  this._notifySingleNew(element);
+}
+ObservableList_ColumnDefinition.prototype._notifySingleNew = function(newItem) {
+  var nl = new Array();
+  nl.add(newItem);
+  this.listChanged.invoke(this, new ListChangedEventArgs_ColumnDefinition(new Array(), nl));
 }
 // ********** Code for ObservableList_FrameworkElement **************
 $inherits(ObservableList_FrameworkElement, ObservableList);
@@ -8513,14 +8866,26 @@ Border.prototype.get$innerWidth = function() {
 Border.prototype.get$innerHeight = function() {
   return (this.get$margin() != null && this.get$padding() != null && this.get$borderThickness() != null) ? $sub(this._rawElement.get$clientHeight(), (this.get$margin().top + this.get$padding().top + this.get$borderThickness().top + this.get$margin().bottom + this.get$padding().bottom + this.get$borderThickness().bottom)) : 0;
 }
+Border.prototype.set$background = function(value) {
+  return setValue(this.backgroundProperty, value);
+}
 Border.prototype.get$padding = function() {
   return getValue(this.paddingProperty);
+}
+Border.prototype.set$padding = function(value) {
+  return setValue(this.paddingProperty, value);
 }
 Border.prototype.get$borderColor = function() {
   return getValue(this.borderColorProperty);
 }
+Border.prototype.set$borderColor = function(value) {
+  return setValue(this.borderColorProperty, value);
+}
 Border.prototype.get$borderThickness = function() {
   return getValue(this.borderThicknessProperty);
+}
+Border.prototype.set$borderThickness = function(value) {
+  return setValue(this.borderThicknessProperty, value);
 }
 Border.prototype.get$content = function() {
   return getValue(this.contentProperty);
@@ -8604,6 +8969,9 @@ function Button() {
 }
 Button.prototype.get$content = function() {
   return getValue(this.contentProperty);
+}
+Button.prototype.set$content = function(value) {
+  return setValue(this.contentProperty, value);
 }
 Button.prototype.CreateElement = function() {
   this._component = _Dom.createByTag("button");
@@ -9297,13 +9665,14 @@ _GridCell.prototype.set$parent = function(value) {
   this._parent = value;
 }
 _GridCell.prototype.updateLayout$0 = _GridCell.prototype.updateLayout;
-// ********** Code for _ViewFactory **************
-function _ViewFactory(_rootElement) {
-  this._rootElement = _rootElement;
+// ********** Code for ViewModelBase **************
+$inherits(ViewModelBase, FrameworkObject);
+function ViewModelBase() {
   // Initializers done
+  FrameworkObject.call(this);
 }
-_ViewFactory.prototype.get$rootVisual = function() {
-  return this._rootElement;
+ViewModelBase.prototype.get$_type = function() {
+  return "ViewModelBase";
 }
 // ********** Code for TextBox **************
 $inherits(TextBox, FrameworkElement);
@@ -9534,6 +9903,25 @@ RowDefinition.prototype.set$height = function(value) {
   this._value = value;
   this._rowDefinitionChanged.invoke(this, new EventArgs());
 }
+// ********** Code for ColumnDefinition **************
+$inherits(ColumnDefinition, GridLayoutDefinition);
+function ColumnDefinition() {}
+ColumnDefinition.with$ctor = function(value) {
+  this._columnDefinitionChanged = new _FrameworkEventImplementation();
+  // Initializers done
+  GridLayoutDefinition.call(this);
+  this.set$width(value);
+}
+ColumnDefinition.with$ctor.prototype = ColumnDefinition.prototype;
+ColumnDefinition.prototype.get$width = function() {
+  return this._value;
+}
+ColumnDefinition.prototype.set$width = function(value) {
+  if (value.get$value() < this.minLength) value.set$value(this.minLength);
+  if (value.get$value() > this.maxLength) value.set$value(this.maxLength);
+  this._value = value;
+  this._columnDefinitionChanged.invoke(this, new EventArgs());
+}
 // ********** Code for GridLength **************
 $inherits(GridLength, LucaObject);
 function GridLength() {}
@@ -9551,6 +9939,14 @@ GridLength.auto$ctor = function() {
   this._initGridUnitTypeProperties();
 }
 GridLength.auto$ctor.prototype = GridLength.prototype;
+GridLength.pixel$ctor = function(v) {
+  // Initializers done
+  LucaObject.call(this);
+  this._initGridUnitTypeProperties();
+  this.set$gridUnitType(const$377/*GridUnitType.pixel*/);
+  this.set$value(v);
+}
+GridLength.pixel$ctor.prototype = GridLength.prototype;
 GridLength.prototype.get$gridUnitType = function() {
   return getValue(this.gridUnitTypeProperty);
 }
@@ -9657,35 +10053,6 @@ function _StyleTemplateImplementation() {
   // Initializers done
   LucaObject.call(this);
 }
-_StyleTemplateImplementation.prototype.mergeWith = function(templates) {
-  var $this = this; // closure support
-  if (templates == null || templates.isEmpty()) return;
-  for (var $$i = 0;$$i < templates.get$length(); $$i++) {
-    var style = templates.$index($$i);
-    if (style == null || $eq(style, this)) continue;
-    style._setters.forEach((function (_, s) {
-      $this.setProperty(s.propertyName, s.get$value());
-    })
-    );
-  }
-}
-_StyleTemplateImplementation.prototype.setProperty = function(property, newValue) {
-  if ((newValue instanceof FrameworkObject)) $throw(const$401/*const FrameworkException("LUCA UI Framework Objects cannot be passed as StyleTemplate setter values.")*/);
-  if (this._setters.containsKey(property)) {
-    this._setters.$index(property).set$value(newValue);
-  }
-  else {
-    this._setters.$setindex(property, new StyleSetter(property, newValue));
-    this._registerNewSetterBindings(this._setters.$index(property));
-  }
-}
-_StyleTemplateImplementation.prototype._registerNewSetterBindings = function(newSetter) {
-  var $this = this; // closure support
-  this._registeredElements.forEach((function (e) {
-    $this._bindSetterToElement(newSetter, e);
-  })
-  );
-}
 _StyleTemplateImplementation.prototype._registerElement = function(element) {
   this._registeredElements.add(element);
   this._setStyleBindings(element);
@@ -9732,6 +10099,14 @@ function Thickness(uniformThickness) {
   this.bottom = uniformThickness;
   // Initializers done
 }
+Thickness.right$ctor = function(right) {
+  this.right = right;
+  this.top = 0;
+  this.left = 0;
+  this.bottom = 0;
+  // Initializers done
+}
+Thickness.right$ctor.prototype = Thickness.prototype;
 Thickness.widthheight$ctor = function(width, height) {
   this.left = width;
   this.right = width;
@@ -10700,7 +11075,12 @@ ListChangedEventArgs.prototype.get$oldItems = function() { return this.oldItems;
 ListChangedEventArgs.prototype.get$newItems = function() { return this.newItems; };
 // ********** Code for ListChangedEventArgs_ColumnDefinition **************
 $inherits(ListChangedEventArgs_ColumnDefinition, ListChangedEventArgs);
-function ListChangedEventArgs_ColumnDefinition() {}
+function ListChangedEventArgs_ColumnDefinition(oldItems, newItems) {
+  this.oldItems = oldItems;
+  this.newItems = newItems;
+  // Initializers done
+  EventArgs.call(this);
+}
 // ********** Code for ListChangedEventArgs_FrameworkElement **************
 $inherits(ListChangedEventArgs_FrameworkElement, ListChangedEventArgs);
 function ListChangedEventArgs_FrameworkElement(oldItems, newItems) {
@@ -10741,7 +11121,7 @@ function LinearGradientBrush(dir, fallback) {
   this.stops = new Array();
   // Initializers done
   Brush.call(this);
-  if (dir == null) this.direction = const$402/*LinearGradientDirection.leftToRight*/;
+  if (dir == null) this.direction = const$401/*LinearGradientDirection.leftToRight*/;
   if (fallback == null) this.fallbackColor = new Color(const$362/*Colors.White*/);
 }
 LinearGradientBrush.prototype.renderBrush = function(element) {
@@ -10798,26 +11178,6 @@ _Dom.appendClass = function(element, classToAppend) {
 }
 _Dom.createByTag = function(tagName) {
   return ElementWrappingImplementation.ElementWrappingImplementation$tag$factory(tagName);
-}
-// ********** Code for StyleSetter **************
-$inherits(StyleSetter, FrameworkObject);
-function StyleSetter(propertyName, propertyValue) {
-  this.propertyName = propertyName;
-  // Initializers done
-  FrameworkObject.call(this);
-  this.valueProperty = new FrameworkProperty(this, "value", (function (v) {
-
-  })
-  , propertyValue);
-}
-StyleSetter.prototype.get$value = function() {
-  return getValue(this.valueProperty);
-}
-StyleSetter.prototype.set$value = function(newValue) {
-  return setValue(this.valueProperty, newValue);
-}
-StyleSetter.prototype.get$_type = function() {
-  return "StyleSetter";
 }
 // ********** Code for Slider **************
 $inherits(Slider, FrameworkElement);
@@ -11068,136 +11428,183 @@ function getValue(propertyInfo) {
   if (propertyInfo == null) return null;
   return propertyInfo.value;
 }
-//  ********** Library LUCA UI Demo Style Templates **************
-// ********** Code for _templateResources **************
-function _templateResources() {
-  this.contentBorderStyle = new _StyleTemplateImplementation();
-  this.innerBorderStyle = new _StyleTemplateImplementation();
-  this.mainGridStyle = new _StyleTemplateImplementation();
-  this.titleTextBlockStyle = new _StyleTemplateImplementation();
-  this.subTitleTextBlockStyle = new _StyleTemplateImplementation();
-  this.centeredStyle = new _StyleTemplateImplementation();
-  this.stretchedStyle = new _StyleTemplateImplementation();
-  // Initializers done
-  this._initCenteredStyle();
-  this._initStretchedStyle();
-  this._initContentBorder();
-  this._initInnerBorder();
-  this._initMainGrid();
-  this._initTitleTextBlock();
-  this._initSubTitleTextBlock();
-}
-_templateResources.prototype._initStretchedStyle = function() {
-  this.stretchedStyle.setProperty("horizontalAlignment", const$53/*HorizontalAlignment.Stretch*/);
-  this.stretchedStyle.setProperty("verticalAlignment", const$63/*VerticalAlignment.Stretch*/);
-}
-_templateResources.prototype._initCenteredStyle = function() {
-  this.centeredStyle.setProperty("horizontalAlignment", const$51/*HorizontalAlignment.Center*/);
-  this.centeredStyle.setProperty("verticalAlignment", const$61/*VerticalAlignment.Center*/);
-}
-_templateResources.prototype._initTitleTextBlock = function() {
-  this.titleTextBlockStyle.setProperty("fontSize", 32);
-  this.titleTextBlockStyle.setProperty("foreground", new SolidColorBrush(new Color(const$362/*Colors.White*/)));
-  this.titleTextBlockStyle.setProperty("margin", new Thickness(10));
-  this.titleTextBlockStyle.setProperty("horizontalAlignment", const$51/*HorizontalAlignment.Center*/);
-}
-_templateResources.prototype._initSubTitleTextBlock = function() {
-  this.subTitleTextBlockStyle.setProperty("fontSize", 16);
-  this.subTitleTextBlockStyle.setProperty("foreground", new SolidColorBrush(new Color(const$362/*Colors.White*/)));
-  this.subTitleTextBlockStyle.setProperty("margin", new Thickness(10));
-  this.subTitleTextBlockStyle.setProperty("horizontalAlignment", const$51/*HorizontalAlignment.Center*/);
-}
-_templateResources.prototype._initMainGrid = function() {
-  var lgb = new LinearGradientBrush();
-  lgb.direction = const$404/*LinearGradientDirection.topToBottom*/;
-  lgb.stops.add(new GradientStop(new Color.hex$ctor("#3333AA"), 65));
-  lgb.stops.add(new GradientStop(new Color(const$104/*Colors.Black*/), -1));
-  var rList = new ObservableList_RowDefinition();
-  rList.add(new RowDefinition.with$ctor(new GridLength.auto$ctor()));
-  rList.add(new RowDefinition.with$ctor(new GridLength.auto$ctor()));
-  rList.add(new RowDefinition.with$ctor(new GridLength.star$ctor(1)));
-  this.mainGridStyle.setProperty("background", lgb);
-  this.mainGridStyle.setProperty("rowDefinitions", rList);
-  this.mainGridStyle.mergeWith([this.stretchedStyle]);
-}
-_templateResources.prototype._initContentBorder = function() {
-  this.contentBorderStyle.setProperty("margin", new Thickness(10));
-  this.contentBorderStyle.setProperty("borderThickness", new Thickness(10));
-  this.contentBorderStyle.setProperty("borderColor", new SolidColorBrush(new Color.hex$ctor("#AAAAAA")));
-  this.contentBorderStyle.setProperty("cornerRadius", 10);
-  this.contentBorderStyle.setProperty("background", new SolidColorBrush(new Color(const$364/*Colors.WhiteSmoke*/)));
-  this.contentBorderStyle.mergeWith([this.stretchedStyle]);
-}
-_templateResources.prototype._initInnerBorder = function() {
-  this.innerBorderStyle.setProperty("borderThickness", new Thickness(5));
-  this.innerBorderStyle.setProperty("borderColor", new SolidColorBrush(new Color.hex$ctor("#808080")));
-  this.innerBorderStyle.mergeWith([this.stretchedStyle]);
-}
-// ********** Code for top level **************
 //  ********** Library HashClient **************
 // ********** Code for HashClient **************
 function HashClient() {
+  this.vm = new _ViewModelImplementation();
   // Initializers done
 }
-HashClient.prototype.run = function() {
-  LucaSystem.LucaSystem$factory();
-  this.resources = new _templateResources();
+// ********** Code for View **************
+$inherits(View, Grid);
+function View(vm) {
+  this.vm = vm;
+  // Initializers done
+  Grid.call(this);
+  this._initUI();
+}
+View.prototype.get$rootVisual = function() {
+  return this;
+}
+View.prototype._initUI = function() {
+  var $this = this; // closure support
   new _BindingImplementation($globals.LucaSystem_windowWidthProperty, $globals.LucaSystem_visualRoot.widthProperty, const$73/*BindingMode.OneWay*/, const$75/*const _DefaultConverter()*/);
   new _BindingImplementation($globals.LucaSystem_windowHeightProperty, $globals.LucaSystem_visualRoot.heightProperty, const$73/*BindingMode.OneWay*/, const$75/*const _DefaultConverter()*/);
-  var mainGrid = new Grid();
-  mainGrid.set$style(this.resources.mainGridStyle);
-  var outerContentBorder = new Border();
-  outerContentBorder.set$style(this.resources.contentBorderStyle);
-  Grid.setRow(outerContentBorder, 2);
-  mainGrid.children.add(outerContentBorder);
-  var innerContentBorder = new Border();
-  innerContentBorder.set$style(this.resources.innerBorderStyle);
-  outerContentBorder.set$content(innerContentBorder);
+  var lgb = new LinearGradientBrush();
+  lgb.direction = const$403/*LinearGradientDirection.topToBottom*/;
+  lgb.stops.add(new GradientStop(new Color(const$364/*Colors.WhiteSmoke*/), -1));
+  lgb.stops.add(new GradientStop(new Color.hex$ctor("#AAAAAA"), -1));
+  this.set$background(lgb);
+  this.set$horizontalAlignment(const$53/*HorizontalAlignment.Stretch*/);
+  this.set$verticalAlignment(const$63/*VerticalAlignment.Stretch*/);
+  this.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.auto$ctor()));
+  this.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.auto$ctor()));
+  this.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.star$ctor(1)));
+  this.get$columnDefinitions().add(new ColumnDefinition.with$ctor(new GridLength.star$ctor(1)));
+  this.get$columnDefinitions().add(new ColumnDefinition.with$ctor(new GridLength.auto$ctor()));
+  this.get$columnDefinitions().add(new ColumnDefinition.with$ctor(new GridLength.auto$ctor()));
+  this.get$columnDefinitions().add(new ColumnDefinition.with$ctor(new GridLength.auto$ctor()));
+  this.get$columnDefinitions().add(new ColumnDefinition.with$ctor(new GridLength.star$ctor(1)));
   var title = new TextBlock();
-  title.set$style(this.resources.titleTextBlockStyle);
-  title.set$text("Value Conversion and Data Binding");
-  mainGrid.children.add(title);
-  var subTitle = new TextBlock();
-  subTitle.set$style(this.resources.subTitleTextBlockStyle);
-  subTitle.set$text("The value of the TextBox is bound to the TextBlock and converted on-the-fly to upper case.");
-  Grid.setRow(subTitle, 1);
-  mainGrid.children.add(subTitle);
-  var contentGrid = this.buildContentGrid();
-  innerContentBorder.set$content(contentGrid);
-  this.generateContent(contentGrid);
-  LucaSystem.renderRaw(mainGrid);
-}
-HashClient.prototype.generateContent = function(contentGrid) {
-  var info = new TextBlock();
-  info.set$style(this.resources.centeredStyle);
-  info.set$text("Enter text into the text box below.  The text property of it is bound to a text block below it that has a value converter attached.  As you type, the text will appear in all caps as it passes through the converter.");
-  info.set$width(500);
-  contentGrid.children.add(info);
+  title.set$text("Hash Server Example");
+  title.set$fontSize(25);
+  title.set$margin(new Thickness(20));
+  Grid.setColumnSpan(title, 5);
+  title.set$horizontalAlignment(const$51/*HorizontalAlignment.Center*/);
+  this.children.add(title);
+  var sp = new StackPanel();
+  sp.set$margin(new Thickness.right$ctor(10));
+  Grid.setRow(sp, 1);
+  Grid.setColumn(sp, 1);
+  this.children.add(sp);
+  var borderGame = new Border();
+  borderGame.set$borderColor(new SolidColorBrush(new Color(const$104/*Colors.Black*/)));
+  borderGame.set$borderThickness(new Thickness(2));
+  borderGame.set$horizontalAlignment(const$51/*HorizontalAlignment.Center*/);
+  borderGame.set$verticalAlignment(const$61/*VerticalAlignment.Center*/);
+  borderGame.set$background(new SolidColorBrush(new Color(const$190/*Colors.Gray*/)));
+  Grid.setRow(borderGame, 1);
+  Grid.setColumn(borderGame, 2);
+  this.children.add(borderGame);
+  var borderStats = new Border();
+  borderStats.set$width(450);
+  borderStats.set$height(100);
+  borderStats.set$padding(new Thickness(5));
+  borderStats.set$borderThickness(new Thickness(1));
+  borderStats.set$margin(new Thickness.specified$ctor(0, 0, 0, 10));
+  borderStats.set$borderColor(new SolidColorBrush(new Color(const$104/*Colors.Black*/)));
+  borderStats.set$background(new SolidColorBrush(new Color(const$364/*Colors.WhiteSmoke*/)));
+  Grid.setRow(borderStats, 1);
+  Grid.setColumn(borderStats, 3);
+  this.children.add(borderStats);
+  var statsGrid = new Grid();
+  statsGrid.set$horizontalAlignment(const$53/*HorizontalAlignment.Stretch*/);
+  statsGrid.set$verticalAlignment(const$63/*VerticalAlignment.Stretch*/);
+  statsGrid.get$columnDefinitions().add(new ColumnDefinition.with$ctor(new GridLength.pixel$ctor(100)));
+  statsGrid.get$columnDefinitions().add(new ColumnDefinition.with$ctor(new GridLength.pixel$ctor(100)));
+  statsGrid.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.auto$ctor()));
+  statsGrid.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.auto$ctor()));
+  statsGrid.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.star$ctor(1)));
+  borderStats.set$content(statsGrid);
+  var spLabels = new StackPanel();
+  Grid.setRow(spLabels, 1);
+  statsGrid.children.add(spLabels);
+  var spValues = new StackPanel();
+  Grid.setRow(spValues, 1);
+  Grid.setColumn(spValues, 1);
+  statsGrid.children.add(spValues);
+  var lblGeneration = new TextBlock();
+  lblGeneration.set$text("String to hash");
+  lblGeneration.set$fontSize(10);
+  spLabels.children.add(lblGeneration);
+  var lblHighestPop = new TextBlock();
+  lblHighestPop.set$text("Hashed Value");
+  lblHighestPop.set$fontSize(10);
+  spLabels.children.add(lblHighestPop);
+  var lblGenerationValue = new TextBlock();
+  lblGenerationValue.set$text("0");
+  lblGenerationValue.set$fontSize(10);
+  spValues.children.add(lblGenerationValue);
+  var lblHighestPopValue = new TextBlock();
+  lblHighestPopValue.set$text("0");
+  lblHighestPopValue.set$fontSize(10);
+  spValues.children.add(lblHighestPopValue);
   var enter = new TextBox();
-  enter.set$style(this.resources.centeredStyle);
   enter.set$width(300);
   enter.set$placeholder("Enter some lowercase text here...");
-  Grid.setRow(enter, 1);
-  contentGrid.children.add(enter);
-  var output = new TextBlock();
-  output.set$style(this.resources.centeredStyle);
-  output.set$fontSize(24);
-  output.set$text("hello");
-  Grid.setRow(output, 2);
-  contentGrid.children.add(output);
+  spValues.children.add(enter);
+  var btnGenHash = new Button();
+  btnGenHash.set$content("Generate Hash");
+  spValues.children.add(btnGenHash);
+  btnGenHash.click.$add((function (_, __) {
+    return $this.vm.genHash(enter.get$text());
+  })
+  );
 }
-HashClient.prototype.buildContentGrid = function() {
-  var g = new Grid();
-  g.set$background(new SolidColorBrush(new Color(const$364/*Colors.WhiteSmoke*/)));
-  g.set$style(this.resources.stretchedStyle);
-  g.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.star$ctor(.3)));
-  g.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.star$ctor(.3)));
-  g.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.star$ctor(1)));
-  return g;
+// ********** Code for _ViewModelImplementation **************
+$inherits(_ViewModelImplementation, ViewModelBase);
+function _ViewModelImplementation() {
+  // Initializers done
+  ViewModelBase.call(this);
+  this._initializeView();
+}
+_ViewModelImplementation.prototype._initializeView = function() {
+  this.view = new View(this);
+  this.generateHash = new GenerateHash();
+  LucaSystem.set$rootView(this.view);
+}
+_ViewModelImplementation.prototype.genHash = function(str) {
+  this.generateHash.handlePostMessage(str);
+  dart_core_print("genHash implementation :" + str);
+}
+// ********** Code for GenerateHash **************
+function GenerateHash() {
+  // Initializers done
+}
+GenerateHash.prototype.onMessagePost = function(response) {
+  dart_core_print("onMessagePost: " + response.toString());
+  dart_core_print("keys: " + response.getKeys().toString$0());
+  dart_core_print(("response['response'] = " + response.$index('response')));
+  dart_core_print(("response['hash'] = " + response.$index('hash')));
+  dart_core_print(("response['hashName'] = " + response.$index('hashName')));
+}
+GenerateHash.prototype.onMessagePostFailed = function() {
+  dart_core_print("Failed to post message. Please try again later.");
+}
+GenerateHash.prototype.handlePostMessage = function(e) {
+  var $this = this; // closure support
+  var messageText = e;
+  var messageRequest = new HashMapImplementation();
+  messageRequest.$setindex("request", "generateHash");
+  messageRequest.$setindex("value", messageText);
+  this.sendRequest("/generateHash", messageRequest, (function (response) {
+    return $this.onMessagePost(response);
+  })
+  , (function () {
+    return $this.onMessagePostFailed();
+  })
+  );
+}
+GenerateHash.prototype.sendRequest = function(url, json, onSuccess, onError) {
+  var request = XMLHttpRequestWrappingImplementation.XMLHttpRequestWrappingImplementation$factory();
+  request.get$on().get$readyStateChange().add$1((function (event) {
+    if (request.get$readyState() != 4) return;
+    if (request.get$status() == 200) {
+      onSuccess.call$1(json_JSON.parse(request.get$responseText()));
+    }
+    else {
+      onError.call$0();
+    }
+  })
+  );
+  request.open("POST", url, true);
+  request.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+  request.send(json_JSON.stringify(json));
+  return request;
 }
 // ********** Code for top level **************
 function main() {
-  new HashClient().run();
+  LucaSystem.LucaSystem$factory();
+  new HashClient();
 }
 // ********** Generic Type Inheritance **************
 /** Implements extends for generic types. */
@@ -11213,18 +11620,19 @@ $inheritsMembers(_DoubleLinkedQueueEntrySentinel_KeyValuePair_K$V, DoubleLinkedQ
 $inheritsMembers(ObservableList_ColumnDefinition, ListFactory_ColumnDefinition);
 $inheritsMembers(ObservableList_FrameworkElement, ListFactory_FrameworkElement);
 $inheritsMembers(ObservableList_RowDefinition, ListFactory_RowDefinition);
-// 327 dynamic types.
+// 331 dynamic types.
 // 502 types
 // 41 !leaf
 (function(){
   var v0/*CSSValueList*/ = 'CSSValueList|WebKitCSSFilterValue|WebKitCSSTransformValue';
   var v1/*HTMLInputElement*/ = 'HTMLInputElement|HTMLIsIndexElement';
-  var v2/*SVGGradientElement*/ = 'SVGGradientElement|SVGLinearGradientElement|SVGRadialGradientElement';
-  var v3/*SVGTextContentElement*/ = 'SVGTextContentElement|SVGTextPathElement|SVGTextPositioningElement|SVGAltGlyphElement|SVGTRefElement|SVGTSpanElement|SVGTextElement';
-  var v4/*UIEvent*/ = 'UIEvent|CompositionEvent|KeyboardEvent|MouseEvent|SVGZoomEvent|TextEvent|TouchEvent|WheelEvent';
-  var v5/*CharacterData*/ = 'CharacterData|Comment|Text|CDATASection';
-  var v6/*Document*/ = 'Document|HTMLDocument|SVGDocument';
-  var v7/*Element*/ = [v1/*HTMLInputElement*/,v2/*SVGGradientElement*/,v3/*SVGTextContentElement*/,'Element|HTMLElement|HTMLAnchorElement|HTMLAppletElement|HTMLAreaElement|HTMLBRElement|HTMLBaseElement|HTMLBaseFontElement|HTMLBodyElement|HTMLButtonElement|HTMLCanvasElement|HTMLDListElement|HTMLDataListElement|HTMLDetailsElement|HTMLDirectoryElement|HTMLDivElement|HTMLEmbedElement|HTMLFieldSetElement|HTMLFontElement|HTMLFormElement|HTMLFrameElement|HTMLFrameSetElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLIFrameElement|HTMLImageElement|HTMLKeygenElement|HTMLLIElement|HTMLLabelElement|HTMLLegendElement|HTMLLinkElement|HTMLMapElement|HTMLMarqueeElement|HTMLMediaElement|HTMLAudioElement|HTMLVideoElement|HTMLMenuElement|HTMLMetaElement|HTMLMeterElement|HTMLModElement|HTMLOListElement|HTMLObjectElement|HTMLOptGroupElement|HTMLOptionElement|HTMLOutputElement|HTMLParagraphElement|HTMLParamElement|HTMLPreElement|HTMLProgressElement|HTMLQuoteElement|HTMLScriptElement|HTMLSelectElement|HTMLSourceElement|HTMLSpanElement|HTMLStyleElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableElement|HTMLTableRowElement|HTMLTableSectionElement|HTMLTextAreaElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement|SVGElement|SVGAElement|SVGAltGlyphDefElement|SVGAltGlyphItemElement|SVGAnimationElement|SVGAnimateColorElement|SVGAnimateElement|SVGAnimateMotionElement|SVGAnimateTransformElement|SVGSetElement|SVGCircleElement|SVGClipPathElement|SVGComponentTransferFunctionElement|SVGFEFuncAElement|SVGFEFuncBElement|SVGFEFuncGElement|SVGFEFuncRElement|SVGCursorElement|SVGDefsElement|SVGDescElement|SVGEllipseElement|SVGFEBlendElement|SVGFEColorMatrixElement|SVGFEComponentTransferElement|SVGFECompositeElement|SVGFEConvolveMatrixElement|SVGFEDiffuseLightingElement|SVGFEDisplacementMapElement|SVGFEDistantLightElement|SVGFEDropShadowElement|SVGFEFloodElement|SVGFEGaussianBlurElement|SVGFEImageElement|SVGFEMergeElement|SVGFEMergeNodeElement|SVGFEMorphologyElement|SVGFEOffsetElement|SVGFEPointLightElement|SVGFESpecularLightingElement|SVGFESpotLightElement|SVGFETileElement|SVGFETurbulenceElement|SVGFilterElement|SVGFontElement|SVGFontFaceElement|SVGFontFaceFormatElement|SVGFontFaceNameElement|SVGFontFaceSrcElement|SVGFontFaceUriElement|SVGForeignObjectElement|SVGGElement|SVGGlyphElement|SVGGlyphRefElement|SVGHKernElement|SVGImageElement|SVGLineElement|SVGMPathElement|SVGMarkerElement|SVGMaskElement|SVGMetadataElement|SVGMissingGlyphElement|SVGPathElement|SVGPatternElement|SVGPolygonElement|SVGPolylineElement|SVGRectElement|SVGSVGElement|SVGScriptElement|SVGStopElement|SVGStyleElement|SVGSwitchElement|SVGSymbolElement|SVGTitleElement|SVGUseElement|SVGVKernElement|SVGViewElement'].join('|');
+  var v2/*HTMLMediaElement*/ = 'HTMLMediaElement|HTMLAudioElement|HTMLVideoElement';
+  var v3/*SVGGradientElement*/ = 'SVGGradientElement|SVGLinearGradientElement|SVGRadialGradientElement';
+  var v4/*SVGTextContentElement*/ = 'SVGTextContentElement|SVGTextPathElement|SVGTextPositioningElement|SVGAltGlyphElement|SVGTRefElement|SVGTSpanElement|SVGTextElement';
+  var v5/*UIEvent*/ = 'UIEvent|CompositionEvent|KeyboardEvent|MouseEvent|SVGZoomEvent|TextEvent|TouchEvent|WheelEvent';
+  var v6/*CharacterData*/ = 'CharacterData|Comment|Text|CDATASection';
+  var v7/*Document*/ = 'Document|HTMLDocument|SVGDocument';
+  var v8/*Element*/ = [v1/*HTMLInputElement*/,v2/*HTMLMediaElement*/,v3/*SVGGradientElement*/,v4/*SVGTextContentElement*/,'Element|HTMLElement|HTMLAnchorElement|HTMLAppletElement|HTMLAreaElement|HTMLBRElement|HTMLBaseElement|HTMLBaseFontElement|HTMLBodyElement|HTMLButtonElement|HTMLCanvasElement|HTMLDListElement|HTMLDataListElement|HTMLDetailsElement|HTMLDirectoryElement|HTMLDivElement|HTMLEmbedElement|HTMLFieldSetElement|HTMLFontElement|HTMLFormElement|HTMLFrameElement|HTMLFrameSetElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLIFrameElement|HTMLImageElement|HTMLKeygenElement|HTMLLIElement|HTMLLabelElement|HTMLLegendElement|HTMLLinkElement|HTMLMapElement|HTMLMarqueeElement|HTMLMenuElement|HTMLMetaElement|HTMLMeterElement|HTMLModElement|HTMLOListElement|HTMLObjectElement|HTMLOptGroupElement|HTMLOptionElement|HTMLOutputElement|HTMLParagraphElement|HTMLParamElement|HTMLPreElement|HTMLProgressElement|HTMLQuoteElement|HTMLScriptElement|HTMLSelectElement|HTMLSourceElement|HTMLSpanElement|HTMLStyleElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableElement|HTMLTableRowElement|HTMLTableSectionElement|HTMLTextAreaElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement|SVGElement|SVGAElement|SVGAltGlyphDefElement|SVGAltGlyphItemElement|SVGAnimationElement|SVGAnimateColorElement|SVGAnimateElement|SVGAnimateMotionElement|SVGAnimateTransformElement|SVGSetElement|SVGCircleElement|SVGClipPathElement|SVGComponentTransferFunctionElement|SVGFEFuncAElement|SVGFEFuncBElement|SVGFEFuncGElement|SVGFEFuncRElement|SVGCursorElement|SVGDefsElement|SVGDescElement|SVGEllipseElement|SVGFEBlendElement|SVGFEColorMatrixElement|SVGFEComponentTransferElement|SVGFECompositeElement|SVGFEConvolveMatrixElement|SVGFEDiffuseLightingElement|SVGFEDisplacementMapElement|SVGFEDistantLightElement|SVGFEDropShadowElement|SVGFEFloodElement|SVGFEGaussianBlurElement|SVGFEImageElement|SVGFEMergeElement|SVGFEMergeNodeElement|SVGFEMorphologyElement|SVGFEOffsetElement|SVGFEPointLightElement|SVGFESpecularLightingElement|SVGFESpotLightElement|SVGFETileElement|SVGFETurbulenceElement|SVGFilterElement|SVGFontElement|SVGFontFaceElement|SVGFontFaceFormatElement|SVGFontFaceNameElement|SVGFontFaceSrcElement|SVGFontFaceUriElement|SVGForeignObjectElement|SVGGElement|SVGGlyphElement|SVGGlyphRefElement|SVGHKernElement|SVGImageElement|SVGLineElement|SVGMPathElement|SVGMarkerElement|SVGMaskElement|SVGMetadataElement|SVGMissingGlyphElement|SVGPathElement|SVGPatternElement|SVGPolygonElement|SVGPolylineElement|SVGRectElement|SVGSVGElement|SVGScriptElement|SVGStopElement|SVGStyleElement|SVGSwitchElement|SVGSymbolElement|SVGTitleElement|SVGUseElement|SVGVKernElement|SVGViewElement'].join('|');
   var table = [
     // [dynamic-dispatch-tag, tags of classes implementing dynamic-dispatch-tag]
     ['AbstractWorker', 'AbstractWorker|SharedWorker|Worker'],
@@ -11236,22 +11644,23 @@ $inheritsMembers(ObservableList_RowDefinition, ListFactory_RowDefinition);
     ['CSSValueList', v0/*CSSValueList*/],
     ['CSSValue', [v0/*CSSValueList*/,'CSSValue|CSSPrimitiveValue|SVGColor|SVGPaint'].join('|')],
     ['CanvasRenderingContext', 'CanvasRenderingContext|CanvasRenderingContext2D|WebGLRenderingContext'],
-    ['CharacterData', v5/*CharacterData*/],
+    ['CharacterData', v6/*CharacterData*/],
     ['DOMTokenList', 'DOMTokenList|DOMSettableTokenList'],
     ['DOMWindow', 'DOMWindow|Window'],
-    ['Document', v6/*Document*/],
+    ['Document', v7/*Document*/],
     ['HTMLInputElement', v1/*HTMLInputElement*/],
-    ['SVGGradientElement', v2/*SVGGradientElement*/],
-    ['SVGTextContentElement', v3/*SVGTextContentElement*/],
-    ['Element', v7/*Element*/],
+    ['HTMLMediaElement', v2/*HTMLMediaElement*/],
+    ['SVGGradientElement', v3/*SVGGradientElement*/],
+    ['SVGTextContentElement', v4/*SVGTextContentElement*/],
+    ['Element', v8/*Element*/],
     ['Entry', 'Entry|DirectoryEntry|FileEntry'],
     ['EntrySync', 'EntrySync|DirectoryEntrySync|FileEntrySync'],
-    ['UIEvent', v4/*UIEvent*/],
-    ['Event', [v4/*UIEvent*/,'Event|AudioProcessingEvent|BeforeLoadEvent|CloseEvent|CustomEvent|DeviceMotionEvent|DeviceOrientationEvent|ErrorEvent|HashChangeEvent|IDBVersionChangeEvent|MessageEvent|MutationEvent|OfflineAudioCompletionEvent|OverflowEvent|PageTransitionEvent|PopStateEvent|ProgressEvent|XMLHttpRequestProgressEvent|SpeechInputEvent|StorageEvent|TrackEvent|WebGLContextEvent|WebKitAnimationEvent|WebKitTransitionEvent'].join('|')],
+    ['UIEvent', v5/*UIEvent*/],
+    ['Event', [v5/*UIEvent*/,'Event|AudioProcessingEvent|BeforeLoadEvent|CloseEvent|CustomEvent|DeviceMotionEvent|DeviceOrientationEvent|ErrorEvent|HashChangeEvent|IDBVersionChangeEvent|MessageEvent|MutationEvent|OfflineAudioCompletionEvent|OverflowEvent|PageTransitionEvent|PopStateEvent|ProgressEvent|XMLHttpRequestProgressEvent|SpeechInputEvent|StorageEvent|TrackEvent|WebGLContextEvent|WebKitAnimationEvent|WebKitTransitionEvent'].join('|')],
     ['HTMLCollection', 'HTMLCollection|HTMLOptionsCollection|HTMLPropertiesCollection'],
     ['IDBCursor', 'IDBCursor|IDBCursorWithValue'],
     ['IDBRequest', 'IDBRequest|IDBVersionChangeRequest'],
-    ['Node', [v5/*CharacterData*/,v6/*Document*/,v7/*Element*/,'Node|Attr|DocumentFragment|DocumentType|Entity|EntityReference|Notation|ProcessingInstruction'].join('|')],
+    ['Node', [v6/*CharacterData*/,v7/*Document*/,v8/*Element*/,'Node|Attr|DocumentFragment|DocumentType|Entity|EntityReference|Notation|ProcessingInstruction'].join('|')],
     ['SVGLocatable', 'SVGLocatable|SVGTransformable'],
     ['SVGPathSeg', 'SVGPathSeg|SVGPathSegArcAbs|SVGPathSegArcRel|SVGPathSegClosePath|SVGPathSegCurvetoCubicAbs|SVGPathSegCurvetoCubicRel|SVGPathSegCurvetoCubicSmoothAbs|SVGPathSegCurvetoCubicSmoothRel|SVGPathSegCurvetoQuadraticAbs|SVGPathSegCurvetoQuadraticRel|SVGPathSegCurvetoQuadraticSmoothAbs|SVGPathSegCurvetoQuadraticSmoothRel|SVGPathSegLinetoAbs|SVGPathSegLinetoHorizontalAbs|SVGPathSegLinetoHorizontalRel|SVGPathSegLinetoRel|SVGPathSegLinetoVerticalAbs|SVGPathSegLinetoVerticalRel|SVGPathSegMovetoAbs|SVGPathSegMovetoRel'],
     ['SVGStylable', 'SVGStylable|SVGFilterPrimitiveStandardAttributes'],
@@ -11427,9 +11836,8 @@ var const$381 = new GridUnitType(3)/*const GridUnitType(3)*/;
 var const$385 = new StringToBooleanConverter()/*const StringToBooleanConverter()*/;
 var const$39 = new Cursors("se-resize")/*const Cursors("se-resize")*/;
 var const$4 = new Visibility(true)/*const Visibility(true)*/;
-var const$401 = new FrameworkException("LUCA UI Framework Objects cannot be passed as StyleTemplate setter values.")/*const FrameworkException("LUCA UI Framework Objects cannot be passed as StyleTemplate setter values.")*/;
-var const$402 = new LinearGradientDirection("left")/*const LinearGradientDirection("left")*/;
-var const$404 = new LinearGradientDirection("top")/*const LinearGradientDirection("top")*/;
+var const$401 = new LinearGradientDirection("left")/*const LinearGradientDirection("left")*/;
+var const$403 = new LinearGradientDirection("top")/*const LinearGradientDirection("top")*/;
 var const$41 = new Cursors("sw-resize")/*const Cursors("sw-resize")*/;
 var const$43 = new Cursors("text")/*const Cursors("text")*/;
 var const$45 = new Cursors("wait")/*const Cursors("wait")*/;

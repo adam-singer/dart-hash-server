@@ -1,3 +1,7 @@
+// Copyright (c) 2011, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+
 class IsolatedServer extends Isolate {
   Map _requestHandlers;
   // Static HTML.
@@ -22,7 +26,16 @@ class IsolatedServer extends Isolate {
 
   void _generateHashHandler(HTTPRequest request, HTTPResponse response) {
     void dataEndHandler(String data) {
-      print(data);
+      var h = new Hasher("DJBHash");
+      var requestData = JSON.parse(data);
+      var d = h.getHash(requestData["value"].toString());
+      print("_generateHashHandler: " + data);
+      print("d = " + d.toString());
+      var responseData = new Map();
+      responseData["response"] = "generatedHash";
+      responseData["hash"] = d.toString();
+      responseData["hashName"] = h.name;
+      _sendJSONResponse(response,responseData);
     }
     
     request.dataEnd = dataEndHandler;
@@ -176,6 +189,7 @@ class IsolatedServer extends Isolate {
   }
   
   void _sendJSONResponse(HTTPResponse response, Map responseData) {
+    print('_sendJSONResponse()');
     response.setHeader("Content-Type", "application/json; charset=UTF-8");
     response.writeString(JSON.stringify(responseData));
     response.writeDone();
