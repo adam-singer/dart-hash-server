@@ -468,7 +468,6 @@ ListFactory_ColumnDefinition = ListFactory;
 ListFactory_E = ListFactory;
 ListFactory_EventHandlerReference = ListFactory;
 ListFactory_FrameworkElement = ListFactory;
-ListFactory_GradientStop = ListFactory;
 ListFactory_html_html_Node = ListFactory;
 ListFactory_RowDefinition = ListFactory;
 ListFactory_dart_core_String = ListFactory;
@@ -7535,6 +7534,8 @@ function html_get$window() {
   }
   return $globals.secretWindow;
 }
+//  ********** Library json **************
+// ********** Code for top level **************
 //  ********** Library LUCAStudios_UI_Framework_Core **************
 // ********** Code for HashableObject **************
 function HashableObject() {
@@ -7781,15 +7782,6 @@ LucaSystem.get$windowWidth = function() {
 LucaSystem.get$windowHeight = function() {
   return ($globals.LucaSystem__ref != null) ? getValue($globals.LucaSystem_windowHeightProperty) : -1;
 }
-LucaSystem.set$rootView = function(view) {
-  $globals.LucaSystem__currentRootView = view;
-  $globals.LucaSystem_visualRoot.set$content(view.get$rootVisual());
-  $globals.LucaSystem__domRootElement.get$nodes().clear();
-  $globals.LucaSystem__domRootElement.get$nodes().add($globals.LucaSystem_visualRoot._component);
-}
-LucaSystem.renderRaw = function(element) {
-  LucaSystem.set$rootView(new _ViewFactory(element));
-}
 LucaSystem.makeFlexBox = function(element) {
   var e = element._component;
   e.get$style().setProperty$3("display", "-webkit-box");
@@ -8012,30 +8004,12 @@ function ObservableList_FrameworkElement() {
   // Initializers done
   Array.call(this);
 }
-ObservableList_FrameworkElement.prototype.add = function(element) {
-  ListFactory.prototype.add.call(this, element);
-  this._notifySingleNew(element);
-}
-ObservableList_FrameworkElement.prototype._notifySingleNew = function(newItem) {
-  var nl = new Array();
-  nl.add(newItem);
-  this.listChanged.invoke(this, new ListChangedEventArgs_FrameworkElement(new Array(), nl));
-}
 // ********** Code for ObservableList_RowDefinition **************
 $inherits(ObservableList_RowDefinition, ObservableList);
 function ObservableList_RowDefinition() {
   this.listChanged = new _FrameworkEventImplementation();
   // Initializers done
   Array.call(this);
-}
-ObservableList_RowDefinition.prototype.add = function(element) {
-  ListFactory.prototype.add.call(this, element);
-  this._notifySingleNew(element);
-}
-ObservableList_RowDefinition.prototype._notifySingleNew = function(newItem) {
-  var nl = new Array();
-  nl.add(newItem);
-  this.listChanged.invoke(this, new ListChangedEventArgs_RowDefinition(new Array(), nl));
 }
 // ********** Code for _BindingImplementation **************
 $inherits(_BindingImplementation, LucaObject);
@@ -8525,9 +8499,6 @@ Border.prototype.get$borderThickness = function() {
 Border.prototype.get$content = function() {
   return getValue(this.contentProperty);
 }
-Border.prototype.set$content = function(value) {
-  return setValue(this.contentProperty, value);
-}
 Border.prototype.CreateElement = function() {
   this._component = _Dom.createByTag("div");
   this._component.get$style().set$overflow("hidden");
@@ -8639,9 +8610,6 @@ function Panel() {
     );
   })
   );
-}
-Panel.prototype.set$background = function(value) {
-  return setValue(this.backgroundProperty, value);
 }
 Panel.prototype.get$_type = function() {
   return "Panel";
@@ -9170,9 +9138,6 @@ TextBlock.prototype._initProperties = function() {
   })
   );
 }
-TextBlock.prototype.set$fontSize = function(value) {
-  return setValue(this.fontSizeProperty, value);
-}
 TextBlock.prototype.set$text = function(value) {
   return setValue(this.textProperty, value);
 }
@@ -9297,13 +9262,14 @@ _GridCell.prototype.set$parent = function(value) {
   this._parent = value;
 }
 _GridCell.prototype.updateLayout$0 = _GridCell.prototype.updateLayout;
-// ********** Code for _ViewFactory **************
-function _ViewFactory(_rootElement) {
-  this._rootElement = _rootElement;
+// ********** Code for ViewModelBase **************
+$inherits(ViewModelBase, FrameworkObject);
+function ViewModelBase() {
   // Initializers done
+  FrameworkObject.call(this);
 }
-_ViewFactory.prototype.get$rootVisual = function() {
-  return this._rootElement;
+ViewModelBase.prototype.get$_type = function() {
+  return "ViewModelBase";
 }
 // ********** Code for TextBox **************
 $inherits(TextBox, FrameworkElement);
@@ -9362,9 +9328,6 @@ TextBox.prototype.get$text = function() {
 }
 TextBox.prototype.set$text = function(value) {
   return setValue(this.textProperty, value);
-}
-TextBox.prototype.set$placeholder = function(value) {
-  return setValue(this.placeholderProperty, value);
 }
 TextBox.prototype.CreateElement = function() {
   this._component = _Dom.createByTag("input");
@@ -9497,82 +9460,6 @@ function PropertyChangingEventArgs(oldValue, newValue) {
   // Initializers done
   EventArgs.call(this);
 }
-// ********** Code for GridLayoutDefinition **************
-$inherits(GridLayoutDefinition, LucaObject);
-function GridLayoutDefinition() {
-  this._adjustedLengthInternal = 0
-  this._adjustedOffset = 0
-  this.maxLength = 32767
-  this.minLength = 0
-  // Initializers done
-  LucaObject.call(this);
-}
-GridLayoutDefinition.prototype.get$_adjustedLength = function() {
-  return this._adjustedLengthInternal;
-}
-GridLayoutDefinition.prototype.set$_adjustedLength = function(value) {
-  if (value < this.minLength) value = this.minLength;
-  if (value > this.maxLength) value = this.maxLength;
-  this._adjustedLengthInternal = value;
-}
-// ********** Code for RowDefinition **************
-$inherits(RowDefinition, GridLayoutDefinition);
-function RowDefinition() {}
-RowDefinition.with$ctor = function(value) {
-  this._rowDefinitionChanged = new _FrameworkEventImplementation();
-  // Initializers done
-  GridLayoutDefinition.call(this);
-  this.set$height(value);
-}
-RowDefinition.with$ctor.prototype = RowDefinition.prototype;
-RowDefinition.prototype.get$height = function() {
-  return this._value;
-}
-RowDefinition.prototype.set$height = function(value) {
-  if (value.get$value() < this.minLength) value.set$value(this.minLength);
-  if (value.get$value() > this.maxLength) value.set$value(this.maxLength);
-  this._value = value;
-  this._rowDefinitionChanged.invoke(this, new EventArgs());
-}
-// ********** Code for GridLength **************
-$inherits(GridLength, LucaObject);
-function GridLength() {}
-GridLength.star$ctor = function(v) {
-  // Initializers done
-  LucaObject.call(this);
-  this._initGridUnitTypeProperties();
-  this.set$gridUnitType(const$379/*GridUnitType.star*/);
-  this.set$value(v);
-}
-GridLength.star$ctor.prototype = GridLength.prototype;
-GridLength.auto$ctor = function() {
-  // Initializers done
-  LucaObject.call(this);
-  this._initGridUnitTypeProperties();
-}
-GridLength.auto$ctor.prototype = GridLength.prototype;
-GridLength.prototype.get$gridUnitType = function() {
-  return getValue(this.gridUnitTypeProperty);
-}
-GridLength.prototype.set$gridUnitType = function(v) {
-  return setValue(this.gridUnitTypeProperty, v);
-}
-GridLength.prototype.get$value = function() {
-  return getValue(this.valueProperty);
-}
-GridLength.prototype.set$value = function(v) {
-  return setValue(this.valueProperty, v);
-}
-GridLength.prototype._initGridUnitTypeProperties = function() {
-  this.gridUnitTypeProperty = new FrameworkProperty(this, "gridUnitType", (function (v) {
-
-  })
-  , const$381/*GridUnitType.auto*/);
-  this.valueProperty = new FrameworkProperty(this, "value", (function (v) {
-
-  })
-  , -1);
-}
 // ********** Code for GridUnitType **************
 function GridUnitType(_val) {
   this._val = _val;
@@ -9656,35 +9543,6 @@ function _StyleTemplateImplementation() {
   this._setters = new HashMapImplementation();
   // Initializers done
   LucaObject.call(this);
-}
-_StyleTemplateImplementation.prototype.mergeWith = function(templates) {
-  var $this = this; // closure support
-  if (templates == null || templates.isEmpty()) return;
-  for (var $$i = 0;$$i < templates.get$length(); $$i++) {
-    var style = templates.$index($$i);
-    if (style == null || $eq(style, this)) continue;
-    style._setters.forEach((function (_, s) {
-      $this.setProperty(s.propertyName, s.get$value());
-    })
-    );
-  }
-}
-_StyleTemplateImplementation.prototype.setProperty = function(property, newValue) {
-  if ((newValue instanceof FrameworkObject)) $throw(const$401/*const FrameworkException("LUCA UI Framework Objects cannot be passed as StyleTemplate setter values.")*/);
-  if (this._setters.containsKey(property)) {
-    this._setters.$index(property).set$value(newValue);
-  }
-  else {
-    this._setters.$setindex(property, new StyleSetter(property, newValue));
-    this._registerNewSetterBindings(this._setters.$index(property));
-  }
-}
-_StyleTemplateImplementation.prototype._registerNewSetterBindings = function(newSetter) {
-  var $this = this; // closure support
-  this._registeredElements.forEach((function (e) {
-    $this._bindSetterToElement(newSetter, e);
-  })
-  );
 }
 _StyleTemplateImplementation.prototype._registerElement = function(element) {
   this._registeredElements.add(element);
@@ -10703,20 +10561,10 @@ $inherits(ListChangedEventArgs_ColumnDefinition, ListChangedEventArgs);
 function ListChangedEventArgs_ColumnDefinition() {}
 // ********** Code for ListChangedEventArgs_FrameworkElement **************
 $inherits(ListChangedEventArgs_FrameworkElement, ListChangedEventArgs);
-function ListChangedEventArgs_FrameworkElement(oldItems, newItems) {
-  this.oldItems = oldItems;
-  this.newItems = newItems;
-  // Initializers done
-  EventArgs.call(this);
-}
+function ListChangedEventArgs_FrameworkElement() {}
 // ********** Code for ListChangedEventArgs_RowDefinition **************
 $inherits(ListChangedEventArgs_RowDefinition, ListChangedEventArgs);
-function ListChangedEventArgs_RowDefinition(oldItems, newItems) {
-  this.oldItems = oldItems;
-  this.newItems = newItems;
-  // Initializers done
-  EventArgs.call(this);
-}
+function ListChangedEventArgs_RowDefinition() {}
 // ********** Code for ListChangedEventArgs_T **************
 $inherits(ListChangedEventArgs_T, ListChangedEventArgs);
 function ListChangedEventArgs_T(oldItems, newItems) {
@@ -10735,49 +10583,6 @@ function EventHandlerReference(handler) {
 EventHandlerReference.prototype.handler$2 = function($0, $1) {
   return this.handler($0, $1);
 };
-// ********** Code for LinearGradientBrush **************
-$inherits(LinearGradientBrush, Brush);
-function LinearGradientBrush(dir, fallback) {
-  this.stops = new Array();
-  // Initializers done
-  Brush.call(this);
-  if (dir == null) this.direction = const$402/*LinearGradientDirection.leftToRight*/;
-  if (fallback == null) this.fallbackColor = new Color(const$362/*Colors.White*/);
-}
-LinearGradientBrush.prototype.renderBrush = function(element) {
-  var $this = this; // closure support
-  element.get$style().set$background(this.fallbackColor.toString());
-  var colorString = "";
-  this.stops.forEach((function (stop) {
-    colorString = colorString + stop.color.toString();
-    if (stop.percent != -1) colorString = colorString + (" " + stop.percent + "%");
-    if ($ne(stop, $this.stops.last())) colorString = colorString + ", ";
-  })
-  );
-  element.get$style().set$background(("-webkit-linear-gradient(" + this.direction.toString() + ", " + colorString + ")"));
-  element.get$style().set$background(("-moz-linear-gradient(" + this.direction.toString() + ", " + colorString + ")"));
-  element.get$style().set$background(("-ms-linear-gradient(" + this.direction.toString() + ", " + colorString + ")"));
-  element.get$style().set$background(("-o-linear-gradient(" + this.direction.toString() + ", " + colorString + ")"));
-  element.get$style().set$background(("linear-gradient(" + this.direction.toString() + ", " + colorString + ")"));
-}
-// ********** Code for GradientStop **************
-$inherits(GradientStop, LucaObject);
-function GradientStop(color, percent) {
-  this.color = color;
-  this.percent = percent;
-  // Initializers done
-  LucaObject.call(this);
-}
-GradientStop.prototype.get$color = function() { return this.color; };
-// ********** Code for LinearGradientDirection **************
-function LinearGradientDirection(_str) {
-  this._str = _str;
-  // Initializers done
-}
-LinearGradientDirection.prototype.toString = function() {
-  return this._str;
-}
-LinearGradientDirection.prototype.toString$0 = LinearGradientDirection.prototype.toString;
 // ********** Code for _RootElement **************
 $inherits(_RootElement, Border);
 function _RootElement() {
@@ -10798,26 +10603,6 @@ _Dom.appendClass = function(element, classToAppend) {
 }
 _Dom.createByTag = function(tagName) {
   return ElementWrappingImplementation.ElementWrappingImplementation$tag$factory(tagName);
-}
-// ********** Code for StyleSetter **************
-$inherits(StyleSetter, FrameworkObject);
-function StyleSetter(propertyName, propertyValue) {
-  this.propertyName = propertyName;
-  // Initializers done
-  FrameworkObject.call(this);
-  this.valueProperty = new FrameworkProperty(this, "value", (function (v) {
-
-  })
-  , propertyValue);
-}
-StyleSetter.prototype.get$value = function() {
-  return getValue(this.valueProperty);
-}
-StyleSetter.prototype.set$value = function(newValue) {
-  return setValue(this.valueProperty, newValue);
-}
-StyleSetter.prototype.get$_type = function() {
-  return "StyleSetter";
 }
 // ********** Code for Slider **************
 $inherits(Slider, FrameworkElement);
@@ -11068,136 +10853,22 @@ function getValue(propertyInfo) {
   if (propertyInfo == null) return null;
   return propertyInfo.value;
 }
-//  ********** Library LUCA UI Demo Style Templates **************
-// ********** Code for _templateResources **************
-function _templateResources() {
-  this.contentBorderStyle = new _StyleTemplateImplementation();
-  this.innerBorderStyle = new _StyleTemplateImplementation();
-  this.mainGridStyle = new _StyleTemplateImplementation();
-  this.titleTextBlockStyle = new _StyleTemplateImplementation();
-  this.subTitleTextBlockStyle = new _StyleTemplateImplementation();
-  this.centeredStyle = new _StyleTemplateImplementation();
-  this.stretchedStyle = new _StyleTemplateImplementation();
-  // Initializers done
-  this._initCenteredStyle();
-  this._initStretchedStyle();
-  this._initContentBorder();
-  this._initInnerBorder();
-  this._initMainGrid();
-  this._initTitleTextBlock();
-  this._initSubTitleTextBlock();
-}
-_templateResources.prototype._initStretchedStyle = function() {
-  this.stretchedStyle.setProperty("horizontalAlignment", const$53/*HorizontalAlignment.Stretch*/);
-  this.stretchedStyle.setProperty("verticalAlignment", const$63/*VerticalAlignment.Stretch*/);
-}
-_templateResources.prototype._initCenteredStyle = function() {
-  this.centeredStyle.setProperty("horizontalAlignment", const$51/*HorizontalAlignment.Center*/);
-  this.centeredStyle.setProperty("verticalAlignment", const$61/*VerticalAlignment.Center*/);
-}
-_templateResources.prototype._initTitleTextBlock = function() {
-  this.titleTextBlockStyle.setProperty("fontSize", 32);
-  this.titleTextBlockStyle.setProperty("foreground", new SolidColorBrush(new Color(const$362/*Colors.White*/)));
-  this.titleTextBlockStyle.setProperty("margin", new Thickness(10));
-  this.titleTextBlockStyle.setProperty("horizontalAlignment", const$51/*HorizontalAlignment.Center*/);
-}
-_templateResources.prototype._initSubTitleTextBlock = function() {
-  this.subTitleTextBlockStyle.setProperty("fontSize", 16);
-  this.subTitleTextBlockStyle.setProperty("foreground", new SolidColorBrush(new Color(const$362/*Colors.White*/)));
-  this.subTitleTextBlockStyle.setProperty("margin", new Thickness(10));
-  this.subTitleTextBlockStyle.setProperty("horizontalAlignment", const$51/*HorizontalAlignment.Center*/);
-}
-_templateResources.prototype._initMainGrid = function() {
-  var lgb = new LinearGradientBrush();
-  lgb.direction = const$404/*LinearGradientDirection.topToBottom*/;
-  lgb.stops.add(new GradientStop(new Color.hex$ctor("#3333AA"), 65));
-  lgb.stops.add(new GradientStop(new Color(const$104/*Colors.Black*/), -1));
-  var rList = new ObservableList_RowDefinition();
-  rList.add(new RowDefinition.with$ctor(new GridLength.auto$ctor()));
-  rList.add(new RowDefinition.with$ctor(new GridLength.auto$ctor()));
-  rList.add(new RowDefinition.with$ctor(new GridLength.star$ctor(1)));
-  this.mainGridStyle.setProperty("background", lgb);
-  this.mainGridStyle.setProperty("rowDefinitions", rList);
-  this.mainGridStyle.mergeWith([this.stretchedStyle]);
-}
-_templateResources.prototype._initContentBorder = function() {
-  this.contentBorderStyle.setProperty("margin", new Thickness(10));
-  this.contentBorderStyle.setProperty("borderThickness", new Thickness(10));
-  this.contentBorderStyle.setProperty("borderColor", new SolidColorBrush(new Color.hex$ctor("#AAAAAA")));
-  this.contentBorderStyle.setProperty("cornerRadius", 10);
-  this.contentBorderStyle.setProperty("background", new SolidColorBrush(new Color(const$364/*Colors.WhiteSmoke*/)));
-  this.contentBorderStyle.mergeWith([this.stretchedStyle]);
-}
-_templateResources.prototype._initInnerBorder = function() {
-  this.innerBorderStyle.setProperty("borderThickness", new Thickness(5));
-  this.innerBorderStyle.setProperty("borderColor", new SolidColorBrush(new Color.hex$ctor("#808080")));
-  this.innerBorderStyle.mergeWith([this.stretchedStyle]);
-}
-// ********** Code for top level **************
 //  ********** Library HashClient **************
 // ********** Code for HashClient **************
 function HashClient() {
+  this.vm = new _ViewModelImplementation();
   // Initializers done
 }
-HashClient.prototype.run = function() {
-  LucaSystem.LucaSystem$factory();
-  this.resources = new _templateResources();
-  new _BindingImplementation($globals.LucaSystem_windowWidthProperty, $globals.LucaSystem_visualRoot.widthProperty, const$73/*BindingMode.OneWay*/, const$75/*const _DefaultConverter()*/);
-  new _BindingImplementation($globals.LucaSystem_windowHeightProperty, $globals.LucaSystem_visualRoot.heightProperty, const$73/*BindingMode.OneWay*/, const$75/*const _DefaultConverter()*/);
-  var mainGrid = new Grid();
-  mainGrid.set$style(this.resources.mainGridStyle);
-  var outerContentBorder = new Border();
-  outerContentBorder.set$style(this.resources.contentBorderStyle);
-  Grid.setRow(outerContentBorder, 2);
-  mainGrid.children.add(outerContentBorder);
-  var innerContentBorder = new Border();
-  innerContentBorder.set$style(this.resources.innerBorderStyle);
-  outerContentBorder.set$content(innerContentBorder);
-  var title = new TextBlock();
-  title.set$style(this.resources.titleTextBlockStyle);
-  title.set$text("Value Conversion and Data Binding");
-  mainGrid.children.add(title);
-  var subTitle = new TextBlock();
-  subTitle.set$style(this.resources.subTitleTextBlockStyle);
-  subTitle.set$text("The value of the TextBox is bound to the TextBlock and converted on-the-fly to upper case.");
-  Grid.setRow(subTitle, 1);
-  mainGrid.children.add(subTitle);
-  var contentGrid = this.buildContentGrid();
-  innerContentBorder.set$content(contentGrid);
-  this.generateContent(contentGrid);
-  LucaSystem.renderRaw(mainGrid);
-}
-HashClient.prototype.generateContent = function(contentGrid) {
-  var info = new TextBlock();
-  info.set$style(this.resources.centeredStyle);
-  info.set$text("Enter text into the text box below.  The text property of it is bound to a text block below it that has a value converter attached.  As you type, the text will appear in all caps as it passes through the converter.");
-  info.set$width(500);
-  contentGrid.children.add(info);
-  var enter = new TextBox();
-  enter.set$style(this.resources.centeredStyle);
-  enter.set$width(300);
-  enter.set$placeholder("Enter some lowercase text here...");
-  Grid.setRow(enter, 1);
-  contentGrid.children.add(enter);
-  var output = new TextBlock();
-  output.set$style(this.resources.centeredStyle);
-  output.set$fontSize(24);
-  output.set$text("hello");
-  Grid.setRow(output, 2);
-  contentGrid.children.add(output);
-}
-HashClient.prototype.buildContentGrid = function() {
-  var g = new Grid();
-  g.set$background(new SolidColorBrush(new Color(const$364/*Colors.WhiteSmoke*/)));
-  g.set$style(this.resources.stretchedStyle);
-  g.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.star$ctor(.3)));
-  g.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.star$ctor(.3)));
-  g.get$rowDefinitions().add(new RowDefinition.with$ctor(new GridLength.star$ctor(1)));
-  return g;
+// ********** Code for _ViewModelImplementation **************
+$inherits(_ViewModelImplementation, ViewModelBase);
+function _ViewModelImplementation() {
+  // Initializers done
+  ViewModelBase.call(this);
 }
 // ********** Code for top level **************
 function main() {
-  new HashClient().run();
+  LucaSystem.LucaSystem$factory();
+  new HashClient();
 }
 // ********** Generic Type Inheritance **************
 /** Implements extends for generic types. */
@@ -11427,9 +11098,6 @@ var const$381 = new GridUnitType(3)/*const GridUnitType(3)*/;
 var const$385 = new StringToBooleanConverter()/*const StringToBooleanConverter()*/;
 var const$39 = new Cursors("se-resize")/*const Cursors("se-resize")*/;
 var const$4 = new Visibility(true)/*const Visibility(true)*/;
-var const$401 = new FrameworkException("LUCA UI Framework Objects cannot be passed as StyleTemplate setter values.")/*const FrameworkException("LUCA UI Framework Objects cannot be passed as StyleTemplate setter values.")*/;
-var const$402 = new LinearGradientDirection("left")/*const LinearGradientDirection("left")*/;
-var const$404 = new LinearGradientDirection("top")/*const LinearGradientDirection("top")*/;
 var const$41 = new Cursors("sw-resize")/*const Cursors("sw-resize")*/;
 var const$43 = new Cursors("text")/*const Cursors("text")*/;
 var const$45 = new Cursors("wait")/*const Cursors("wait")*/;
