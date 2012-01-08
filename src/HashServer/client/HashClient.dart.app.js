@@ -129,6 +129,9 @@ Object.prototype.handler$2 = function($0, $1) {
 Object.prototype.hasAttribute$1 = function($0) {
   return this.noSuchMethod("hasAttribute", [$0]);
 };
+Object.prototype.hasAttributes$0 = function() {
+  return this.noSuchMethod("hasAttributes", []);
+};
 Object.prototype.hasChildNodes$0 = function() {
   return this.noSuchMethod("hasChildNodes", []);
 };
@@ -152,6 +155,9 @@ Object.prototype.is$html_html_Document = function() {
 };
 Object.prototype.item$1 = function($0) {
   return this.noSuchMethod("item", [$0]);
+};
+Object.prototype.iterator$0 = function() {
+  return this.noSuchMethod("iterator", []);
 };
 Object.prototype.next$0 = function() {
   return this.noSuchMethod("next", []);
@@ -512,6 +518,7 @@ ListFactory.prototype.add$1 = ListFactory.prototype.add;
 ListFactory.prototype.forEach$1 = function($0) {
   return this.forEach(to$call$1($0));
 };
+ListFactory.prototype.iterator$0 = ListFactory.prototype.iterator;
 ListFactory_Binding = ListFactory;
 ListFactory_ColumnDefinition = ListFactory;
 ListFactory_E = ListFactory;
@@ -611,6 +618,9 @@ ImmutableMap.prototype.is$Map_dart_core_String$Dynamic = function(){return true}
 ImmutableMap.prototype.$index = function(key) {
   return this._internal.$index(key);
 }
+ImmutableMap.prototype.isEmpty = function() {
+  return this._internal.isEmpty();
+}
 ImmutableMap.prototype.get$length = function() {
   return this._internal.get$length();
 }
@@ -619,6 +629,9 @@ ImmutableMap.prototype.forEach = function(f) {
 }
 ImmutableMap.prototype.getKeys = function() {
   return this._internal.getKeys();
+}
+ImmutableMap.prototype.containsKey = function(key) {
+  return this._internal.containsKey(key);
 }
 ImmutableMap.prototype.$setindex = function(key, value) {
   $throw(const$76/*const IllegalAccessException()*/);
@@ -764,6 +777,9 @@ HashMapImplementation.prototype.remove = function(key) {
     return value;
   }
   return null;
+}
+HashMapImplementation.prototype.isEmpty = function() {
+  return this._numberOfEntries == 0;
 }
 HashMapImplementation.prototype.get$length = function() {
   return this._numberOfEntries;
@@ -925,6 +941,10 @@ HashMapImplementation_FrameworkElement$Dynamic.prototype.is$Map_dart_core_String
 $inherits(HashMapImplementation_K$DoubleLinkedQueueEntry_KeyValuePair_K$V, HashMapImplementation);
 function HashMapImplementation_K$DoubleLinkedQueueEntry_KeyValuePair_K$V() {}
 HashMapImplementation_K$DoubleLinkedQueueEntry_KeyValuePair_K$V.prototype.is$Map_dart_core_String$Dynamic = function(){return true};
+// ********** Code for HashMapImplementation_RadioButton$EventHandlerReference **************
+$inherits(HashMapImplementation_RadioButton$EventHandlerReference, HashMapImplementation);
+function HashMapImplementation_RadioButton$EventHandlerReference() {}
+HashMapImplementation_RadioButton$EventHandlerReference.prototype.is$Map_dart_core_String$Dynamic = function(){return false};
 // ********** Code for HashMapImplementation_dart_core_String$Dynamic **************
 $inherits(HashMapImplementation_dart_core_String$Dynamic, HashMapImplementation);
 function HashMapImplementation_dart_core_String$Dynamic() {}
@@ -973,6 +993,7 @@ HashSetImplementation.prototype.add$1 = HashSetImplementation.prototype.add;
 HashSetImplementation.prototype.forEach$1 = function($0) {
   return this.forEach(to$call$1($0));
 };
+HashSetImplementation.prototype.iterator$0 = HashSetImplementation.prototype.iterator;
 HashSetImplementation.prototype.remove$1 = HashSetImplementation.prototype.remove;
 // ********** Code for HashSetImplementation_E **************
 $inherits(HashSetImplementation_E, HashSetImplementation);
@@ -1112,6 +1133,9 @@ LinkedHashMapImplementation.prototype.containsKey = function(key) {
 }
 LinkedHashMapImplementation.prototype.get$length = function() {
   return this._map.get$length();
+}
+LinkedHashMapImplementation.prototype.isEmpty = function() {
+  return this.get$length() == 0;
 }
 LinkedHashMapImplementation.prototype.forEach$1 = function($0) {
   return this.forEach(to$call$2($0));
@@ -1259,6 +1283,7 @@ DoubleLinkedQueue.prototype.add$1 = DoubleLinkedQueue.prototype.add;
 DoubleLinkedQueue.prototype.forEach$1 = function($0) {
   return this.forEach(to$call$1($0));
 };
+DoubleLinkedQueue.prototype.iterator$0 = DoubleLinkedQueue.prototype.iterator;
 // ********** Code for DoubleLinkedQueue_KeyValuePair_K$V **************
 $inherits(DoubleLinkedQueue_KeyValuePair_K$V, DoubleLinkedQueue);
 function DoubleLinkedQueue_KeyValuePair_K$V() {
@@ -2585,6 +2610,9 @@ $dynamic("addEventListener$3").Node = function($0, $1, $2) {
 };
 $dynamic("appendChild$1").Node = function($0) {
   return this.appendChild($0);
+};
+$dynamic("hasAttributes$0").Node = function() {
+  return this.hasAttributes();
 };
 $dynamic("hasChildNodes$0").Node = function() {
   return this.hasChildNodes();
@@ -7289,6 +7317,9 @@ ElementAttributeMap.prototype.getKeys = function() {
 ElementAttributeMap.prototype.get$length = function() {
   return this._element.get$attributes().get$length();
 }
+ElementAttributeMap.prototype.isEmpty = function() {
+  return !this._element.hasAttributes$0();
+}
 ElementAttributeMap.prototype.forEach$1 = function($0) {
   return this.forEach(to$call$2($0));
 };
@@ -7489,6 +7520,7 @@ _ChildrenNodeList.prototype.add$1 = _ChildrenNodeList.prototype.add;
 _ChildrenNodeList.prototype.forEach$1 = function($0) {
   return this.forEach(to$call$1($0));
 };
+_ChildrenNodeList.prototype.iterator$0 = _ChildrenNodeList.prototype.iterator;
 // ********** Code for ObjectElementWrappingImplementation **************
 $inherits(ObjectElementWrappingImplementation, ElementWrappingImplementation);
 function ObjectElementWrappingImplementation() {}
@@ -9154,6 +9186,9 @@ function _FrameworkEventImplementation_MouseEventArgs() {}
 // ********** Code for _FrameworkEventImplementation_PropertyChangingEventArgs **************
 $inherits(_FrameworkEventImplementation_PropertyChangingEventArgs, _FrameworkEventImplementation);
 function _FrameworkEventImplementation_PropertyChangingEventArgs() {}
+// ********** Code for _FrameworkEventImplementation_RadioButtonSelectionChangedEventArgs **************
+$inherits(_FrameworkEventImplementation_RadioButtonSelectionChangedEventArgs, _FrameworkEventImplementation);
+function _FrameworkEventImplementation_RadioButtonSelectionChangedEventArgs() {}
 // ********** Code for _FrameworkEventImplementation_RoutedEventArgs **************
 $inherits(_FrameworkEventImplementation_RoutedEventArgs, _FrameworkEventImplementation);
 function _FrameworkEventImplementation_RoutedEventArgs() {}
@@ -9810,12 +9845,50 @@ RadioButton.prototype.get$value = function() {
 RadioButton.prototype.set$value = function(v) {
   return setValue(this.valueProperty, v);
 }
+RadioButton.prototype.get$groupName = function() {
+  return getValue(this.groupNameProperty);
+}
+RadioButton.prototype.set$groupName = function(v) {
+  return setValue(this.groupNameProperty, v);
+}
 RadioButton.prototype.CreateElement = function() {
   this._component = _Dom.createByTag("input");
   this._component.get$attributes().$setindex("type", "radio");
 }
 RadioButton.prototype.get$_type = function() {
   return "RadioButton";
+}
+// ********** Code for RadioButtonGroup **************
+function RadioButtonGroup() {
+  this._radioButtonList = new HashMapImplementation();
+  this.selectionChanged = new _FrameworkEventImplementation();
+  // Initializers done
+}
+RadioButtonGroup.prototype.get$currentSelectedButton = function() { return this.currentSelectedButton; };
+RadioButtonGroup.prototype.set$currentSelectedButton = function(value) { return this.currentSelectedButton = value; };
+RadioButtonGroup.prototype.addRadioButton = function(buttonToAdd) {
+  var $this = this; // closure support
+  if (buttonToAdd == null) return;
+  if (this._radioButtonList.containsKey(buttonToAdd)) {
+    $throw(const$405/*const FrameworkException("RadioButton already exists in the RadioButtonGroup list.")*/);
+  }
+  if (!this._radioButtonList.isEmpty()) {
+    var name = this._radioButtonList.getKeys().iterator$0().next$0().get$groupName();
+    if (name != buttonToAdd.get$groupName()) $throw(new FrameworkException(("Attempted to add RadioButton with groupName='" + buttonToAdd.get$groupName() + "' to RadioButtonGroup with groupName='" + name + "'")));
+  }
+  var ref = buttonToAdd.selectionChanged.$add((function (button, __) {
+    $this.currentSelectedButton = button;
+    $this.selectionChanged.invoke($this, new RadioButtonSelectionChangedEventArgs(button));
+  })
+  );
+  this._radioButtonList.$setindex(buttonToAdd, ref);
+}
+// ********** Code for RadioButtonSelectionChangedEventArgs **************
+$inherits(RadioButtonSelectionChangedEventArgs, EventArgs);
+function RadioButtonSelectionChangedEventArgs(selectedRadioButton) {
+  this.selectedRadioButton = selectedRadioButton;
+  // Initializers done
+  EventArgs.call(this);
 }
 // ********** Code for CheckBox **************
 $inherits(CheckBox, FrameworkElement);
@@ -9850,6 +9923,9 @@ CheckBox.prototype.get$value = function() {
 }
 CheckBox.prototype.set$value = function(v) {
   return setValue(this.valueProperty, v);
+}
+CheckBox.prototype.get$groupName = function() {
+  return getValue(this.groupNameProperty);
 }
 CheckBox.prototype.CreateElement = function() {
   this._component = _Dom.createByTag("input");
@@ -11487,7 +11563,7 @@ View.prototype._initUI = function() {
   this.children.add(borderGame);
   var borderStats = new Border();
   borderStats.set$width(450);
-  borderStats.set$height(100);
+  borderStats.set$height(500);
   borderStats.set$padding(new Thickness(5));
   borderStats.set$borderThickness(new Thickness(1));
   borderStats.set$margin(new Thickness.specified$ctor(0, 0, 0, 10));
@@ -11535,25 +11611,174 @@ View.prototype._initUI = function() {
   var btnGenHash = new Button();
   btnGenHash.set$content("Generate Hash");
   spValues.children.add(btnGenHash);
+  var radioButtonGroup = new RadioButtonGroup();
+  radioButtonGroup.selectionChanged.$add((function (b, _) {
+    dart_core_print("radio button group selected " + b.get$currentSelectedButton().get$value().toString$0());
+    $this.vm.setHasher(b.get$currentSelectedButton().get$name());
+  })
+  );
+  var lblHash = new TextBlock();
+  lblHash.set$text("APHash");
+  lblHash.set$fontSize(10);
+  var hashRadioButton = new RadioButton();
+  hashRadioButton.set$groupName("hashRadioButtons");
+  hashRadioButton.set$value("0");
+  hashRadioButton.set$name("APHash");
+  spValues.children.add(lblHash);
+  radioButtonGroup.addRadioButton(hashRadioButton);
+  spValues.children.add(hashRadioButton);
+  lblHash = new TextBlock();
+  lblHash.set$text("BKDRHash");
+  lblHash.set$fontSize(10);
+  hashRadioButton = new RadioButton();
+  hashRadioButton.set$groupName("hashRadioButtons");
+  hashRadioButton.set$value("1");
+  hashRadioButton.set$name("BKDRHash");
+  spValues.children.add(lblHash);
+  radioButtonGroup.addRadioButton(hashRadioButton);
+  spValues.children.add(hashRadioButton);
+  lblHash = new TextBlock();
+  lblHash.set$text("DEKHash");
+  lblHash.set$fontSize(10);
+  hashRadioButton = new RadioButton();
+  hashRadioButton.set$groupName("hashRadioButtons");
+  hashRadioButton.set$value("2");
+  hashRadioButton.set$name("DEKHash");
+  spValues.children.add(lblHash);
+  radioButtonGroup.addRadioButton(hashRadioButton);
+  spValues.children.add(hashRadioButton);
+  lblHash = new TextBlock();
+  lblHash.set$text("DJBHash");
+  lblHash.set$fontSize(10);
+  hashRadioButton = new RadioButton();
+  hashRadioButton.set$groupName("hashRadioButtons");
+  hashRadioButton.set$value("3");
+  hashRadioButton.set$name("DJBHash");
+  spValues.children.add(lblHash);
+  radioButtonGroup.addRadioButton(hashRadioButton);
+  spValues.children.add(hashRadioButton);
+  lblHash = new TextBlock();
+  lblHash.set$text("ELFHash");
+  lblHash.set$fontSize(10);
+  hashRadioButton = new RadioButton();
+  hashRadioButton.set$groupName("hashRadioButtons");
+  hashRadioButton.set$value("4");
+  hashRadioButton.set$name("ELFHash");
+  spValues.children.add(lblHash);
+  radioButtonGroup.addRadioButton(hashRadioButton);
+  spValues.children.add(hashRadioButton);
+  lblHash = new TextBlock();
+  lblHash.set$text("JSHash");
+  lblHash.set$fontSize(10);
+  hashRadioButton = new RadioButton();
+  hashRadioButton.set$groupName("hashRadioButtons");
+  hashRadioButton.set$value("5");
+  hashRadioButton.set$name("JSHash");
+  spValues.children.add(lblHash);
+  radioButtonGroup.addRadioButton(hashRadioButton);
+  spValues.children.add(hashRadioButton);
+  lblHash = new TextBlock();
+  lblHash.set$text("PJWHash");
+  lblHash.set$fontSize(10);
+  hashRadioButton = new RadioButton();
+  hashRadioButton.set$groupName("hashRadioButtons");
+  hashRadioButton.set$value("6");
+  hashRadioButton.set$name("PJWHash");
+  spValues.children.add(lblHash);
+  radioButtonGroup.addRadioButton(hashRadioButton);
+  spValues.children.add(hashRadioButton);
+  lblHash = new TextBlock();
+  lblHash.set$text("RSHash");
+  lblHash.set$fontSize(10);
+  hashRadioButton = new RadioButton();
+  hashRadioButton.set$groupName("hashRadioButtons");
+  hashRadioButton.set$value("7");
+  hashRadioButton.set$name("RSHash");
+  spValues.children.add(lblHash);
+  radioButtonGroup.addRadioButton(hashRadioButton);
+  spValues.children.add(hashRadioButton);
+  lblHash = new TextBlock();
+  lblHash.set$text("SDBMHash");
+  lblHash.set$fontSize(10);
+  hashRadioButton = new RadioButton();
+  hashRadioButton.set$groupName("hashRadioButtons");
+  hashRadioButton.set$value("8");
+  hashRadioButton.set$name("SDBMHash");
+  spValues.children.add(lblHash);
+  radioButtonGroup.addRadioButton(hashRadioButton);
+  spValues.children.add(hashRadioButton);
+  lblHash = new TextBlock();
+  lblHash.set$text("NullHash");
+  lblHash.set$fontSize(10);
+  hashRadioButton = new RadioButton();
+  hashRadioButton.set$groupName("hashRadioButtons");
+  hashRadioButton.set$value("9");
+  hashRadioButton.set$name("NullHash");
+  spValues.children.add(lblHash);
+  radioButtonGroup.addRadioButton(hashRadioButton);
+  spValues.children.add(hashRadioButton);
+  lblHash = new TextBlock();
+  lblHash.set$text("BPHash");
+  lblHash.set$fontSize(10);
+  hashRadioButton = new RadioButton();
+  hashRadioButton.set$groupName("hashRadioButtons");
+  hashRadioButton.set$value("10");
+  hashRadioButton.set$name("BPHash");
+  spValues.children.add(lblHash);
+  radioButtonGroup.addRadioButton(hashRadioButton);
+  spValues.children.add(hashRadioButton);
+  lblHash = new TextBlock();
+  lblHash.set$text("FNVHash");
+  lblHash.set$fontSize(10);
+  hashRadioButton = new RadioButton();
+  hashRadioButton.set$groupName("hashRadioButtons");
+  hashRadioButton.set$value("11");
+  hashRadioButton.set$name("FNVHash");
+  spValues.children.add(lblHash);
+  radioButtonGroup.addRadioButton(hashRadioButton);
+  spValues.children.add(hashRadioButton);
   btnGenHash.click.$add((function (_, __) {
     return $this.vm.genHash(enter.get$text());
   })
   );
+  new _BindingImplementation(this.vm.hashedValueProperty, lblGenerationValue.textProperty, const$73/*BindingMode.OneWay*/, const$75/*const _DefaultConverter()*/);
 }
 // ********** Code for _ViewModelImplementation **************
 $inherits(_ViewModelImplementation, ViewModelBase);
 function _ViewModelImplementation() {
   // Initializers done
   ViewModelBase.call(this);
+  this._HashClient_initProperties();
   this._initializeView();
 }
 _ViewModelImplementation.prototype._initializeView = function() {
+  var $this = this; // closure support
   this.view = new View(this);
   this.generateHash = new GenerateHash();
+  this.generateHash.f = (function (s) {
+    setValue($this.hashedValueProperty, s);
+  })
+  ;
   LucaSystem.set$rootView(this.view);
 }
+_ViewModelImplementation.prototype._HashClient_initProperties = function() {
+  var $this = this; // closure support
+  this.hashedValueProperty = new FrameworkProperty(this, "hashedValueProperty", (function (_) {
+
+  })
+  , "test");
+  this.hasherNameProperty = new FrameworkProperty(this, "hasherNameProperty", (function (s) {
+    $this._hasherName = s;
+  })
+  , "DJBHash");
+}
+_ViewModelImplementation.prototype.setHasher = function(str) {
+  dart_core_print("setHasher=" + str);
+  this._hasherName = str;
+}
 _ViewModelImplementation.prototype.genHash = function(str) {
-  this.generateHash.handlePostMessage(str);
+  dart_core_print("genHash implementation :" + str + "\n" + "_hasherName = " + this._hasherName);
+  this.generateHash.handlePostMessage(str, this._hasherName);
   dart_core_print("genHash implementation :" + str);
 }
 // ********** Code for GenerateHash **************
@@ -11566,16 +11791,20 @@ GenerateHash.prototype.onMessagePost = function(response) {
   dart_core_print(("response['response'] = " + response.$index('response')));
   dart_core_print(("response['hash'] = " + response.$index('hash')));
   dart_core_print(("response['hashName'] = " + response.$index('hashName')));
+  if ((typeof(this.f) == 'function')) {
+    this.f.call$1(response.$index('hash'));
+  }
 }
 GenerateHash.prototype.onMessagePostFailed = function() {
   dart_core_print("Failed to post message. Please try again later.");
 }
-GenerateHash.prototype.handlePostMessage = function(e) {
+GenerateHash.prototype.handlePostMessage = function(e, hasherName) {
   var $this = this; // closure support
   var messageText = e;
   var messageRequest = new HashMapImplementation();
   messageRequest.$setindex("request", "generateHash");
   messageRequest.$setindex("value", messageText);
+  messageRequest.$setindex("hasher", hasherName);
   this.sendRequest("/generateHash", messageRequest, (function (response) {
     return $this.onMessagePost(response);
   })
@@ -11838,6 +12067,7 @@ var const$39 = new Cursors("se-resize")/*const Cursors("se-resize")*/;
 var const$4 = new Visibility(true)/*const Visibility(true)*/;
 var const$401 = new LinearGradientDirection("left")/*const LinearGradientDirection("left")*/;
 var const$403 = new LinearGradientDirection("top")/*const LinearGradientDirection("top")*/;
+var const$405 = new FrameworkException("RadioButton already exists in the RadioButtonGroup list.")/*const FrameworkException("RadioButton already exists in the RadioButtonGroup list.")*/;
 var const$41 = new Cursors("sw-resize")/*const Cursors("sw-resize")*/;
 var const$43 = new Cursors("text")/*const Cursors("text")*/;
 var const$45 = new Cursors("wait")/*const Cursors("wait")*/;

@@ -93,7 +93,7 @@ class View extends Grid implements IView {
     // Statistics Border Container
     Border borderStats = new Border();
     borderStats.width = 450;
-    borderStats.height = 100;
+    borderStats.height = 500;
     borderStats.padding = new Thickness(5);
     borderStats.borderThickness = new Thickness(1);
     borderStats.margin = new Thickness.specified(0,0,0,10);
@@ -162,12 +162,203 @@ class View extends Grid implements IView {
     spValues.children.add(btnGenHash);
     
     
+    RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
+    radioButtonGroup.selectionChanged +  (b, _) { 
+      print ("radio button group selected " 
+        + b.currentSelectedButton.value.toString()); 
+      vm.setHasher(b.currentSelectedButton.name);
+      };
+    // TODO: make this dynamic by having the server tell the client which radio buttons to create. 
+    // APHash
+    TextBlock lblHash = new TextBlock();
+    lblHash.text = "APHash";
+    lblHash.fontSize = 10;
+    
+    
+    RadioButton hashRadioButton = new RadioButton();
+    hashRadioButton.groupName = "hashRadioButtons";
+    hashRadioButton.value = "0";
+    hashRadioButton.name = "APHash";
+    
+    spValues.children.add(lblHash);
+    radioButtonGroup.addRadioButton(hashRadioButton);
+    spValues.children.add(hashRadioButton);
+    
+    // BKDRHash
+    lblHash = new TextBlock();
+    lblHash.text = "BKDRHash";
+    lblHash.fontSize = 10;
+    
+    
+    hashRadioButton = new RadioButton();
+    hashRadioButton.groupName = "hashRadioButtons";
+    hashRadioButton.value = "1";
+    hashRadioButton.name = "BKDRHash";
+    
+    spValues.children.add(lblHash);
+    radioButtonGroup.addRadioButton(hashRadioButton);
+    spValues.children.add(hashRadioButton);
+    
+    // DEKHash
+    lblHash = new TextBlock();
+    lblHash.text = "DEKHash";
+    lblHash.fontSize = 10;
+    
+    
+    hashRadioButton = new RadioButton();
+    hashRadioButton.groupName = "hashRadioButtons";
+    hashRadioButton.value = "2";
+    hashRadioButton.name = "DEKHash";
+    
+    spValues.children.add(lblHash);
+    radioButtonGroup.addRadioButton(hashRadioButton);
+    spValues.children.add(hashRadioButton);
+    
+    // DJBHash
+    lblHash = new TextBlock();
+    lblHash.text = "DJBHash";
+    lblHash.fontSize = 10;
+    
+    
+    hashRadioButton = new RadioButton();
+    hashRadioButton.groupName = "hashRadioButtons";
+    hashRadioButton.value = "3";
+    hashRadioButton.name = "DJBHash";
+    
+    spValues.children.add(lblHash);
+    radioButtonGroup.addRadioButton(hashRadioButton);
+    spValues.children.add(hashRadioButton);
+    
+    // ELFHash
+    lblHash = new TextBlock();
+    lblHash.text = "ELFHash";
+    lblHash.fontSize = 10;
+    
+    
+    hashRadioButton = new RadioButton();
+    hashRadioButton.groupName = "hashRadioButtons";
+    hashRadioButton.value = "4";
+    hashRadioButton.name = "ELFHash";
+    
+    spValues.children.add(lblHash);
+    radioButtonGroup.addRadioButton(hashRadioButton);
+    spValues.children.add(hashRadioButton);
+    
+    // JSHash
+    lblHash = new TextBlock();
+    lblHash.text = "JSHash";
+    lblHash.fontSize = 10;
+    
+    
+    hashRadioButton = new RadioButton();
+    hashRadioButton.groupName = "hashRadioButtons";
+    hashRadioButton.value = "5";
+    hashRadioButton.name = "JSHash";
+    
+    spValues.children.add(lblHash);
+    radioButtonGroup.addRadioButton(hashRadioButton);
+    spValues.children.add(hashRadioButton);
+    
+    // PJWHash
+    lblHash = new TextBlock();
+    lblHash.text = "PJWHash";
+    lblHash.fontSize = 10;
+    
+    
+    hashRadioButton = new RadioButton();
+    hashRadioButton.groupName = "hashRadioButtons";
+    hashRadioButton.value = "6";
+    hashRadioButton.name = "PJWHash";
+    
+    spValues.children.add(lblHash);
+    radioButtonGroup.addRadioButton(hashRadioButton);
+    spValues.children.add(hashRadioButton);
+    
+    // RSHash
+    lblHash = new TextBlock();
+    lblHash.text = "RSHash";
+    lblHash.fontSize = 10;
+    
+    
+    hashRadioButton = new RadioButton();
+    hashRadioButton.groupName = "hashRadioButtons";
+    hashRadioButton.value = "7";
+    hashRadioButton.name = "RSHash";
+    
+    spValues.children.add(lblHash);
+    radioButtonGroup.addRadioButton(hashRadioButton);
+    spValues.children.add(hashRadioButton);
+    
+    // SDBMHash
+    lblHash = new TextBlock();
+    lblHash.text = "SDBMHash";
+    lblHash.fontSize = 10;
+    
+    
+    hashRadioButton = new RadioButton();
+    hashRadioButton.groupName = "hashRadioButtons";
+    hashRadioButton.value = "8";
+    hashRadioButton.name = "SDBMHash";
+    
+    spValues.children.add(lblHash);
+    radioButtonGroup.addRadioButton(hashRadioButton);
+    spValues.children.add(hashRadioButton);
+    
+    // NullHash
+    lblHash = new TextBlock();
+    lblHash.text = "NullHash";
+    lblHash.fontSize = 10;
+    
+    
+    hashRadioButton = new RadioButton();
+    hashRadioButton.groupName = "hashRadioButtons";
+    hashRadioButton.value = "9";
+    hashRadioButton.name = "NullHash";
+    
+    spValues.children.add(lblHash);
+    radioButtonGroup.addRadioButton(hashRadioButton);
+    spValues.children.add(hashRadioButton);
+    
+    // BPHash
+    lblHash = new TextBlock();
+    lblHash.text = "BPHash";
+    lblHash.fontSize = 10;
+    
+    
+    hashRadioButton = new RadioButton();
+    hashRadioButton.groupName = "hashRadioButtons";
+    hashRadioButton.value = "10";
+    hashRadioButton.name = "BPHash";
+    
+    spValues.children.add(lblHash);
+    radioButtonGroup.addRadioButton(hashRadioButton);
+    spValues.children.add(hashRadioButton);
+    
+    // FNVHash
+    lblHash = new TextBlock();
+    lblHash.text = "FNVHash";
+    lblHash.fontSize = 10;
+    
+    
+    hashRadioButton = new RadioButton();
+    hashRadioButton.groupName = "hashRadioButtons";
+    hashRadioButton.value = "11";
+    hashRadioButton.name = "FNVHash";
+    
+    spValues.children.add(lblHash);
+    radioButtonGroup.addRadioButton(hashRadioButton);
+    spValues.children.add(hashRadioButton);
+    
     //events
     btnGenHash.click + (_, __) => vm.genHash(enter.text);
     //btnReset.click + (_, __) => vm.reset();
     //btnPlay.click + (_, __) => vm.togglePlayState();
     
     //view model bindings
+    
+    new Binding(vm.hashedValueProperty, lblGenerationValue.textProperty);
+    //new Binding(vm.hasherNameProperty, radioButtonGroup.)
+    
     //new Binding(vm.playButtonTextProperty, btnPlay.contentProperty);
     //new Binding(vm.playfieldBorderColorProperty, borderGame.borderColorProperty);
     //new Binding(vm.contentAreaProperty, borderGame.contentProperty);

@@ -26,15 +26,16 @@ class IsolatedServer extends Isolate {
 
   void _generateHashHandler(HTTPRequest request, HTTPResponse response) {
     void dataEndHandler(String data) {
-      var h = new Hasher("DJBHash");
+      
       var requestData = JSON.parse(data);
-      var d = h.getHash(requestData["value"].toString());
-      print("_generateHashHandler: " + data);
-      print("d = " + d.toString());
+      var hasher = new Hasher(requestData["hasher"]);
+      var hashedData = hasher.getHash(requestData["value"].toString());
       var responseData = new Map();
+ 
       responseData["response"] = "generatedHash";
-      responseData["hash"] = d.toString();
-      responseData["hashName"] = h.name;
+      responseData["hash"] = hashedData.toString();
+      responseData["hashName"] = hasher.name;
+      // Respond to the client
       _sendJSONResponse(response,responseData);
     }
     
@@ -189,7 +190,7 @@ class IsolatedServer extends Isolate {
   }
   
   void _sendJSONResponse(HTTPResponse response, Map responseData) {
-    print('_sendJSONResponse()');
+    //print('_sendJSONResponse()');
     response.setHeader("Content-Type", "application/json; charset=UTF-8");
     response.writeString(JSON.stringify(responseData));
     response.writeDone();
@@ -202,6 +203,5 @@ class IsolatedServer extends Isolate {
   }
   
   //void init(String name, SendPort port) {
-    
   //}
 }

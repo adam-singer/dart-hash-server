@@ -1,5 +1,6 @@
 // Class to communicate with dart web server
 class GenerateHash {
+  Function f;
   void onMessagePost(Map response) {
     // Nothing to do. Messages posted will be delivered from the server.
     print("onMessagePost: " + response.toString());
@@ -7,7 +8,9 @@ class GenerateHash {
     print("response['response'] = ${response['response']}");
     print("response['hash'] = ${response['hash']}");
     print("response['hashName'] = ${response['hashName']}");
-    
+    if (f is Function) {
+      f(response['hash']);
+    }
   }
   
   void onMessagePostFailed() {
@@ -16,14 +19,15 @@ class GenerateHash {
     //uiJoin();
   }
   
-  void handlePostMessage(String e) {
+  void handlePostMessage(String e, String hasherName) {
     var messageText = e;
     var messageRequest = new Map();
     messageRequest["request"] = "generateHash";
     messageRequest["value"] = messageText;
+    messageRequest["hasher"] = hasherName;
     sendRequest("/generateHash",
       messageRequest,
-      (Map response) => onMessagePost(response), 
+      (Map response) =>  onMessagePost(response) , 
       () => onMessagePostFailed());
   }
   
@@ -37,9 +41,11 @@ class GenerateHash {
         onError();
       }
     });
+    
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
     request.send(JSON.stringify(json));
+    
     return request;
   }
 }

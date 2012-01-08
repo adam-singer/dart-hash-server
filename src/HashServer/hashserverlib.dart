@@ -30,9 +30,9 @@ class HashServer extends IsolatedServer {
       (HTTPRequest request, HTTPResponse response) =>
           fileHandler(request, response));
     
-    addHandler("/client/HashClient.dart",
-      (HTTPRequest request, HTTPResponse response) =>
-          fileHandler(request, response));
+    //addHandler("/client/HashClient.dart",
+    //  (HTTPRequest request, HTTPResponse response) =>
+    //      fileHandler(request, response));
     
     addHandler("/generateHash", _generateHashHandler);
     
