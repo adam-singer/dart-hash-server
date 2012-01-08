@@ -14,9 +14,9 @@ class HashServer extends IsolatedServer {
     addHandler("/",
       (HTTPRequest request, HTTPResponse response) =>
           redirectPageHandler(
-              request, response, "client/index.html"));
+              request, response, "client/HashClient.html"));
     
-    addHandler("/client/index.html",
+    addHandler("/client/HashClient.html",
       (HTTPRequest request, HTTPResponse response) =>
           fileHandler(request, response));
     
