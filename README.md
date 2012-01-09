@@ -1,4 +1,4 @@
-An example client/server dart application that uses the [LUCA framework][LUCA] and dart http server. The server is based on the components found in [dart/samples/chat/][HTTPserver]. This application shows how one could create a client application that posts json data to a http server that then makes some calculations (in this example its hash values) and returns to the client. 
+An example client/server dart application that uses the [LUCA framework][LUCA] and [dart http server][HTTPserver]. The server is based on the components found in [dart/samples/chat/][HTTPserver]. This application shows how one could create a client application that posts json data to a http server that then makes some calculations (in this example its hash values) and returns to the client. 
 
 Build & Run this application
 ----------------------------
