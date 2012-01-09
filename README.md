@@ -8,7 +8,7 @@ Build & Run this application
     cd dart-hash-server
     ./run.sh
 
-Before running you might need to adjust the location of the frog and dart locations in the `run.sh`. 
+Before running you might need to adjust the location of the frog and dart locations in the `run.sh`. Open the url thats gets displayed in the console in chrome. The default address should be `http://127.0.0.1:8123/`
 
 [LUCA]: https://github.com/LUCA-Studios-LLC/LUCA-UI-Framework-for-Dart
 [HTTPserver]:https://code.google.com/p/dart/source/browse/#svn%2Fbranches%2Fbleeding_edge%2Fdart%2Fsamples%2Fchat
