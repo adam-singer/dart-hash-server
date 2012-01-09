@@ -4,8 +4,8 @@ Build & Run this application
 ----------------------------
 
     git clone git://github.com/financeCoding/dart-hash-server.git
-    git submodule update --init
     cd dart-hash-server
+    git submodule update --init
     ./run.sh
 
 Before running you might need to adjust the location of the frog and dart locations in the `run.sh`. Open the url thats gets displayed in the console in chrome. The default address should be `http://127.0.0.1:8123/`
