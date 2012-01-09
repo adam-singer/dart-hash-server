@@ -35,11 +35,11 @@ class View implements IView {
     String uiXml = 
 '''
 <!-- main ui container -->
-<stackpanel width="400" 
+<stackpanel 
   horizontalalignment="center" verticalalignment="center">
 
   <!-- title -->
-  <border width="400">
+  <border width="300">
     <textblock horizontalalignment="center" verticalalignment="center"
       text="Hash Server Example" fontsize="25"></textblock>
   </border>
@@ -112,7 +112,7 @@ class View implements IView {
     
     for (int i = 0; i < vm.hashNames.length; i++){
       var r = LucaSystem.findByName(vm.hashNames[i], rootElement);
-      print('r = ' + r);
+      //print('r = ' + r);
       bg.addRadioButton(r); 
     }
     

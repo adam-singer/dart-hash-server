@@ -1,7 +1,7 @@
 #import('hashserverlib.dart');
 
 final DEFAULT_PORT = 8123;
-final DEFAULT_HOST = "127.0.0.1";
+final DEFAULT_HOST = "192.168.1.186";
 
 void main() {
 

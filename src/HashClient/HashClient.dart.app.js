@@ -12181,7 +12181,7 @@ View.prototype._buildUI = function() {
   lgb.stops.add(new GradientStop(new Color(const$364/*Colors.WhiteSmoke*/), -1));
   lgb.stops.add(new GradientStop(new Color.hex$ctor("#AAAAAA"), -1));
   $globals.LucaSystem_visualRoot.set$background(lgb);
-  var uiXml = "<!-- main ui container -->\n<stackpanel width=\"400\" \n  horizontalalignment=\"center\" verticalalignment=\"center\">\n\n  <!-- title -->\n  <border width=\"400\">\n    <textblock horizontalalignment=\"center\" verticalalignment=\"center\"\n      text=\"Hash Server Example\" fontsize=\"25\"></textblock>\n  </border>\n  \n  <!-- main ui layout -->\n  <border borderthickness=\"1\" background=\"WhiteSmoke\" bordercolor=\"Black\"\n  padding=\"5\" margin=\"5,0,0,0\">\n    <stackpanel>\n      <stackpanel>\n        <textblock text=\"String To Be Hashed\"></textblock>\n        <textbox name=\"tbRawString\"></textbox>\n      </stackpanel>\n      <stackpanel margin=\"10,0,0,0\">\n        <textblock text=\"Hashed Result:\"></textblock>\n        <textblock name=\"lblHashedString\"></textblock>\n      </stackpanel>\n      <button name=\"btnGenHash\" margin=\"5,0,0,0\" width=\"110\" content=\"Generate Hash\"></button>\n      \n      <border margin=\"0,10\" padding=\"5\" width=\"300\" borderthickness=\"1\" cornerradius=\"5px\" bordercolor=\"Gray\">\n        <stackpanel>\n      <textblock text=\"Select Hash Algorithm\"></textblock>\n    ";
+  var uiXml = "<!-- main ui container -->\n<stackpanel \n  horizontalalignment=\"center\" verticalalignment=\"center\">\n\n  <!-- title -->\n  <border width=\"300\">\n    <textblock horizontalalignment=\"center\" verticalalignment=\"center\"\n      text=\"Hash Server Example\" fontsize=\"25\"></textblock>\n  </border>\n  \n  <!-- main ui layout -->\n  <border borderthickness=\"1\" background=\"WhiteSmoke\" bordercolor=\"Black\"\n  padding=\"5\" margin=\"5,0,0,0\">\n    <stackpanel>\n      <stackpanel>\n        <textblock text=\"String To Be Hashed\"></textblock>\n        <textbox name=\"tbRawString\"></textbox>\n      </stackpanel>\n      <stackpanel margin=\"10,0,0,0\">\n        <textblock text=\"Hashed Result:\"></textblock>\n        <textblock name=\"lblHashedString\"></textblock>\n      </stackpanel>\n      <button name=\"btnGenHash\" margin=\"5,0,0,0\" width=\"110\" content=\"Generate Hash\"></button>\n      \n      <border margin=\"0,10\" padding=\"5\" width=\"300\" borderthickness=\"1\" cornerradius=\"5px\" bordercolor=\"Gray\">\n        <stackpanel>\n      <textblock text=\"Select Hash Algorithm\"></textblock>\n    ";
   for (var i = 0;
    i < this.vm.hashNames.get$length(); i++) {
     uiXml = uiXml + ("    <stackpanel margin=\"5,0,0,0\" orientation=\"horizontal\">\n    <radiobutton groupname=\"hashRadioButtons\" name=\"" + this.vm.hashNames.$index(i) + "\" value=\"" + i + "\"></radiobutton>\n    <textblock margin=\"0,0,0,5\" text=\"" + this.vm.hashNames.$index(i) + "\"></textblock>\n    </stackpanel>\n    ");
@@ -12208,7 +12208,6 @@ View.prototype._groupRadiosByGroupName = function(groupName) {
   for (var i = 0;
    i < this.vm.hashNames.get$length(); i++) {
     var r = LucaSystem.findByName(this.vm.hashNames.$index(i), this.rootElement);
-    dart_core_print('r = ' + r);
     bg.addRadioButton(r);
   }
   return bg;
