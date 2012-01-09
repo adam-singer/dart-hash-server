@@ -1,8 +1,0 @@
-An example server that uses isolates to run hash methods and return to a client with json
-
-
-HTTP server: ~/dart_bleeding/dart/samples/chat
-Actors: ??
-
-LUCA: git submodule update --init
-
